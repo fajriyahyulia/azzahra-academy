@@ -1,696 +1,456 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AzZahra Academy — Premium Cyber Dark Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Exo+2:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* ==========================================================================
-       AZZAHRA ACADEMY GLOBAL STYLING (THEME: DEEP SPACE CYBER-DARK BLINK-BLINK)
-       ========================================================================== */
-    :root {
-      --neon-gold: #ffb703;
-      --neon-emerald: #00f5d4;
-      --neon-cyan: #4cc9f0;
-      --neon-violet: #b5179e;
-      --dark-bg: #020206;
-      --dark-card: #090915;
-      --dark-card2: #12122c;
-      --text-light: #e6e6f2;
-      --text-dim: #74749a;
-      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --glow-gold: 0 0 15px rgba(255, 183, 3, 0.6);
-      --glow-cyan: 0 0 15px rgba(76, 201, 240, 0.6);
-      --glow-violet: 0 0 15px rgba(181, 23, 158, 0.6);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Interaktif — AzZahra Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
+    --neon-cyan: #00e5ff; --neon-gold: #ffd700; --neon-emerald: #00f5d4;
+    --dark-bg: #050508; --dark-card: #0d0d1a; --dark-card2: #12122a; 
+    --text-light: #e8e0ff; --text-dim: #8878aa;
+  }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
 
-    body {
-      background-color: var(--dark-bg); color: var(--text-light);
-      font-family: 'Exo 2', sans-serif; line-height: 1.6;
-      padding-bottom: 95px; overflow-x: hidden;
-    }
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* DASHBOARD HEADER & GRID */
+  .main-header {
+    text-align: center; margin-bottom: 50px;
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(176,38,255,0.2); border-radius: 24px; padding: 40px;
+    box-shadow: 0 10px 30px rgba(176,38,255,0.05);
+  }
+  .main-title { font-family: 'Cinzel Decorative', serif; font-size: 2.5rem; color: #fff; margin-bottom: 10px; }
+  .main-subtitle { color: var(--text-dim); font-size: 1.1rem; }
 
-    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .level-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 50px; }
+  .level-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px; padding: 30px; cursor: pointer; transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .level-card:hover {
+    transform: translateY(-5px); border-color: var(--neon-purple);
+    box-shadow: 0 10px 25px rgba(176,38,255,0.15);
+  }
+  .card-num { font-size: 0.8rem; font-weight: 700; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .card-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: #fff; margin-bottom: 15px; }
+  .card-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; }
 
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 20px; background: rgba(9, 9, 21, 0.85); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 183, 3, 0.3); margin-bottom: 25px;
-      box-shadow: 0 0 20px rgba(255, 183, 3, 0.1);
-    }
-    .brand { font-family: 'Cinzel Decorative', serif; font-size: 1.6rem; font-weight: 700; color: #ffffff; text-shadow: var(--glow-gold); }
-    .nav-stats { display: flex; gap: 15px; align-items: center; }
-    .stat-badge { background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 20px; font-weight: 700; border: 1px solid rgba(255,255,255,0.08); }
+  /* HEADER LEVEL KONTEN */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(124,58,237,0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(124,58,237,0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-cyan);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; border: none; background: none; cursor: pointer; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(176,38,255,0.15); border: 1px solid var(--neon-purple); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 75px;
-      background: rgba(9, 9, 21, 0.9); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,183,3,0.2);
-      display: flex; justify-content: space-around; align-items: center; z-index: 1000;
-      box-shadow: 0 -5px 30px rgba(0,0,0,0.8);
-    }
-    .nav-item { color: var(--text-dim); text-align: center; cursor: pointer; text-decoration: none; font-size: 0.85rem; flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: var(--transition-smooth); }
-    .nav-item i { font-size: 1.4rem; margin-bottom: 4px; transition: var(--transition-smooth); }
-    .nav-item.active { color: var(--neon-gold); font-weight: 700; text-shadow: var(--glow-gold); }
-    .nav-item.active i { transform: scale(1.15); color: var(--neon-gold); }
+  /* MATERI KONTEN */
+  .materi-view { display: none; }
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-gold); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-purple); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-cyan); }
+  p { margin-bottom: 15px; color: #d0c8ec; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #d0c8ec; }
+  li { margin-bottom: 5px; }
 
-    .page { display: none; }
-    .page.active { display: block; animation: fadeIn 0.4s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-cyan); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; }
 
-    .grid-dashboard { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
-    @media (max-width: 768px) { .grid-dashboard { grid-template-columns: 1fr; } }
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(124,58,237,0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(124,58,237,0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-    .level-header {
-      background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
-      border: 1px solid rgba(255, 183, 3, 0.3); border-radius: 24px; padding: 30px; margin-bottom: 30px;
-      box-shadow: 0 10px 30px rgba(255, 183, 3, 0.1);
-    }
-    .level-title { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: #ffffff; }
-    .level-badge { display: inline-block; background: rgba(255, 183, 3, 0.15); border: 1px solid var(--neon-gold); color: #ffffff; padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; box-shadow: var(--glow-gold); }
+  /* TABEL KONTEN */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); }
+  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  th { background-color: rgba(124,58,237,0.25); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(176,38,255,0.05); }
+  .td-arabic { font-family: 'Amiri', serif; font-size: 1.4rem; text-align: right; color: #fff; font-weight: bold; width: 25%; }
 
-    .level-card {
-      background: linear-gradient(135deg, var(--dark-card), var(--dark-card2)); border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 18px; padding: 22px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition-smooth);
-    }
-    .level-card:hover { background: rgba(18, 18, 44, 0.7); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255, 183, 3, 0.15); }
-    .level-card.locked { opacity: 0.25; cursor: not-allowed; filter: grayscale(1); }
-    
-    .level-left { display: flex; align-items: center; gap: 20px; flex: 1; }
-    .level-icon-box { font-size: 1.8rem; width: 52px; height: 52px; background: rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: center; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); }
-    .level-text-box h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 5px; }
-    .level-text-box p { font-size: 0.92rem; color: var(--text-dim); }
-    .level-progress-bar-bg { background: rgba(255,255,255,0.08); width: 100%; max-width: 220px; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 8px; }
-    .level-progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
-    .level-right { font-size: 1.45rem; font-weight: 800; padding-left: 15px; text-shadow: 0 0 10px currentColor; }
-
-    .materi-card { background: var(--dark-card); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 24px; padding: 35px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); }
-    .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-cyan); margin-top: 15px; margin-bottom: 25px; padding-bottom: 12px; border-bottom: 1px solid rgba(76, 201, 240, 0.2); display: flex; align-items: center; gap: 12px; text-shadow: var(--glow-cyan); }
-    
-    .subbab-list { display: grid; gap: 14px; }
-    .subbab-item {
-      background: rgba(255,255,255,0.02); padding: 18px 22px; border-radius: 14px;
-      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid rgba(255,255,255,0.05); transition: var(--transition-smooth);
-    }
-    .subbab-item:hover { background: rgba(76,201,240,0.03); border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(76,201,240,0.1); transform: translateX(4px); }
-    .subbab-item.completed { border-color: var(--neon-emerald); background: rgba(0, 245, 212, 0.02); }
-
-    .test-bab-container { margin-top: 30px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); }
-    .btn-test-bab {
-      width: 100%; padding: 20px; border-radius: 16px; font-size: 1.1rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.5px; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 12px; transition: var(--transition-smooth);
-    }
-    .btn-test-bab.locked { background: #1b1b2f; color: var(--text-dim); cursor: not-allowed; opacity: 0.4; }
-    .btn-test-bab.unlocked { background: linear-gradient(135deg, var(--neon-violet), #7209b7); color: #fff; box-shadow: var(--glow-violet); animation: pulseGlow 2s infinite; }
-    @keyframes pulseGlow { 0% { box-shadow: 0 0 15px rgba(181, 23, 158, 0.5); } 50% { box-shadow: 0 0 25px rgba(181, 23, 158, 0.8); } 100% { box-shadow: 0 0 15px rgba(181, 23, 158, 0.5); } }
-
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 18px; border: 1px solid rgba(76, 201, 240, 0.25); margin: 25px 0; box-shadow: var(--glow-cyan); }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-    .dalil-box { background: rgba(255, 255, 255, 0.015); border-left: 4px solid var(--neon-gold); padding: 22px; border-radius: 0 16px 16px 0; margin: 25px 0; font-family: 'Amiri', serif; font-size: 1.15rem; }
-    .dalil-text { font-size: 1.6rem; text-align: right; margin-bottom: 10px; color: #fff; line-height: 2; }
-    
-    .materi-body h3 { color: var(--neon-gold); margin: 20px 0 10px 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-    .materi-body p { margin-bottom: 12px; color: #cbd5e1; text-align: justify; }
-    .materi-body ul, .materi-body ol { margin-left: 20px; margin-bottom: 15px; color: #cbd5e1; }
-    .materi-body li { margin-bottom: 6px; }
-
-    /* QUIZ SYSTEM */
-    .quiz-section { background: linear-gradient(135deg, rgba(9, 9, 21, 0.98), rgba(18, 18, 44, 0.98)); border: 2px solid var(--neon-gold); border-radius: 24px; padding: 35px; box-shadow: 0 0 35px rgba(255, 183, 3, 0.2); }
-    .quiz-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-    .progress-bar-container { background: rgba(255,255,255,0.05); width: 100%; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 25px; }
-    .quiz-progress { height: 100%; background: linear-gradient(90deg, var(--neon-gold), var(--neon-emerald)); width: 0%; transition: width 0.3s ease; }
-    .question-box { margin-bottom: 25px; background: rgba(255, 255, 255, 0.02); padding: 25px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05); }
-    .question-text { font-size: 1.25rem; font-weight: 700; color: #ffffff; text-align: center; }
-    .options-list { display: flex; flex-direction: column; gap: 14px; }
-    .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); padding: 16px 20px; border-radius: 14px; cursor: pointer; transition: var(--transition-smooth); font-size: 1rem; color: #fff; width: 100%; text-align: left; }
-    .option-item:hover:not([disabled]) { background: rgba(255, 183, 3, 0.08); border-color: var(--neon-gold); box-shadow: 0 0 12px rgba(255,183,3,0.15); }
-    .option-item.correct { background: rgba(0, 245, 212, 0.18) !important; border-color: var(--neon-emerald) !important; box-shadow: 0 0 15px rgba(0,245,212,0.2); font-weight: 700; }
-    .option-item.wrong { background: rgba(181, 23, 158, 0.18) !important; border-color: var(--neon-violet) !important; box-shadow: 0 0 15px rgba(181,23,158,0.2); }
-
-    .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet)); color: #ffffff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 20px rgba(255, 183, 3, 0.3); transition: var(--transition-smooth); }
-    .submit-quiz-btn:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 183, 3, 0.45); }
-    .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--neon-gold); text-decoration: none; font-size: 0.95rem; font-weight: 600; margin-bottom: 20px; background: none; border: none; cursor: pointer; transition: var(--transition-smooth); }
-    .back-btn:hover { color: #ffffff; transform: translateX(-3px); text-shadow: var(--glow-gold); }
-    .result-box { text-align: center; padding: 30px; border-radius: 18px; background: rgba(9,9,21,0.6); border: 2px solid rgba(255,255,255,0.05); margin-top: 20px; }
-
-    .profile-card { text-align: center; max-width: 500px; margin: 40px auto; padding: 40px 30px; background: var(--dark-card); border-radius: 24px; border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-    .avatar { width: 105px; height: 105px; background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; color: white; box-shadow: 0 0 25px rgba(255,183,3,0.3); }
-  </style>
+  /* GRID 3 KOLOM KHUSUS ASMAUL HUSNA */
+  .asmaul-grid { display: grid; grid-template-columns: repeat(repeat, 1fr); gap: 15px; margin: 25px 0; }
+  @media(max-width: 768px){ .asmaul-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(max-width: 480px){ .asmaul-grid { grid-template-columns: 1fr; } }
+  .asmaul-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 25px 0; }
+  .asmaul-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 15px; text-align: center; transition: 0.2s; }
+  .asmaul-card:hover { border-color: var(--neon-cyan); background: rgba(0,229,255,0.03); }
+  .asm-num { font-size: 0.75rem; color: var(--text-dim); display: block; margin-bottom: 5px; }
+  .asm-arab { font-family: 'Amiri', serif; font-size: 1.6rem; color: var(--neon-gold); font-weight: 700; display: block; margin-bottom: 4px; }
+  .asm-latin { font-size: 0.9rem; font-weight: 600; color: #fff; display: block; }
+  .asm-arti { font-size: 0.8rem; color: var(--text-dim); display: block; margin-top: 2px; }
+</style>
 </head>
 <body>
 
-  <nav>
-    <div class="brand"><i class="fas fa-graduation-cap" style="color:var(--neon-gold)"></i> AZZAHRA ACADEMY</div>
-    <div class="nav-stats">
-      <div class="stat-badge" style="color: var(--neon-gold);"><i class="fas fa-star"></i> <span id="lblTopXp">0</span> XP</div>
-      <div class="stat-badge" style="color: var(--neon-cyan);"><i class="fas fa-fire"></i> <span id="lblTopStreak">1</span> Hari</div>
+<div class="container">
+  
+  <div id="dashboardView">
+    <div class="main-header">
+      <h1 class="main-title">AzZahra Academy</h1>
+      <p class="main-subtitle">Sistem Manajemen Pembelajaran Islam & Peradaban Khazanah Global</p>
     </div>
-  </nav>
 
-  <div class="container">
+    <div class="level-grid">
+      <div class="level-card" onclick="openLevel(1)">
+        <div class="card-num">Level 1</div>
+        <h2 class="card-title">Aqidah Islam</h2>
+        <p class="card-desc">Fondasi keimanan pokok meliputi pemahaman mendalam Rukun Iman dan Asmaul Husna secara esensial.</p>
+      </div>
+      <div class="level-card" onclick="openLevel(2)">
+        <div class="card-num">Level 2</div>
+        <h2 class="card-title">Al-Qur'an & Tajwid</h2>
+        <p class="card-desc">Pedoman tartil, hukum bacaan Nun Sukun, Mim Sukun, Mad, Makharijul Huruf, dan struktur klasifikasi surah.</p>
+      </div>
+      <div class="level-card" onclick="openLevel(3)">
+        <div class="card-num">Level 3</div>
+        <h2 class="card-title">Fiqih Ibadah</h2>
+        <p class="card-desc">Kupas tuntas rukun Islam, tata cara Thaharah, Shalat Fardhu/Sunnah, Zakat, Puasa, hingga instrumen Haji.</p>
+      </div>
+      <div class="level-card" onclick="openLevel(4)">
+        <div class="card-num">Level 4</div>
+        <h2 class="card-title">Akhlak & Adab</h2>
+        <p class="card-desc">Refleksi implementasi moralitas kepada khalik, makhluk, adab keseharian, serta eliminasi penyakit hati.</p>
+      </div>
+      <div class="level-card" onclick="openLevel(5)">
+        <div class="card-num">Level 5</div>
+        <h2 class="card-title">Sirah Nabawiyah</h2>
+        <p class="card-desc">Kronik kehidupan Rasulullah SAW periode Makkah-Madinah serta keteladanan agung 25 Nabi dan Rasul Allah.</p>
+      </div>
+      <div class="level-card" onclick="openLevel(6)">
+        <div class="card-num">Level 6</div>
+        <h2 class="card-title">Sejarah Islam</h2>
+        <p class="card-desc">Eksplorasi kepemimpinan Khulafaur Rasyidin, era keemasan sains (Golden Age), dan jalur masuk Islam di Nusantara.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="level1View" class="materi-view">
+    <div class="level-header">
+      <button class="back-btn" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
+      <h1 class="level-title">Level 1: Aqidah (Fondasi Iman)</h1>
+      <span class="level-badge">Pilar Dasar & Atribut Ketuhanan</span>
+    </div>
+    <div class="materi-card">
+      <div class="sub-bab-title"><i class="fas fa-shield-alt"></i> Sub-Bab 1: Rukun Iman (6 Perkara)</div>
+      <h3>Pengertian Rukun Iman</h3>
+      <p>Rukun artinya tiang atau pilar tempat bersandar. Iman menurut bahasa berarti memercayai atau membenarkan. Secara istilah syariat, iman adalah membenarkan dengan hati, mengucapkan dengan lisan, dan mengamalkan dengan perbuatan anggota badan. Rukun Iman adalah pilar-pilar kepercayaan pokok yang menjadi fondasi utama bangunan keislaman seorang muslim.</p>
+      
+      <div class="dalil-box">
+        <strong>QS. An-Nisa: 136</strong><br>
+        "Wahai orang-orang yang beriman! Tetaplah beriman kepada Allah, Rasul-Nya (Muhammad), Kitab yang diturunkan kepada Rasul-Nya, serta kitab yang diturunkan sebelumnya. Barang siapa ingkar kepada Allah, malaikat-malaikat-Nya, kitab-kitab-Nya, rasul-rasul-Nya, dan hari kemudian, maka sungguh orang itu telah tersesat sangat jauh."
+      </div>
+
+      <h3>6 Pilar Rukun Iman Secara Mendalam</h3>
+      <ol>
+        <li><strong>Iman Kepada Allah:</strong> Meliputi tiga aspek Tauhid yang tidak boleh dipisahkan:
+          <ul>
+            <li><em>Tauhid Rububiyah:</em> Meyakini hanya Allah yang menciptakan, memelihara, dan mengatur seluruh alam semesta (QS. Az-Zumar: 62).</li>
+            <li><em>Tauhid Uluhiyah:</em> Meyakini hanya Allah yang berhak disembah dan menjadi tujuan seluruh ibadah (QS. Al-Anbiya: 25).</li>
+            <li><em>Tauhid Asma wa Sifat:</em> Meyakini nama-nama dan sifat sempurna Allah dalam Al-Qur'an dan Hadis tanpa menyerupakan dengan makhluk.</li>
+          </ul>
+          <p>Konsekuensi: Ibadah, doa, nazar, dan penyembelihan hewan hanya ditujukan khusus untuk Allah semata.</p>
+        </li>
+        <li><strong>Iman Kepada Malaikat:</strong> Makhluk gaib dari cahaya (nur), tidak memiliki jenis kelamin, tidak makan/minum/tidur, dan selalu taat tanpa bermaksiat. 10 Nama Malaikat beserta tugas utamanya: Jibril (wahyu), Mikail (rezeki/hujan), Israfil (sangkakala), Izrail/Malak al-Maut (nyawa), Munkar & Nakir (kubur), Raqib & Atid (catat amal), Malik (neraka), Ridwan (surga).</p></li>
+        <li><strong>Iman Kepada Kitab-Kitab Allah:</strong> Memercayai wahyu sebagai pedoman hidup manusia: Taurat (Nabi Musa AS - Umat Bani Israil), Zabur (Nabi Dawud AS - Umat Bani Israil), Injil (Nabi Isa AS - Umat Bani Israil), Al-Qur'an (Nabi Muhammad SAW untuk seluruh umat manusia hingga akhir zaman).</p></li>
+        <li><strong>Iman Kepada Nabi dan Rasul:</strong> Nabi menerima wahyu untuk diri sendiri, sedangkan Rasul wajib menyampaikan wahyu kepada umatnya. Ada 5 rasul pilihan bergelar Ulul Azmi (keteguhan luar biasa): Nabi Nuh AS, Nabi Ibrahim AS, Nabi Musa AS, Nabi Isa AS, dan Nabi Muhammad SAW.</p></li>
+        <li><strong>Iman Kepada Hari Akhir:</strong> Berakhirnya kehidupan dunia menuju fase abadi. Jalur fasenya: Alam Barzakh &rarr; Ba'ats (Kebangkitan) &rarr; Mahsyar &rarr; Hisab (Perhitungan) &rarr; Mizan (Penimbangan) &rarr; Shirat &rarr; Surga/Neraka.</p></li>
+        <li><strong>Iman Kepada Qada dan Qadar:</strong> Qada adalah ketetapan Allah sejak zaman azali, sedangkan Qadar adalah realisasi fisik dari ketetapan tersebut di dunia nyata.</p></li>
+      </ol>
+
+      <div class="sub-bab-title"><i class="fas fa-star"></i> Sub-Bab 2: Asmaul Husna (99 Nama Allah)</div>
+      <p>Asmaul Husna adalah nama-nama Allah yang paling indah dan sempurna. Rasulullah SAW bersabda bahwa siapa yang menghafal dan mengamalkannya dijamin masuk surga. Berikut adalah 20 nama pertama yang wajib dipelajari beserta maknanya:</p>
+      
+      <div class="asmaul-grid">
+        <div class="asmaul-card"><span class="asm-num">1</span><span class="asm-arab">الرحمن</span><span class="asm-latin">Ar-Rahman</span><span class="asm-arti">Maha Pengasih</span></div>
+        <div class="asmaul-card"><span class="asm-num">2</span><span class="asm-arab">الرحيم</span><span class="asm-latin">Ar-Rahim</span><span class="asm-arti">Maha Penyayang</span></div>
+        <div class="asmaul-card"><span class="asm-num">3</span><span class="asm-arab">الملك</span><span class="asm-latin">Al-Malik</span><span class="asm-arti">Maha Merajai</span></div>
+        <div class="asmaul-card"><span class="asm-num">4</span><span class="asm-arab">القدوس</span><span class="asm-latin">Al-Quddus</span><span class="asm-arti">Maha Suci</span></div>
+        <div class="asmaul-card"><span class="asm-num">5</span><span class="asm-arab">السلام</span><span class="asm-latin">As-Salam</span><span class="asm-arti">Maha Pemberi Selamat</span></div>
+        <div class="asmaul-card"><span class="asm-num">6</span><span class="asm-arab">المؤمن</span><span class="asm-latin">Al-Mu'min</span><span class="asm-arti">Maha Memberi Keamanan</span></div>
+        <div class="asmaul-card"><span class="asm-num">7</span><span class="asm-arab">المهيمن</span><span class="asm-latin">Al-Muhaimin</span><span class="asm-arti">Maha Memelihara</span></div>
+        <div class="asmaul-card"><span class="asm-num">8</span><span class="asm-arab">العزيز</span><span class="asm-latin">Al-'Aziz</span><span class="asm-arti">Maha Perkasa</span></div>
+        <div class="asmaul-card"><span class="asm-num">9</span><span class="asm-arab">الجبار</span><span class="asm-latin">Al-Jabbar</span><span class="asm-arti">Maha Memaksa</span></div>
+        <div class="asmaul-card"><span class="asm-num">10</span><span class="asm-arab">المتكبر</span><span class="asm-latin">Al-Mutakabbir</span><span class="asm-arti">Maha Megah</span></div>
+        <div class="asmaul-card"><span class="asm-num">11</span><span class="asm-arab">الخالق</span><span class="asm-latin">Al-Khaliq</span><span class="asm-arti">Maha Pencipta</span></div>
+        <div class="asmaul-card"><span class="asm-num">12</span><span class="asm-arab">البارئ</span><span class="asm-latin">Al-Bari'</span><span class="asm-arti">Maha Melepaskan</span></div>
+        <div class="asmaul-card"><span class="asm-num">13</span><span class="asm-arab">المصور</span><span class="asm-latin">Al-Mushawwir</span><span class="asm-arti">Maha Membentuk Rupa</span></div>
+        <div class="asmaul-card"><span class="asm-num">14</span><span class="asm-arab">الغفار</span><span class="asm-latin">Al-Ghaffar</span><span class="asm-arti">Maha Pengampun</span></div>
+        <div class="asmaul-card"><span class="asm-num">15</span><span class="asm-arab">القهار</span><span class="asm-latin">Al-Qahhar</span><span class="asm-arti">Maha Mengalahkan</span></div>
+        <div class="asmaul-card"><span class="asm-num">16</span><span class="asm-arab">الوهاب</span><span class="asm-latin">Al-Wahhab</span><span class="asm-arti">Maha Pemberi Karunia</span></div>
+        <div class="asmaul-card"><span class="asm-num">17</span><span class="asm-arab">الرزاق</span><span class="asm-latin">Ar-Razzaq</span><span class="asm-arti">Maha Pemberi Rezeki</span></div>
+        <div class="asmaul-card"><span class="asm-num">18</span><span class="asm-arab">الفتاح</span><span class="asm-latin">Al-Fattah</span><span class="asm-arti">Maha Pembuka Rahmat</span></div>
+        <div class="asmaul-card"><span class="asm-num">19</span><span class="asm-arab">العليم</span><span class="asm-latin">Al-'Alim</span><span class="asm-arti">Maha Mengetahui</span></div>
+        <div class="asmaul-card"><span class="asm-num">20</span><span class="asm-arab">القابض</span><span class="asm-latin">Al-Qabidh</span><span class="asm-arti">Maha Menyempitkan</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="level2View" class="materi-view">
+    <div class="level-header" style="border-color: var(--neon-cyan); box-shadow: 0 10px 30px rgba(0,229,255,0.1);">
+      <button class="back-btn" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
+      <h1 class="level-title">Level 2: Al-Qur'an & Tajwid</h1>
+      <span class="level-badge" style="border-color: var(--neon-cyan);">Kaidah Tartil & Fonetika Huruf</span>
+    </div>
+    <div class="materi-card">
+      <div class="sub-bab-title" style="color: var(--neon-cyan);"><i class="fas fa-book-open"></i> Sub-Bab 1: Pengantar Ilmu Tajwid</div>
+      <h3>Definisi & Hukum</h3>
+      <p>Tajwid secara bahasa bermakna memperbagus atau membuat jadi baik. Menurut istilah ilmu qiraah, tajwid berarti mengeluarkan setiap huruf hijaiyah dari tempat keluarnya (makhraj) dengan memberikan hak-haknya (sifat asli) dan mustahaknya (sifat temporer seperti dengung, tebal-tipis). Hukum mempelajari teorinya adalah <strong>Fardhu Kifayah</strong>, sedangkan mempraktikkannya saat membaca Al-Qur'an hukumnya <strong>Fardhu 'Ain</strong> bagi setiap muslim.</p>
+      
+      <div class="sub-bab-title" style="color: var(--neon-cyan);"><i class="fas fa-language"></i> Sub-Bab 2: Hukum Nun Sukun / Tanwin & Mim Sukun</div>
+      <h3>1. Hukum Nun Sukun (نْ) atau Tanwin (ً ٍ ٌ)</h3>
+      <ul>
+        <li><strong>Izhar Halqi:</strong> Membaca nun mati secara jelas tanpa dengung jika bertemu huruf halang/tenggorokan: أ, هـ, ع, ح, غ, خ.</li>
+        <li><strong>Idgham:</strong> Memasukkan nun mati ke huruf berikutnya. Dibagi menjadi dua:
+          <ul>
+            <li><em>Idgham Bigunnah (Berdengung):</em> Jika bertemu huruf ي, ن, م, و.</li>
+            <li><em>Idgham Bilagunnah (Tanpa Dengung):</em> Jika bertemu huruf ل dan ر.</li>
+          </ul>
+        </li>
+        <li><strong>Iqlab:</strong> Membalikkan suara nun mati menjadi suara mim (م) disertai dengung jika bertemu huruf ب.</li>
+        <li><strong>Ikhfa Haqiqi:</strong> Menyamarkan bacaan nun mati antara izhar dan idgham disertai dengung jika bertemu 15 huruf sisa: ت, ث, ج, د, ذ, ز, س, ش, ص, ض, ط, ظ, ف, ق, ك.</li>
+      </ul>
+
+      <h3>2. Hukum Mim Sukun (مْ)</h3>
+      <ul>
+        <li><strong>Ikhfa Syafawi:</strong> Menyamarkan suara mim sukun disertai dengung jika bertemu huruf ب.</li>
+        <li><strong>Idgham Mimi / Mutamatsilain:</strong> Memasukkan mim sukun ke huruf mim berharkat di depannya disertai dengung sempurna.</li>
+        <li><strong>Izhar Syafawi:</strong> Membaca suara mim sukun secara jelas dan tegas tanpa dengung jika bertemu seluruh huruf hijaiyah selain ب dan م.</li>
+      </ul>
+
+      <div class="sub-bab-title" style="color: var(--neon-cyan);"><i class="fas fa-list-ol"></i> Sub-Bab 3: Struktur & Klasifikasi Makkiyah-Madaniyah</div>
+      <p>Al-Qur'an terdiri atas 114 Surah, 30 Juz, dan 6236 Ayat. Berdasarkan fase masa turunnya, surah dikelompokkan menjadi dua jenis utama:</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Karakteristik</th><th>Surah Makkiyah</th><th>Surah Madaniyah</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Fase Penurunan</strong></td><td>Diturunkan sebelum Rasulullah SAW hijrah ke Madinah (periode Makkah).</td><td>Diturunkan setelah Rasulullah SAW hijrah ke Madinah (periode Madinah).</td></tr>
+            <tr><td><strong>Fokus Konten</strong></td><td>Fondasi aqidah, ketauhidan, hari kiamat, surga-neraka, dan penanaman akhlak mulia.</td><td>Sistem regulasi hukum (syariat), hukum pidana/perdata, tata kelola negara, perang, dan hubungan sosial.</td></tr>
+            <tr><td><strong>Ciri Tekstual</strong></td><td>Ayat cenderung pendek-pendek, puitis, dan sering menggunakan seruan "Ya ayyuhan-nas" (Wahai manusia).</td><td>Ayat cenderung panjang, naratif, dan sering menggunakan seruan "Ya ayyuhalladzina amanu" (Wahai orang-orang beriman).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="level3View" class="materi-view">
+    <div class="level-header" style="border-color: var(--neon-violet); box-shadow: 0 10px 30px rgba(124,58,237,0.15);">
+      <button class="back-btn" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
+      <h1 class="level-title">Level 3: Fiqih Ibadah</h1>
+      <span class="level-badge" style="background: rgba(124,58,237,0.2); border-color: var(--neon-violet);">Sains Syariat & Tata Cara Ibadah</span>
+    </div>
+    <div class="materi-card">
+      <div class="sub-bab-title" style="color: var(--neon-violet);"><i class="fas fa-hand-holding-water"></i> Sub-Bab 1: Fiqih Thaharah (Bersuci)</div>
+      <h3>Konsep Dasar Thaharah</h3>
+      <p>Thaharah secara bahasa berarti bersih atau suci. Menurut syara', thaharah adalah mengangkat hadas atau menghilangkan najis dengan media air atau debu agar sah melakukan suatu ibadah. Najis diklasifikasikan menjadi tiga tingkatan dasar:</p>
+      <ul>
+        <li><strong>Najis Mukhaffafah (Ringan):</strong> Contohnya air kencing bayi laki-laki berusia di bawah 2 tahun yang belum makan apa-apa selain ASI. Cara menyucikannya cukup memercikkan air ke area yang terkena najis.</li>
+        <li><strong>Najis Mutawassithah (Sedang):</strong> Contohnya darah, nanah, kotoran manusia/hewan, dan khamr. Dibagi menjadi dua: <em>Ainiyah</em> (terlihat warna, bau, rasanya) dan <em>Hukmiyah</em> (tidak terlihat tapi diyakini ada). Disucikan dengan membasuh air sampai hilang bau, warna, dan rasanya.</li>
+        <li><strong>Najis Mugallazah (Berat):</strong> Najis yang bersumber dari anjing dan babi. Cara menyucikannya wajib membasuh area yang terkena sebanyak 7 kali basuhan air, di mana salah satu basuhannya dicampur dengan tanah/debu bersih.</li>
+      </ul>
+
+      <div class="sub-bab-title" style="color: var(--neon-violet);"><i class="fas fa-pray"></i> Sub-Bab 2: Rukun Islam & Esensi Shalat</div>
+      <p>Rukun Islam merupakan lima fondasi operasional bagi seorang muslim. Shalat fardhu lima waktu merupakan pilar utama penentu amal manusia di akhirat kelak.</p>
+      <h3>Mekanisme Shalat Fardhu 5 Waktu</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Nama Shalat</th><th>Jumlah Rakaat</th><th>Waktu Pelaksanaan Esensial</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Shubuh</strong></td><td>2 Rakaat</td><td>Fajar shadiq hingga terbitnya matahari.</td></tr>
+            <tr><td><strong>Zhuhur</strong></td><td>4 Rakaat</td><td>Tergelincirnya matahari di tengah langit hingga bayangan benda sama panjang dengan aslinya.</td></tr>
+            <tr><td><strong>Ashar</strong></td><td>4 Rakaat</td><td>Bayangan benda melebihi panjang aslinya hingga matahari terbenam.</td></tr>
+            <tr><td><strong>Maghrib</strong></td><td>3 Rakaat</td><td>Matahari terbenam sepenuhnya hingga hilangnya mega merah di langit barat.</td></tr>
+            <tr><td><strong>Isya</strong></td><td>4 Rakaat</td><td>Hilangnya mega merah hingga menjelang terbit fajar shadiq.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-bab-title" style="color: var(--neon-violet);"><i class="fas fa-coins"></i> Sub-Bab 3: Zakat, Puasa, & Manajemen Haji</div>
+      <h3>1. Fiqih Zakat</h3>
+      <p>Zakat dibagi menjadi dua dimensi pokok: <strong>Zakat Fitrah</strong> (zakat jiwa sebesar 2.5 kg atau 3.5 liter beras/makanan pokok yang dikeluarkan pada bulan Ramadhan hingga sebelum shalat Idul Fitri) dan <strong>Zakat Mal</strong> (zakat harta kekayaan seperti emas, perak, perdagangan, pertanian yang telah mencapai ambang batas nisab dan haul selama satu tahun).</p>
+      
+      <h3>2. Fiqih Puasa</h3>
+      <p>Puasa Ramadhan adalah menahan diri dari hal yang membatalkan (makan, minum, hubungan suami istri) mulai dari terbit fajar shadiq hingga terbenamnya matahari dengan niat tertentu. Pembatal puasa meliputi masuknya benda ke rongga terbuka dengan sengaja, muntah sengaja, serta haid atau nifas.</p>
+
+      <h3>3. Manajemen Haji</h3>
+      <p>Ibadah fisik dan finansial ke Baitullah sekali seumur hidup bagi yang mampu. Rukun haji wajib dipenuhi dan tidak bisa diganti dengan denda (dam): Ihram, Wukuf di Arafah, Thawaf Ifadhah, Sa'i, Tahallul, dan Tertib.</p>
+    </div>
+  </div>
+
+  <div id="level4View" class="materi-view">
+    <div class="level-header" style="border-color: var(--neon-pink); box-shadow: 0 10px 30px rgba(255,42,133,0.15);">
+      <button class="back-btn" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
+      <h1 class="level-title">Level 4: Akhlak & Adab</h1>
+      <span class="level-badge" style="background: rgba(255,42,133,0.15); border-color: var(--neon-pink);">Moralitas Islami & Etika Sosial</span>
+    </div>
+    <div class="materi-card">
+      <div class="sub-bab-title" style="color: var(--neon-pink);"><i class="fas fa-heart"></i> Sub-Bab 1: Akhlak Terpuji (Mahmudah) vs Akhlak Tercela (Madzmomah)</div>
+      <h3>Akhlak Mahmudah (Terpuji)</h3>
+      <p>Merupakan perilaku indah yang lahir dari keimanan kokoh. Manifestasi utamanya:</p>
+      <ul>
+        <li><strong>Ikhlas:</strong> Memurnikan tujuan seluruh aktivitas ibadah dan sosial hanya untuk mencari keridaan Allah semata, bersih dari tendensi pujian manusia.</li>
+        <li><strong>Sabar:</strong> Menahan diri dari kegelisahan, lisan dari mengeluh, dan anggota tubuh dari tindakan murka ketika menghadapi tiga kondisi: sabar dalam ketaatan, sabar dalam menjauhi kemaksiatan, serta sabar dalam menghadapi ketetapan ujian Allah.</li>
+        <li><strong>Syukur:</strong> Pendayagunaan seluruh nikmat pemberian Allah (fisik, harta, pikiran) di jalur yang dicintai-Nya, diiringi pengakuan lisan dan kebahagiaan hati.</li>
+      </ul>
+
+      <h3>Akhlak Madzmomah (Tercela) & Penyakit Hati</h3>
+      <p>Sifat internal berbahaya yang merusak amal perbuatan seseorang:</p>
+      <ul>
+        <li><strong>Riya':</strong> Melakukan amal kebaikan atau ibadah dengan tujuan agar dilihat, dipuji, atau mendapat sanjungan dari orang lain.</li>
+        <li><strong>Hasad (Dengki):</strong> Perasaan tidak senang atau benci melihat orang lain mendapatkan nikmat dari Allah, disertai ambisi kuat agar nikmat tersebut lenyap dari orang itu.</li>
+        <li><strong>Takabur (Sombong):</strong> Sikap mental menolak kebenaran obyektif dan memandang rendah atau meremehkan sesama manusia.</li>
+      </ul>
+
+      <div class="sub-bab-title" style="color: var(--neon-pink);"><i class="fas fa-users"></i> Sub-Bab 2: Adab Keseharian Profesional</div>
+      <p>Adab adalah penataan etika moral dalam aktivitas harian. Islam memberikan panduan komprehensif bagi kehidupan profesional dan sosial:</p>
+      <ol>
+        <li><strong>Adab Berbicara:</strong> Berbicara jujur, menghindari perkataan dusta, menjauhi ghibah (menggunjing), tidak memotong pembicaraan orang lain secara tidak sopan, serta memilih diam jika tidak bisa melontarkan kalimat yang bermanfaat.</li>
+        <li><strong>Adab Berpakaian:</strong> Wajib menutup aurat secara sempurna. Pakaian laki-laki tidak boleh menyerupai wanita dan sebaliknya. Tidak ketat, tidak transparan, serta menghindari motif kesombongan (syuhrah). Bagi laki-laki, tidak boleh memakai kain sutra tulen dan perhiasan emas.</li>
+        <li><strong>Adab Menuntut Ilmu:</strong> Membersihkan niat dari tendensi duniawi, menghormati dan memuliakan guru, menjaga ketenangan di majelis ilmu, mencatat materi pengajaran agar tidak hilang, serta mengamalkan ilmu tersebut dalam realitas kehidupan harian.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="level5View" class="materi-view">
+    <div class="level-header" style="border-color: var(--neon-emerald); box-shadow: 0 10px 30px rgba(0,245,212,0.15);">
+      <button class="back-btn" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
+      <h1 class="level-title">Level 5: Sirah Nabawiyah & Kisah Nabi</h1>
+      <span class="level-badge" style="background: rgba(0,245,212,0.15); border-color: var(--neon-emerald);">Kronik Kenabian & Teladan Agung</span>
+    </div>
+    <div class="materi-card">
+      <div class="sub-bab-title" style="color: var(--neon-emerald);"><i class="fas fa-history"></i> Sub-Bab 1: Sirah Nabawiyah (Fase Makkah & Madinah)</div>
+      <h3>1. Periode Makkah (±13 Tahun)</h3>
+      <p>Berfokus pada penanaman fondasi tauhid dan pembersihan mentalitas jahiliyah. Dimulai sejak penerimaan wahyu pertama di Gua Hira (Surah Al-'Alaq: 1-5) pada usia 40 tahun. Dakwah dijalankan secara sembunyi-sembunyi selama 3 tahun awal, kemudian dilakukan secara terang-terangan yang memicu gelombang boikot, siksaan fisik, dan intimidasi dari kaum kafir Quraisy terhadap Rasulullah SAW dan para sahabat.</p>
+
+      <h3>2. Periode Madinah (±10 Tahun)</h3>
+      <p>Dimulai pasca peristiwa Hijrah akbar. Fase ini berfokus pada pembangunan peradaban bernegara, tatanan sosial, ekonomi, politik, dan hukum syariat formal. Momentum fundamental meliputi pendirian Masjid Nabawi sebagai pusat komunal, deklarasi Piagam Madinah (konstitusi persaudaraan Muhajirin, Anshar, dan komunitas Yahudi), serangkaian perang defensif (Badr, Uhud, Khandaq), Perjanjian Hudaibiyah, hingga puncaknya Fathu Makkah (Pembebasan Makkah) tanpa pertumpahan darah.</p>
+
+      <div class="sub-bab-title" style="color: var(--neon-emerald);"><i class="fas fa-user-friends"></i> Sub-Bab 2: Kisah Keteladanan 25 Nabi & Rasul</div>
+      <p>Nabi dan Rasul utusan Allah membawa risalah ketauhidan yang estafet. Berikut adalah highlight keteladanan epik para Nabi pilihan:</p>
+      <ul>
+        <li><strong>Nabi Adam AS:</strong> Bapak umat manusia, mengajarkan esensi taubat sejati dan pengakuan kelemahan diri di hadapan Allah setelah melakukan kekhilafan di surga.</li>
+        <li><strong>Nabi Nuh AS:</strong> Menunjukkan ketabahan dakwah legendaris selama 950 tahun, pembangun bahtera raksasa penyelamat umat beriman dari azab banjir bandang global yang mematikan.</li>
+        <li><strong>Nabi Ibrahim AS:</strong> Bapak para Nabi (Abul Anbiya), simbol ketauhidan murni penghancur berhala, pencetus fondasi syariat ibadah qurban, serta pembangun Baitullah Ka'bah bersama putranya Nabi Ismail AS.</li>
+        <li><strong>Nabi Musa AS:</strong> Pemimpin Bani Israil menerjang tirani Fir'aun, penerima mukjizat tongkat pembelah Laut Merah serta kitab suci Taurat di Bukit Sinai.</li>
+        <li><strong>Nabi Isa AS:</strong> Lahir tanpa ayah sebagai tanda kebesaran Allah, berdakwah dengan mukjizat menyembuhkan orang buta, menghidupkan orang mati atas izin Allah, serta penerima kitab suci Injil.</li>
+        <li><strong>Nabi Muhammad SAW:</strong> Penutup para nabi dan rasul (Khatamul Anbiya), pembawa risalah sempurna Al-Qur'an untuk seluruh alam semesta, diutus guna menyempurnakan kemuliaan akhlak manusia.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="level6View" class="materi-view">
+    <div class="level-header" style="border-color: var(--neon-gold); box-shadow: 0 10px 30px rgba(255,215,0,0.15);">
+      <button class="back-btn" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
+      <h1 class="level-title">Level 6: Sejarah Islam & Peradaban Dunia</h1>
+      <span class="level-badge" style="background: rgba(255,215,0,0.15); border-color: var(--neon-gold);">Khulafaur Rasyidin, Golden Age & Islamisasi Nusantara</span>
+    </div>
+    <div class="materi-card">
+      <div class="sub-bab-title"><i class="fas fa-gavel"></i> Sub-Bab 1: Khulafaur Rasyidin</div>
+      <h3>Esensi & Periodisasi</h3>
+      <p><strong>Khulafaur Rasyidin</strong> berasal dari kata <em>khulafa</em> (para pemimpin/pengganti) dan <em>rasyidin</em> (yang mendapat petunjuk). Mereka adalah empat sahabat utama penerus kepemimpinan umat Islam pasca wafatnya Rasulullah SAW. Periode ini berlangsung selama sekitar 30 tahun (632-661 M) dan menjadi fondasi perluasan dakwah global.</p>
+      
+      <div class="dalil-box">
+        <strong>HR. Tirmidzi</strong><br>
+        "Pegang teguhlah sunnahku dan sunnah Khulafaur Rasyidin yang mendapat petunjuk setelahku. Gigit dengan gigi gerahammu."
+      </div>
+
+      <h3>Sistem Suksesi Kepemimpinan Unik</h3>
+      <p>Mekanisme pemilihan keempat khalifah ini menggunakan metode demokratis yang bervariasi, membuktikan keluwesan politik Islam:</p>
+      <ul>
+        <li><strong>Abu Bakar RA:</strong> Dipilih melalui musyawarah terbuka darurat di Saqifah Bani Sa'idah antara kaum Muhajirin dan Anshar.</li>
+        <li><strong>Umar bin Khattab RA:</strong> Dipilih melalui penunjukan langsung oleh Abu Bakar melalui surat wasiat tertulis, yang kemudian diratifikasi dan dibaiat massal oleh para sahabat.</li>
+        <li><strong>Utsman bin Affan RA:</strong> Dipilih oleh tim formatur independen (Dewan Syura) beranggotakan 6 orang sahabat senior yang ditunjuk Umar menjelang wafatnya.</li>
+        <li><strong>Ali bin Abi Thalib RA:</strong> Dipilih secara aklamasi oleh mayoritas umat Islam di tengah situasi krisis politik pasca syahidnya Utsman.</li>
+      </ul>
+
+      <div class="sub-bab-title"><i class="fas fa-flask"></i> Sub-Bab 2: Peradaban Islam Dunia & Golden Age</div>
+      <h3>Era Keemasan Dinasti Abbasiyah (750-1258 M)</h3>
+      <p>Berpusat di Baghdad di bawah kepemimpinan Khalifah Harun Ar-Rasyid dan Al-Ma'mun. Menjadi kiblat sains internasional berkat berdirinya <strong>Baitul Hikmah</strong> (pusat penerjemahan global, perpustakaan megah, dan akademi riset).</p>
+      
+      <h3>Kontribusi Ilmuwan Muslim Terhadap Sains Modern</h3>
+      <ul>
+        <li><strong>Al-Khawarizmi:</strong> Tokoh sentral matematika — Bapak Aljabar (<em>Algebra</em>), penemu angka nol (0), sistem desimal, serta penemu dasar algoritma.</li>
+        <li><strong>Al-Biruni:</strong> Pionir astronomi dan geodesi — Sukses menghitung keliling bumi dengan akurasi trigonometri tinggi, meleset hanya 1% dari perhitungan satelit modern.</li>
+        <li><strong>Ibnu Sina (Avicenna):</strong> Bapak kedokteran dunia — Penulis kitab agung <em>Al-Qanun fit Thibb</em> yang menjadi kitab rujukan utama medis Eropa selama 600 tahun, serta penemu konsep isolasi karantina wabah.</li>
+        <li><strong>Az-Zahrawi:</strong> Bapak ilmu bedah modern — Penulis ensiklopedia <em>Al-Tasrif</em> dan pencipta 200+ instrumen bedah orisinal yang tekniknya masih dipakai di ruang operasi modern.</li>
+        <li><strong>Ibnu Al-Haytham:</strong> Bapak optik modern — Pembukti teori ilmiah pembiasan cahaya masuk ke mata, penemu prinsip dasar kamera obscura awal.</li>
+        <li><strong>Jabir bin Hayyan:</strong> Bapak kimia modern — Penemu teknik distilasi, filtrasi, sublimasi, serta perumus awal zat asam, alkohol, dan alkali.</li>
+        <li><strong>Ibnu Battutah:</strong> Geografer penjelajah terjauh dunia — Menempuh 120.000 km melintasi 3 benua besar, mencatat keanekaragaman budaya dalam kitab legendaris <em>Rihlah</em>.</li>
+        <li><strong>Al-Ghazali:</strong> Teolog dan filosof agung bergelar <em>Hujjatul Islam</em> — Penulis karya monumental sistem pembersihan jiwa <em>Ihya Ulumiddin</em>.</li>
+      </ul>
+      <p>Mata rantai transmisi ilmu pengetahuan ini mengalir ke peradaban Barat melalui koridor ilmiah <strong>Toledo (Andalusia/Spanyol Muslim)</strong> dan <strong>Sisilia</strong>, memicu gerakan Renaisans Eropa. Dinasti besar lainnya meliputi Dinasti Umayyah Damaskus (ekspansi geografis terluas), Fatimiyah Mesir (pendiri Universitas Al-Azhar), dan Utsmaniyah/Ottoman Istanbul (penakluk Konstantinopel pada 1453 M oleh Sultan Mehmed II / Al-Fatih).</p>
+
+      <div class="sub-bab-title"><i class="fas fa-ship"></i> Sub-Bab 3: Islam di Nusantara & Peran Wali Songo</div>
+      <h3>Teori Masuk & Jalur Dakwah Damai</h3>
+      <p>Islamisasi di Indonesia berjalan damai tanpa ekspansi militer melainkan melalui akulturasi budaya. Terdapat ragam hipotesis sejarah seperti Teori Arab (Makkah, abad ke-7 M dibuktikan dengan pemukiman Barus), Teori Gujarat (India, abad ke-13 M), Teori China, dan Persia. Penetrasi dakwah berjalan melalui 5 saluran utama: perdagangan maritim, perkawinan strategis, pendidikan berasrama (pesantren), pagelaran kesenian (wayang kulit oleh Sunan Kalijaga), dan jalur birokrasi politik formal.</p>
+      
+      <h3>Konstelasi Kerajaan Islam Terkemuka</h3>
+      <ol>
+        <li><strong>Samudera Pasai:</strong> Kesultanan Islam pertama di Indonesia (Aceh, abad ke-13) dipimpin raja pertama Sultan Malik As-Shalih sebagai bandar perdagangan internasional terpadu.</li>
+        <li><strong>Kesultanan Aceh Darussalam:</strong> Mencapai puncak kejayaan di bawah Sultan Iskandar Muda, menjadi pusat transit ekonomi internasional dan episentrum studi Islam terbesar di Asia Tenggara.</li>
+        <li><strong>Kesultanan Demak:</strong> Kerajaan Islam pertama di pulau Jawa yang didirikan oleh Raden Patah di bawah naungan dewan penasihat kolektif Wali Songo.</li>
+        <li><strong>Mataram Islam:</strong> Di bawah kepemimpinan Sultan Agung, berhasil menyatukan kalender Jawa-Hijriyah dan melakukan aksi militer perlawanan epik terhadap kongsi dagang VOC di Batavia.</li>
+        <li><strong>Ternate-Tidore & Gowa-Tallo:</strong> Penguasa rute komoditas rempah-rempah maritim wilayah timur, dipimpin oleh raja heroik seperti Sultan Hasanuddin ("Ayam Jantan dari Timur") yang gigih melawan monopoli Barat.</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function openLevel(levelNum) {
+    // Sembunyikan dashboard utama
+    document.getElementById('dashboardView').style.display = 'none';
     
-    <div id="pageBeranda" class="page active">
-      <div class="grid-dashboard">
-        <div>
-          <div class="level-header">
-            <h2 class="level-title" style="color: #fff;">Kurikulum Santri</h2>
-            <div class="level-badge">Papan Belajar Utama AzZahra</div>
-          </div>
-          <div id="levelContainer"></div>
-        </div>
-        <div>
-          <div class="materi-card" style="padding: 25px; border-color: rgba(76,201,240,0.2)">
-            <h3 style="margin-top:0; border-left: 3px solid var(--neon-cyan); padding-left:10px; color:#fff;">Papan Peringkat</h3>
-            <div id="leaderboardList" style="margin-top:15px;">Memuat peringkat terbaik...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="pageMateri" class="page">
-      <div class="materi-card">
-        <h2 id="lblDetailTitle" style="font-family: 'Cinzel Decorative', serif; color: #fff; margin-bottom: 10px; font-size: 1.8rem; text-shadow: var(--glow-gold);">Nama Bab</h2>
-        <p id="lblDetailDesc" style="color: var(--text-dim); margin-bottom: 25px;"></p>
-        
-        <div class="sub-bab-title"><i class="fas fa-book-bookmark"></i> Langkah 1: Tuntaskan Semua Sub-Bab</div>
-        <div id="subbabContainer" class="subbab-list"></div>
-
-        <div class="test-bab-container">
-          <div class="sub-bab-title" style="color:var(--neon-violet); border-bottom-color:rgba(181,23,158,0.2); text-shadow:var(--glow-violet);"><i class="fas fa-trophy"></i> Langkah 2: Ujian Kelulusan Bab</div>
-          <button id="btnTestBesarBab" class="btn-test-bab locked" disabled>
-            <i class="fas fa-lock"></i> Kunci Ujian Belum Terbuka
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pageRuangBelajar" class="page">
-      <button class="back-btn" onclick="window.switchTab('materi')"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Sub-bab</button>
-      <div class="materi-card">
-        <h2 id="lblMateriTitle" style="font-family: 'Cinzel Decorative', serif; color: var(--neon-cyan); margin-bottom: 15px; text-shadow: var(--glow-cyan);">Judul Sub-Bab</h2>
-        
-        <div class="video-container">
-          <iframe id="videoPlayer" src="" allowfullscreen></iframe>
-        </div>
-
-        <div class="materi-body" id="materiBodyContent"></div>
-        <button class="submit-quiz-btn" id="btnMulaiKuisSubBab"><i class="fas fa-gamepad"></i> Mulai Kuis Latihan Sub-Bab</button>
-      </div>
-    </div>
-
-    <div id="pageKuisQuizizz" class="page">
-      <div class="quiz-section" style="max-width: 650px; margin: 0 auto;">
-        <div class="quiz-header">
-          <span style="font-weight: 600; color: var(--text-dim);" id="lblQuizTracker">Soal 1</span>
-          <span style="font-weight: 600; color: var(--neon-emerald);"><i class="fas fa-check"></i> Benar: <span id="lblCorrectCount">0</span></span>
-        </div>
-        <div class="progress-bar-container">
-          <div class="quiz-progress" id="quizProgressBar"></div>
-        </div>
-        
-        <div id="quizContentBox">
-          <div class="question-box">
-            <div class="question-text" id="lblQuestionText">Pertanyaan kuis...</div>
-          </div>
-          <div class="options-list" id="optionsContainer"></div>
-        </div>
-
-        <div id="quizResultBox" class="result-box" style="display: none;">
-          <h2 id="lblResultStatus" style="font-family: 'Cinzel Decorative', serif; margin-bottom: 10px;">Hasil</h2>
-          <p id="lblResultDesc" style="margin-bottom: 20px; color:#cbd5e1;"></p>
-          <div id="resultActionContainer"></div>
-        </div>
-        
-        <div id="quizFooter" style="margin-top: 25px; text-align: right; display: none;">
-          <button class="submit-quiz-btn" style="width: auto; padding: 12px 35px; margin-top: 0;" id="btnNextQuizAction">Lanjut Soal <i class="fas fa-chevron-right"></i></button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pageProfil" class="page">
-      <div class="profile-card">
-        <div class="avatar" id="avatarProfil">A</div>
-        <h2 id="lblProfilName" style="color: #fff; font-family: 'Cinzel Decorative', serif; text-shadow: var(--glow-gold);">Nama Santri</h2>
-        <p id="lblProfilEmail" style="color: var(--text-dim); margin-bottom: 30px;">email@santri.com</p>
-        <button class="submit-quiz-btn" style="background: var(--neon-violet); max-width: 180px; margin: 0 auto; display: block;" id="btnLogoutAction">Keluar Akun</button>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="bottom-nav">
-    <div class="nav-item active" id="tabBeranda"><i class="fas fa-home"></i>Beranda</div>
-    <div class="nav-item" id="tabMateri"><i class="fas fa-book"></i>Materi</div>
-    <div class="nav-item" id="tabProfil"><i class="fas fa-user"></i>Profil</div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
-      authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
-      projectId: "azzahra-academy-ad1ec",
-      storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
-      messagingSenderId: "425297111795",
-      appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let currentUserData = null;
-    let currentUserId = null;
-    let selectedLevelId = "level1"; 
-    let selectedSubBabIndex = 0;
-    let isDoingFinalTest = false;
-
-    let quizQuestions = [];
-    let currentQuestionIdx = 0;
-    let totalCorrectAnswers = 0;
-
-    // DATA BASE LENGKAP PENUH MATERI SUB-BAB 1-3 SESUAI BERKAS ASLI
-    const DATA_MATERI = [
-      {
-        id: "level1", title: "Level 1: Aqidah (Fondasi Iman)", color: "var(--neon-emerald)", icon: "fa-sun",
-        description: "Membentuk fondasi keimanan yang lurus melalui pemahaman kalimat tauhid dan asmaul husna.",
-        subBabs: [
-          {
-            title: "Hakikat Syahadatain", videoId: "9gX_Ebe_ZfI", 
-            summary: `
-              <h3>Makna Teks & Konsep</h3>
-              <p>Syahadatain berasal dari dua kalimat persaksian penting. Rukunnya berdiri atas dua sisi: An-Nafyu (Penafian) pada "Laa Ilaaha" dan Al-Itsbat (Penetapan) pada "Illallah".</p>
-              <h3>Syarat Sah Sahnya Syahadat</h3>
-              <ul>
-                <li>Ilmu (Memahami), Al-Yaqin (Meyakini tanpa ragu), Al-Ikhlas, Ash-Shidqu (Jujur).</li>
-              </ul>
-            `,
-            quiz: [{ q: "Apa rukun pertama dari kalimat Syahadat?", a: ["An-Nafyu (Penafian)", "Al-Itsbat", "Al-Ikhlas", "Al-Ilmu"], correct: 0 }]
-          },
-          {
-            title: "Tauhid & Pembagiannya", videoId: "bOInI2Z8xno",
-            summary: `<h3>Tiga Pembagian Tauhid</h3><p>1. Rububiyah (Penciptaan), 2. Uluhiyah (Peribadahan), 3. Asma wa Sifat (Nama & Sifat Allah).</p>`,
-            quiz: [{ q: "Meyakini Allah satu-satunya Pencipta semesta adalah tauhid...", a: ["Uluhiyah", "Rububiyah", "Asma wa Sifat"], correct: 1 }]
-          },
-          {
-            title: "Asmaul Husna Terpilih", videoId: "bOInI2Z8xno",
-            summary: `<h3>Penjiwaan Sifat Allah</h3><p>Mendalami Asmaul Husna: Al-Malik, Al-Aziz, Al-Quddus, As-Salam, Al-Mu'min, Al-Muhaimin.</p>`,
-            quiz: [{ q: "Apa arti dari nama Al-Malik?", a: ["Maha Suci", "Maha Perkasa", "Maha Raja/Penguasa"], correct: 2 }]
-          }
-        ],
-        finalTest: [{ q: "Dosa besar yang tidak diampuni jika terbawa mati adalah...", a: ["Mencuri", "Syirik", "Riya"], correct: 1 }]
-      },
-      {
-        id: "level2", title: "Level 2: Al-Qur'an & Tajwid", color: "var(--neon-cyan)", icon: "fa-book-quran",
-        description: "Membaca kitab suci Al-Qur'an secara tartil berlandaskan kaidah hukum tajwid yang sah.",
-        subBabs: [
-          { title: "Urgensi Menjaga Al-Qur'an", videoId: "bOInI2Z8xno", summary: `<p>Membaca dan mengamalkan kalamullah mendatangkan pahala berlipat.</p>`, quiz: [{ q: "Membaca 1 huruf Al-Qur'an mendapat...", a: ["1 Kebaikan", "10 Kebaikan", "5 Kebaikan"], correct: 1 }] },
-          { title: "Hukum Nun Mati & Tanwin", videoId: "bOInI2Z8xno", summary: `<p>Izhar Halqi, Idgham, Iqlab, dan Ikhfa Haqiqi.</p>`, quiz: [{ q: "Berapa huruf Izhar Halqi?", a: ["4", "5", "6"], correct: 2 }] },
-          { title: "Hukum Mim Mati & Mad Dasar", videoId: "bOInI2Z8xno", summary: `<p>Ikhfa Syafawi, Idgham Mimi, Izhar Syafawi serta Mad Thabi'i.</p>`, quiz: [{ q: "Mim mati bertemu Ba disebut...", a: ["Ikhfa Syafawi", "Izhar", "Iqlab"], correct: 0 }] }
-        ],
-        finalTest: [{ q: "Huruf 'Lam' dan 'Ra' adalah huruf dari...", a: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Iqlab"], correct: 1 }]
-      },
-      {
-        id: "level3", title: "Level 3: Fiqih Ibadah", color: "var(--neon-purple)", icon: "fa-water",
-        description: "Panduan bersuci (Thaharah), kesempurnaan gerakan shalat fardhu, zakat, dan ibadah harian.",
-        subBabs: [
-          { title: "Thaharah (Bersuci)", videoId: "bOInI2Z8xno", summary: `<p>Tata cara thaharah, pengenalan najis mukhaffafah, mutawassithah, mughallazah.</p>`, quiz: [{ q: "Najis berat dinamakan?", a: ["Mukhaffafah", "Mughallazah", "Mutawassithah"], correct: 1 }] },
-          { title: "Fiqih Shalat Fardhu & Jama'-Qashar", videoId: "bOInI2Z8xno", summary: `<p>Aturan rukun shalat fardhu dan rukhsah pengerjaan shalat jama' qashar.</p>`, quiz: [{ q: "Keringanan shalat saat musafir disebut...", a: ["Rukhsah", "Azimah", "Makruh"], correct: 0 }] },
-          { title: "Fiqih Puasa Ramadhan & Zakat", videoId: "bOInI2Z8xno", summary: `<p>Ketentuan wajib puasa ramadhan dan perhitungan zakat fitrah maupun zakat maal.</p>`, quiz: [{ q: "Berapa asnaf golongan penerima zakat?", a: ["5 Golongan", "8 Golongan", "10 Golongan"], correct: 1 }] }
-        ],
-        finalTest: [{ q: "Membasuh najis jilatan anjing dilakukan sebanyak...", a: ["3 kali", "5 kali", "7 kali"], correct: 2 }]
-      },
-      {
-        id: "level4", title: "Level 4: Akhlak & Adab", color: "var(--neon-gold)", icon: "fa-hands-holding-child",
-        description: "Menghias diri dengan perangai terpuji (Mahmudah) serta membersihkan penyakit hati.",
-        subBabs: [
-          { title: "Akhlak Terpuji (Mahmudah)", videoId: "bOInI2Z8xno", summary: `<p>Sifat ikhlas, jujur (shiddiq), amanah, sabar, syukur, dan tawakal.</p>`, quiz: [{ q: "Sifat jujur dikenal juga dengan istilah...", a: ["Fathanah", "Shiddiq", "Amanah"], correct: 1 }] },
-          { title: "Adab Sosial Islam", videoId: "bOInI2Z8xno", summary: `<p>Adab berbakti pada orang tua (birrul walidain), memuliakan guru, dan tetangga.</p>`, quiz: [{ q: "Berbakti kepada kedua orang tua dinamakan...", a: ["Uququl Walidain", "Birrul Walidain", "Silaturahmi"], correct: 1 }] },
-          { title: "Penyakit Hati (Akhlak Madzmumah)", videoId: "bOInI2Z8xno", summary: `<p>Menghindari sifat riya, sum'ah, hasad, ujub, sombong, dan ghibah.</p>`, quiz: [{ q: "Beramal agar didengar kebaikannya dinamakan...", a: ["Riya", "Sum'ah", "Ujub"], correct: 1 }] }
-        ],
-        finalTest: [{ q: "Sifat dengki atas kebahagiaan orang lain disebut...", a: ["Hasad", "Ghibah", "Sombong"], correct: 0 }]
-      },
-      {
-        id: "level5", title: "Level 5: Sirah Nabawiyah", color: "var(--neon-cyan)", icon: "fa-landmark",
-        description: "Meneladani sejarah perjuangan hidup Rasulullah SAW dan mukjizat para Rasul Ulul Azmi.",
-        subBabs: [
-          { title: "Periode Makkah & Madinah", videoId: "bOInI2Z8xno", summary: `<p>Dakwah sembunyi/terang di Makkah, hijrah, dan Piagam Madinah.</p>`, quiz: [{ q: "Perjanjian perdamaian sosial di Madinah dinamakan...", a: ["Amul Huzni", "Piagam Madinah", "Baiat Aqabah"], correct: 1 }] },
-          { title: "Perang-Perang Besar Penentu", videoId: "bOInI2Z8xno", summary: `<p>Sejarah jalannya Perang Badar (2 H), Perang Uhud (3 H), dan Perang Khandaq (5 H).</p>`, quiz: [{ q: "Tahun berapa terjadinya Perang Badar?", a: ["1 H", "2 H", "3 H"], correct: 1 }] },
-          { title: "Kisah Ulul Azmi & Nabi Pilihan", videoId: "bOInI2Z8xno", summary: `<p>Kisah pengorbanan serta keteguhan luar biasa para Rasul bergelar Ulul Azmi.</p>`, quiz: [{ q: "Ada berapa rasul yang bergelar Ulul Azmi?", a: ["3 Rasul", "5 Rasul", "7 Rasul"], correct: 1 }] }
-        ],
-        finalTest: [{ q: "Perang Khandaq terjadi pada tahun...", a: ["2 Hijriah", "3 Hijriah", "5 Hijriah"], correct: 2 }]
-      },
-      {
-        id: "level6", title: "Level 6: Sejarah Islam & Peradaban", color: "var(--neon-gold)", icon: "fa-earth-asia",
-        description: "Meneladani era keemasan Khulafaur Rasyidin hingga jalur dakwah damai masuknya Islam di Nusantara.",
-        subBabs: [
-          {
-            title: "Khulafaur Rasyidin", videoId: "-W9_eWrkh7o",
-            summary: `<h3>Sistem Suksesi Unik</h3><p>Abu Bakar (Musyawarah Saqifah), Umar (Mandat tertulis), Utsman (Dewan Syura 6 orang), Ali (Aklamasi).</p>`,
-            quiz: [{ q: "Siapa Khalifah yang dipilih melalui tim formatur Dewan Syura?", a: ["Abu Bakar", "Umar", "Utsman", "Ali"], correct: 2 }]
-          },
-          { title: "Daulah Kekhalifahan & Golden Age", videoId: "bOInI2Z8xno", summary: `<p>Kontribusi sains zaman Daulah Umayyah dan Abbasiyah.</p>`, quiz: [{ q: "Pusat sains Abbasiyah di Baghdad bernama...", a: ["Baitul Hikmah", "Al-Azhar", "Cordoba"], correct: 0 }] },
-          { title: "Sejarah Masuknya Islam di Nusantara", videoId: "bOInI2Z8xno", summary: `<p>Teori Gujarat, Persia, Mekkah serta dakwah damai Wali Songo.</p>`, quiz: [{ q: "Dewan ulama penyebar Islam di Jawa bernama...", a: ["Wali Songo", "Syura", "Muhajirin"], correct: 0 }] }
-        ],
-        finalTest: [{ q: "Mekanisme pemilihan Abu Bakar berlangsung di...", a: ["Saqifah Bani Sa'idah", "Darun Nadwah", "Masjid Nabawi"], correct: 0 }]
-      }
-    ];
-
-    // ROUTING / TAB SWITCHER GLOBAL FIX
-    window.switchTab = function(tabName) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-      if (tabName === 'beranda') {
-        document.getElementById('pageBeranda').classList.add('active');
-        document.getElementById('tabBeranda').classList.add('active');
-        renderKurikulumBeranda();
-      } else if (tabName === 'materi') {
-        document.getElementById('pageMateri').classList.add('active');
-        document.getElementById('tabMateri').classList.add('active');
-        bukaDetailBabSistem();
-      } else if (tabName === 'profil') {
-        document.getElementById('pageProfil').classList.add('active');
-        document.getElementById('tabProfil').classList.add('active');
-      }
-    };
-
-    // ATTACH CLICK EVENTS KE MENU BAWAH SECARA MANUAL AGAR PATEN
-    document.getElementById('tabBeranda').onclick = () => window.switchTab('beranda');
-    document.getElementById('tabMateri').onclick = () => window.switchTab('materi');
-    document.getElementById('tabProfil').onclick = () => window.switchTab('profil');
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = 'auth.html';
-      } else {
-        currentUserId = user.uid;
-        await muatDataSantri();
-        muatPapanPeringkat();
-      }
-    });
-
-    async function muatDataSantri() {
-      const userDoc = await getDoc(doc(db, "users", currentUserId));
-      if (userDoc.exists()) {
-        currentUserData = userDoc.data();
-        document.getElementById('lblTopXp').innerText = currentUserData.xp || 0;
-        document.getElementById('lblTopStreak').innerText = currentUserData.streak || 1;
-        document.getElementById('lblProfilName').innerText = currentUserData.name || "Santri";
-        document.getElementById('lblProfilEmail').innerText = currentUserData.email || "";
-        document.getElementById('avatarProfil').innerText = (currentUserData.name || "A")[0].toUpperCase();
-        renderKurikulumBeranda();
-      }
+    // Sembunyikan semua konten level terlebih dahulu
+    const views = document.querySelectorAll('.materi-view');
+    views.forEach(view => view.style.display = 'none');
+    
+    // Tampilkan level yang dipilih
+    const targetView = document.getElementById(`level${levelNum}View`);
+    if(targetView) {
+      targetView.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  }
 
-    function renderKurikulumBeranda() {
-      const container = document.getElementById('levelContainer');
-      container.innerHTML = "";
+  function showDashboard() {
+    // Sembunyikan semua konten level
+    const views = document.querySelectorAll('.materi-view');
+    views.forEach(view => view.style.display = 'none');
+    
+    // Tampilkan dashboard utama
+    document.getElementById('dashboardView').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 
-      DATA_MATERI.forEach((lvl) => {
-        const userProgress = currentUserData.progress?.[lvl.id] || { percent: 0, unlocked: false };
-        const isLocked = lvl.id !== "level1" && !userProgress.unlocked;
-
-        const card = document.createElement('div');
-        card.className = `level-card ${isLocked ? 'locked' : ''}`;
-        card.onclick = () => {
-          if (isLocked) {
-            alert("🔒 Bab terkunci! Selesaikan ujian tingkat sebelumnya.");
-            return;
-          }
-          selectedLevelId = lvl.id;
-          window.switchTab('materi');
-        };
-
-        card.innerHTML = `
-          <div class="level-left">
-            <div class="level-icon-box" style="color: ${lvl.color}; border-color: ${lvl.color}44;">
-              <i class="fas ${lvl.icon}"></i>
-            </div>
-            <div class="level-text-box">
-              <h3 style="color: ${lvl.color};">${lvl.title}</h3>
-              <p>${lvl.description}</p>
-              <div class="level-progress-bar-bg">
-                <div class="level-progress-fill" style="background: ${lvl.color}; width: ${userProgress.percent || 0}%;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="level-right" style="color: ${lvl.color};">
-            ${isLocked ? '<i class="fas fa-lock" style="color:var(--text-dim);"></i>' : `${userProgress.percent || 0}%`}
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function bukaDetailBabSistem() {
-      const dataBab = DATA_MATERI.find(l => l.id === selectedLevelId);
-      document.getElementById('lblDetailTitle').innerText = dataBab.title;
-      document.getElementById('lblDetailDesc').innerText = dataBab.description;
-
-      const subContainer = document.getElementById('subbabContainer');
-      subContainer.innerHTML = "";
-
-      const subBabCleared = currentUserData.subbabStatus?.[selectedLevelId] || {};
-      let totalSelesai = 0;
-
-      dataBab.subBabs.forEach((sub, index) => {
-        const isSelesai = subBabCleared[index] === true;
-        if (isSelesai) totalSelesai++;
-
-        const item = document.createElement('div');
-        item.className = `subbab-item ${isSelesai ? 'completed' : ''}`;
-        item.onclick = () => bukaRuangBelajarSubBab(index);
-        item.innerHTML = `
-          <span>
-            <i class="${isSelesai ? 'fas fa-check-circle' : 'fas fa-book-open'}" style="color:${isSelesai ? 'var(--neon-emerald)' : 'var(--neon-cyan)'}; margin-right:12px;"></i>
-            Sub-Bab ${index + 1}: ${sub.title}
-          </span>
-          <span style="font-size:0.85rem; color:${isSelesai ? 'var(--neon-emerald)' : 'var(--text-dim)'}">
-            ${isSelesai ? 'Selesai ✓' : 'Pelajari <i class="fas fa-chevron-right"></i>'}
-          </span>
-        `;
-        subContainer.appendChild(item);
-      });
-
-      const btnTest = document.getElementById('btnTestBesarBab');
-      if (totalSelesai === dataBab.subBabs.length) {
-        btnTest.className = "btn-test-bab unlocked";
-        btnTest.disabled = false;
-        btnTest.innerHTML = "<i class='fas fa-fire-alt'></i> Mulai Ujian Besar Akhir Bab";
-        btnTest.onclick = () => mulaiTestBesarAkhirBabSistem(dataBab.finalTest);
-      } else {
-        btnTest.className = "btn-test-bab locked";
-        btnTest.disabled = true;
-        btnTest.innerHTML = `<i class='fas fa-lock'></i> Kunci Terbuka (${totalSelesai}/${dataBab.subBabs.length} Sub-bab Selesai)`;
-      }
-    }
-
-    function bukaRuangBelajarSubBab(subIndex) {
-      selectedSubBabIndex = subIndex;
-      isDoingFinalTest = false;
-      const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
-      const sub = bab.subBabs[subIndex];
-
-      document.getElementById('pageMateri').classList.remove('active');
-      document.getElementById('pageRuangBelajar').classList.add('active');
-
-      document.getElementById('lblMateriTitle').innerText = sub.title;
-      document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${sub.videoId}`;
-      document.getElementById('materiBodyContent').innerHTML = sub.summary;
-
-      document.getElementById('btnMulaiKuisSubBab').onclick = () => siapkanKuisQuizizz(sub.quiz);
-    }
-
-    function mulaiTestBesarAkhirBabSistem(soalFinal) {
-      isDoingFinalTest = true;
-      siapkanKuisQuizizz(soalFinal);
-    }
-
-    function siapkanKuisQuizizz(daftarSoal) {
-      quizQuestions = daftarSoal;
-      currentQuestionIdx = 0;
-      totalCorrectAnswers = 0;
-
-      document.getElementById('pageMateri').classList.remove('active');
-      document.getElementById('pageRuangBelajar').classList.remove('active');
-      document.getElementById('pageKuisQuizizz').classList.add('active');
-      
-      document.getElementById('quizContentBox').style.display = 'block';
-      document.getElementById('quizResultBox').style.display = 'none';
-
-      tampilkanSoalQuizizz();
-    }
-
-    function tampilkanSoalQuizizz() {
-      document.getElementById('quizFooter').style.display = 'none';
-      const soalAktif = quizQuestions[currentQuestionIdx];
-
-      document.getElementById('lblQuizTracker').innerText = `Soal ${currentQuestionIdx + 1} dari ${quizQuestions.length}`;
-      document.getElementById('lblCorrectCount').innerText = totalCorrectAnswers;
-      
-      const percentProgress = (currentQuestionIdx / quizQuestions.length) * 100;
-      document.getElementById('quizProgressBar').style.width = `${percentProgress}%`;
-      document.getElementById('lblQuestionText').innerText = soalAktif.q;
-
-      const optionsBox = document.getElementById('optionsContainer');
-      optionsBox.innerHTML = "";
-
-      soalAktif.a.forEach((opsi, index) => {
-        const btn = document.createElement('button');
-        btn.className = "option-item";
-        btn.innerText = opsi;
-        btn.onclick = () => cekJawabanQuizizz(index, btn);
-        optionsBox.appendChild(btn);
-      });
-    }
-
-    function cekJawabanQuizizz(indexTerpilih, tombolKlik) {
-      const soalAktif = quizQuestions[currentQuestionIdx];
-      const semuaTombol = document.querySelectorAll('.option-item');
-
-      semuaTombol.forEach(btn => btn.disabled = true);
-
-      if (indexTerpilih === soalAktif.correct) {
-        tombolKlik.classList.add('correct');
-        totalCorrectAnswers++;
-      } else {
-        tombolKlik.classList.add('wrong');
-        semuaTombol[soalAktif.correct].classList.add('correct');
-      }
-
-      document.getElementById('lblCorrectCount').innerText = totalCorrectAnswers;
-      document.getElementById('quizFooter').style.display = 'block';
-    }
-
-    document.getElementById('btnNextQuizAction').onclick = function() {
-      currentQuestionIdx++;
-      if (currentQuestionIdx >= quizQuestions.length) {
-        selesaiSesiKuisSistem();
-      } else {
-        tampilkanSoalQuizizz();
-      }
-    };
-
-    function selesaiSesiKuisSistem() {
-      document.getElementById('quizContentBox').style.display = 'none';
-      document.getElementById('quizFooter').style.display = 'none';
-      
-      const resBox = document.getElementById('quizResultBox');
-      const resStatus = document.getElementById('lblResultStatus');
-      const resDesc = document.getElementById('lblResultDesc');
-      const actionContainer = document.getElementById('resultActionContainer');
-      
-      resBox.style.display = 'block';
-      actionContainer.innerHTML = "";
-
-      const batasLulus = Math.ceil(quizQuestions.length * 0.7);
-
-      if (totalCorrectAnswers >= batasLulus) {
-        resStatus.innerText = "🎉 SELAMAT, KAMU LULUS!";
-        resStatus.style.color = "var(--neon-emerald)";
-        resDesc.innerText = `Kamu berhasil menjawab ${totalCorrectAnswers} dari ${quizQuestions.length} soal dengan benar!`;
-        
-        const btnNext = document.createElement('button');
-        btnNext.className = "submit-quiz-btn";
-
-        if (isDoingFinalTest) {
-          btnNext.innerHTML = "Selesaikan Bab & Buka Tingkat Baru <i class='fas fa-flag-checkered'></i>";
-          btnNext.onclick = () => prosesPenyelesaianTestAkhirBabDatabase();
-        } else {
-          btnNext.innerHTML = "Lanjut Sub-Bab Berikutnya <i class='fas fa-arrow-right'></i>";
-          btnNext.onclick = () => prosesPenyelesaianSubBabDatabase();
-        }
-        actionContainer.appendChild(btnNext);
-      } else {
-        resStatus.innerText = "❌ BELUM MEMENUHI TARGET";
-        resStatus.style.color = "var(--neon-violet)";
-        resDesc.innerText = `Kamu baru menjawab ${totalCorrectAnswers} benar. Syarat lulus minimal adalah ${batasLulus} jawaban benar.`;
-
-        const btnUlang = document.createElement('button');
-        btnUlang.className = "submit-quiz-btn";
-        btnUlang.innerHTML = "<i class='fas fa-redo-alt'></i> Ulangi Kuis Ujian";
-        btnUlang.onclick = () => siapkanKuisQuizizz(quizQuestions);
-        actionContainer.appendChild(btnUlang);
-      }
-    }
-
-    async function prosesPenyelesaianSubBabDatabase() {
-      document.getElementById('pageKuisQuizizz').classList.remove('active');
-      const totalXpBaru = (currentUserData.xp || 0) + 50; 
-      const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
-
-      let dataUpdate = {
-        xp: totalXpBaru,
-        [`subbabStatus.${selectedLevelId}.${selectedSubBabIndex}`]: true
-      };
-
-      await updateDoc(doc(db, "users", currentUserId), dataUpdate);
-      await muatDataSantri();
-
-      if (selectedSubBabIndex + 1 < bab.subBabs.length) {
-        bukaRuangBelajarSubBab(selectedSubBabIndex + 1);
-      } else {
-        alert("🎖️ Semua sub-bab selesai! Silakan ambil Ujian Kelulusan Bab.");
-        window.switchTab('materi');
-      }
-    }
-
-    async function prosesPenyelesaianTestAkhirBabDatabase() {
-      document.getElementById('pageKuisQuizizz').classList.remove('active');
-      const totalXpBaru = (currentUserData.xp || 0) + 100;
-      
-      let dataUpdate = {
-        xp: totalXpBaru,
-        [`progress.${selectedLevelId}.percent`]: 100
-      };
-
-      const urutanLevel = ["level1", "level2", "level3", "level4", "level5", "level6"];
-      const indexSekarang = urutanLevel.indexOf(selectedLevelId);
-      if (indexSekarang !== -1 && indexSekarang < urutanLevel.length - 1) {
-        const levelBerikutnya = urutanLevel[indexSekarang + 1];
-        dataUpdate[`progress.${levelBerikutnya}.unlocked`] = true;
-      }
-
-      await updateDoc(doc(db, "users", currentUserId), dataUpdate);
-      await muatDataSantri();
-      
-      alert("🏆 MasyaAllah! Kamu resmi lulus dari bab ini!");
-      window.switchTab('beranda');
-    }
-
-    async function muatPapanPeringkat() {
-      try {
-        const q = query(collection(db, "users"), orderBy("xp", "desc"), limit(5));
-        const querySnapshot = await getDocs(q);
-        const box = document.getElementById('leaderboardList');
-        box.innerHTML = "";
-
-        let rank = 1;
-        querySnapshot.forEach((doc) => {
-          const u = doc.data();
-          const item = document.createElement('div');
-          item.style = "display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-weight:600;";
-          item.innerHTML = `<span>#${rank} ${u.name || "Anonim"}</span> <span style="color:var(--neon-gold)"><i class="fas fa-bolt"></i> ${u.xp || 0} XP</span>`;
-          box.appendChild(item);
-          rank++;
-        });
-      } catch (err) { console.error(err); }
-    }
-
-    document.getElementById('btnLogoutAction').onclick = async function() {
-      await signOut(auth);
-      window.location.href = 'auth.html';
-    };
-  </script>
 </body>
 </html>
