@@ -115,7 +115,6 @@
     .dalil-box { background: rgba(255, 255, 255, 0.015); border-left: 4px solid var(--neon-gold); padding: 22px; border-radius: 0 16px 16px 0; margin: 25px 0; font-family: 'Amiri', serif; font-size: 1.15rem; }
     .dalil-text { font-size: 1.6rem; text-align: right; margin-bottom: 10px; color: #fff; line-height: 2; }
     
-    /* MODIFIKASI ISI MATERI AGAR COCOK DENGAN CYBER THEME */
     .materi-body h3 { color: var(--neon-gold); margin: 20px 0 10px 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
     .materi-body p { margin-bottom: 12px; color: #cbd5e1; text-align: justify; }
     .materi-body ul, .materi-body ol { margin-left: 20px; margin-bottom: 15px; color: #cbd5e1; }
@@ -175,7 +174,6 @@
     </div>
 
     <div id="pageMateri" class="page">
-      <button class="back-btn" onclick="switchTab('beranda')"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</button>
       <div class="materi-card">
         <h2 id="lblDetailTitle" style="font-family: 'Cinzel Decorative', serif; color: #fff; margin-bottom: 10px; font-size: 1.8rem; text-shadow: var(--glow-gold);">Nama Bab</h2>
         <p id="lblDetailDesc" style="color: var(--text-dim); margin-bottom: 25px;"></p>
@@ -193,7 +191,7 @@
     </div>
 
     <div id="pageRuangBelajar" class="page">
-      <button class="back-btn" onclick="switchTab('materi')"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Sub-bab</button>
+      <button class="back-btn" onclick="window.switchTab('materi')"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Sub-bab</button>
       <div class="materi-card">
         <h2 id="lblMateriTitle" style="font-family: 'Cinzel Decorative', serif; color: var(--neon-cyan); margin-bottom: 15px; text-shadow: var(--glow-cyan);">Judul Sub-Bab</h2>
         
@@ -201,9 +199,7 @@
           <iframe id="videoPlayer" src="" allowfullscreen></iframe>
         </div>
 
-        <div class="materi-body" id="materiBodyContent">
-          </div>
-        
+        <div class="materi-body" id="materiBodyContent"></div>
         <button class="submit-quiz-btn" id="btnMulaiKuisSubBab"><i class="fas fa-gamepad"></i> Mulai Kuis Latihan Sub-Bab</button>
       </div>
     </div>
@@ -232,7 +228,7 @@
         </div>
         
         <div id="quizFooter" style="margin-top: 25px; text-align: right; display: none;">
-          <button class="submit-quiz-btn" style="width: auto; padding: 12px 35px; margin-top: 0;" onclick="nextQuestion()">Lanjut Soal <i class="fas fa-chevron-right"></i></button>
+          <button class="submit-quiz-btn" style="width: auto; padding: 12px 35px; margin-top: 0;" id="btnNextQuizAction">Lanjut Soal <i class="fas fa-chevron-right"></i></button>
         </div>
       </div>
     </div>
@@ -242,22 +238,22 @@
         <div class="avatar" id="avatarProfil">A</div>
         <h2 id="lblProfilName" style="color: #fff; font-family: 'Cinzel Decorative', serif; text-shadow: var(--glow-gold);">Nama Santri</h2>
         <p id="lblProfilEmail" style="color: var(--text-dim); margin-bottom: 30px;">email@santri.com</p>
-        <button class="submit-quiz-btn" style="background: var(--neon-violet); max-width: 180px; margin: 0 auto; display: block;" onclick="handleLogout()">Keluar Akun</button>
+        <button class="submit-quiz-btn" style="background: var(--neon-violet); max-width: 180px; margin: 0 auto; display: block;" id="btnLogoutAction">Keluar Akun</button>
       </div>
     </div>
 
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-item active" id="tabBeranda" onclick="switchTab('beranda')"><i class="fas fa-home"></i>Beranda</div>
-    <div class="nav-item" id="tabMateri" onclick="switchTab('materi')"><i class="fas fa-book"></i>Materi</div>
-    <div class="nav-item" id="tabProfil" onclick="switchTab('profil')"><i class="fas fa-user"></i>Profil</div>
+    <div class="nav-item active" id="tabBeranda"><i class="fas fa-home"></i>Beranda</div>
+    <div class="nav-item" id="tabMateri"><i class="fas fa-book"></i>Materi</div>
+    <div class="nav-item" id="tabProfil"><i class="fas fa-user"></i>Profil</div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"; // jika butuh increment silakan dipanggil dari firestore
+    import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
@@ -282,7 +278,7 @@
     let currentQuestionIdx = 0;
     let totalCorrectAnswers = 0;
 
-    // DATA BASE LENGKAP PENUH MATERI DARI FILE HTML TERPISAH
+    // DATA BASE LENGKAP PENUH MATERI SUB-BAB 1-3 SESUAI BERKAS ASLI
     const DATA_MATERI = [
       {
         id: "level1", title: "Level 1: Aqidah (Fondasi Iman)", color: "var(--neon-emerald)", icon: "fa-sun",
@@ -291,135 +287,67 @@
           {
             title: "Hakikat Syahadatain", videoId: "9gX_Ebe_ZfI", 
             summary: `
-              <h3><i class="fas fa-feather-alt"></i> Makna Dua Kalimat Syahadat</h3>
-              <p>Syahadatain adalah gerbang utama masuknya seseorang ke dalam Islam. Syahadat terdiri dari penafian (<em>An-Nafyu</em>) pada kata 'Laa ilaaha' dan penetapan (<em>Al-Itsbat</em>) pada kata 'Illallah'.</p>
-              <div class="dalil-box">
-                <div class="dalil-text">فَاعْلَمْ أَنَّهُ لَا إِلَٰهَ إِلَّا اللَّهُ</div>
-                "Maka ketahuilah, bahwa sesungguhnya tidak ada Ilah (Sesembahan) yang berhak disembah selain Allah." (QS. Muhammad: 19)
-              </div>
-              <h3><i class="fas fa-check-double"></i> Syarat Sah Syahadat</h3>
-              <p>Syahadat tidak sekadar diucapkan, melainkan wajib memenuhi 7 syarat utama: Ilmu (memahami maknanya), Al-Yaqin (yakin tanpa ragu), Al-Ikhlas, Ash-Shidqu (jujur), Al-Mahabbah (cinta), Al-Inqiyad (tunduk), dan Al-Qabul (menerima).</p>
+              <h3>Makna Teks & Konsep</h3>
+              <p>Syahadatain berasal dari dua kalimat persaksian penting. Rukunnya berdiri atas dua sisi: An-Nafyu (Penafian) pada "Laa Ilaaha" dan Al-Itsbat (Penetapan) pada "Illallah".</p>
+              <h3>Syarat Sah Sahnya Syahadat</h3>
+              <ul>
+                <li>Ilmu (Memahami), Al-Yaqin (Meyakini tanpa ragu), Al-Ikhlas, Ash-Shidqu (Jujur).</li>
+              </ul>
             `,
-            quiz: [
-              { q: "Apa arti dari potongan rukun syahadat 'An-Nafyu'?", a: ["Penetapan", "Penafian / Peniadaan", "Kecintaan", "Keikhlasan"], correct: 1 },
-              { q: "Ada berapakah syarat sah kalimat syahadat?", a: ["5 Syarat", "6 Syarat", "7 Syarat", "10 Syarat"], correct: 2 }
-            ]
+            quiz: [{ q: "Apa rukun pertama dari kalimat Syahadat?", a: ["An-Nafyu (Penafian)", "Al-Itsbat", "Al-Ikhlas", "Al-Ilmu"], correct: 0 }]
           },
           {
             title: "Tauhid & Pembagiannya", videoId: "bOInI2Z8xno",
-            summary: `
-              <h3><i class="fas fa-shield-halved"></i> Tiga Pilar Tauhid</h3>
-              <ul>
-                <li><strong>Tauhid Rububiyah:</strong> Mengesakan Allah dalam perbuatan-Nya seperti mencipta, memberi rezeki, dan mengatur semesta.</li>
-                <li><strong>Tauhid Uluhiyah:</strong> Mengesakan Allah dalam segala bentuk ibadah makhluk (shalat, doa, nadzar).</li>
-                <li><strong>Tauhid Asma wa Sifat:</strong> Menetapkan nama dan sifat Allah sesuai Al-Qur'an tanpa menyamakan dengan makhluk.</li>
-              </ul>
-              <h3><i class="fas fa-triangle-exclamation"></i> Bahaya Besar Syirik</h3>
-              <p>Syirik adalah dosa terbesar yang tidak diampuni jika pelakunya mati sebelum bertaubat. Syirik dibagi menjadi Syirik Akbar (keluar dari Islam) dan Syirik Asghar (seperti Riya dan Sum'ah).</p>
-            `,
-            quiz: [
-              { q: "Meyakini Allah satu-satunya pengatur dan pencipta alam semesta adalah bagian dari tauhid...", a: ["Uluhiyah", "Rububiyah", "Asma wa Sifat", "Mubalaghah"], correct: 1 },
-              { q: "Perbuatan beramal agar dipuji oleh orang lain termasuk kategori...", a: ["Syirik Akbar", "Syirik Asghar (Riya)", "Tauhid murni", "Kufur nikmat"], correct: 1 }
-            ]
+            summary: `<h3>Tiga Pembagian Tauhid</h3><p>1. Rububiyah (Penciptaan), 2. Uluhiyah (Peribadahan), 3. Asma wa Sifat (Nama & Sifat Allah).</p>`,
+            quiz: [{ q: "Meyakini Allah satu-satunya Pencipta semesta adalah tauhid...", a: ["Uluhiyah", "Rububiyah", "Asma wa Sifat"], correct: 1 }]
+          },
+          {
+            title: "Asmaul Husna Terpilih", videoId: "bOInI2Z8xno",
+            summary: `<h3>Penjiwaan Sifat Allah</h3><p>Mendalami Asmaul Husna: Al-Malik, Al-Aziz, Al-Quddus, As-Salam, Al-Mu'min, Al-Muhaimin.</p>`,
+            quiz: [{ q: "Apa arti dari nama Al-Malik?", a: ["Maha Suci", "Maha Perkasa", "Maha Raja/Penguasa"], correct: 2 }]
           }
         ],
-        finalTest: [
-          { q: "Apa rukun utama kalimat tahlil/syahadat selain Al-Itsbat?", a: ["Al-Ikhlas", "An-Nafyu", "Al-Yaqin", "Al-Qabul"], correct: 1 },
-          { q: "Dosa yang tidak akan diampuni Allah jika terbawa mati tanpa taubat adalah...", a: ["Mencuri", "Berbohong", "Syirik", "Meninggalkan puasa sunnah"], correct: 2 },
-          { q: "Pembagian tauhid menjadi Rububiyah, Uluhiyah, dan Asma wa Sifat berjumlah...", a: ["2 Macam", "3 Macam", "4 Macam", "5 Macam"], correct: 1 }
-        ]
+        finalTest: [{ q: "Dosa besar yang tidak diampuni jika terbawa mati adalah...", a: ["Mencuri", "Syirik", "Riya"], correct: 1 }]
       },
       {
         id: "level2", title: "Level 2: Al-Qur'an & Tajwid", color: "var(--neon-cyan)", icon: "fa-book-quran",
         description: "Membaca kitab suci Al-Qur'an secara tartil berlandaskan kaidah hukum tajwid yang sah.",
         subBabs: [
-          {
-            title: "Hukum Nun Mati & Tanwin", videoId: "bOInI2Z8xno",
-            summary: `
-              <h3><i class="fas fa-list-ol"></i> 4 Hukum Utama Nun Sukun</h3>
-              <p>Apabila Nun Mati (نْ) atau Tanwin bertemu huruf-huruf hijaiyah, hukumnya terbagi menjadi:</p>
-              <ul>
-                <li><strong>Izhar Halqi:</strong> Dibaca jelas tanpa mendengung jika bertemu 6 huruf halqi (ء, هـ, ع, ح, غ, خ).</li>
-                <li><strong>Idgham:</strong> Meleburkan suara, dibagi menjadi Bighunnah (mendengung: ي, ن, م, و) dan Bilaghunnah (tanpa mendengung: ل, ر).</li>
-                <li><strong>Iqlab:</strong> Membalik suara menjadi Mim jika bertemu huruf Ba (ب).</li>
-                <li><strong>Ikhfa Haqiqi:</strong> Menyamarkan bacaan jika bertemu 15 huruf sisa.</li>
-              </ul>
-            `,
-            quiz: [
-              { q: "Berapa jumlah huruf yang tergolong ke dalam hukum Izhar Halqi?", a: ["4 Huruf", "5 Huruf", "6 Huruf", "15 Huruf"], correct: 2 },
-              { q: "Huruf 'Lam' dan 'Ra' adalah huruf dari hukum bacaan...", a: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Iqlab", "Ikhfa"], correct: 1 }
-            ]
-          }
+          { title: "Urgensi Menjaga Al-Qur'an", videoId: "bOInI2Z8xno", summary: `<p>Membaca dan mengamalkan kalamullah mendatangkan pahala berlipat.</p>`, quiz: [{ q: "Membaca 1 huruf Al-Qur'an mendapat...", a: ["1 Kebaikan", "10 Kebaikan", "5 Kebaikan"], correct: 1 }] },
+          { title: "Hukum Nun Mati & Tanwin", videoId: "bOInI2Z8xno", summary: `<p>Izhar Halqi, Idgham, Iqlab, dan Ikhfa Haqiqi.</p>`, quiz: [{ q: "Berapa huruf Izhar Halqi?", a: ["4", "5", "6"], correct: 2 }] },
+          { title: "Hukum Mim Mati & Mad Dasar", videoId: "bOInI2Z8xno", summary: `<p>Ikhfa Syafawi, Idgham Mimi, Izhar Syafawi serta Mad Thabi'i.</p>`, quiz: [{ q: "Mim mati bertemu Ba disebut...", a: ["Ikhfa Syafawi", "Izhar", "Iqlab"], correct: 0 }] }
         ],
-        finalTest: [
-          { q: "Apabila Nun Mati bertemu dengan huruf Ba (ب), hukum bacaannya disebut...", a: ["Izhar", "Iqlab", "Ikhfa", "Idgham"], correct: 1 }
-        ]
+        finalTest: [{ q: "Huruf 'Lam' dan 'Ra' adalah huruf dari...", a: ["Idgham Bighunnah", "Idgham Bilaghunnah", "Iqlab"], correct: 1 }]
       },
       {
         id: "level3", title: "Level 3: Fiqih Ibadah", color: "var(--neon-purple)", icon: "fa-water",
         description: "Panduan bersuci (Thaharah), kesempurnaan gerakan shalat fardhu, zakat, dan ibadah harian.",
         subBabs: [
-          {
-            title: "Thaharah (Bersuci)", videoId: "bOInI2Z8xno",
-            summary: `
-              <h3><i class="fas fa-droplet"></i> Pembagian Jenis Najis</h3>
-              <ul>
-                <li><strong>Mukhaffafah (Ringan):</strong> Air kencing bayi laki-laki belum makan selain ASI. Cukup dipercikkan air.</li>
-                <li><strong>Mutawassithah (Sedang):</strong> Darah, nanah, kotoran hewan. Dibasuh sampai hilang warna, bau, rasa.</li>
-                <li><strong>Mughallazah (Berat):</strong> Air liur/kotoran anjing dan babi. Wajib dibasuh 7 kali, salah satunya dengan tanah.</li>
-              </ul>
-            `,
-            quiz: [
-              { q: "Najis yang disucikan dengan membasuhnya 7 kali dan salah satunya menggunakan tanah adalah...", a: ["Mukhaffafah", "Mutawassithah", "Mughallazah", "Ma'fu"], correct: 2 }
-            ]
-          }
+          { title: "Thaharah (Bersuci)", videoId: "bOInI2Z8xno", summary: `<p>Tata cara thaharah, pengenalan najis mukhaffafah, mutawassithah, mughallazah.</p>`, quiz: [{ q: "Najis berat dinamakan?", a: ["Mukhaffafah", "Mughallazah", "Mutawassithah"], correct: 1 }] },
+          { title: "Fiqih Shalat Fardhu & Jama'-Qashar", videoId: "bOInI2Z8xno", summary: `<p>Aturan rukun shalat fardhu dan rukhsah pengerjaan shalat jama' qashar.</p>`, quiz: [{ q: "Keringanan shalat saat musafir disebut...", a: ["Rukhsah", "Azimah", "Makruh"], correct: 0 }] },
+          { title: "Fiqih Puasa Ramadhan & Zakat", videoId: "bOInI2Z8xno", summary: `<p>Ketentuan wajib puasa ramadhan dan perhitungan zakat fitrah maupun zakat maal.</p>`, quiz: [{ q: "Berapa asnaf golongan penerima zakat?", a: ["5 Golongan", "8 Golongan", "10 Golongan"], correct: 1 }] }
         ],
-        finalTest: [
-          { q: "Air kencing bayi laki-laki yang belum makan makanan selain ASI termasuk najis...", a: ["Mukhaffafah", "Mutawassithah", "Mughallazah", "Semua salah"], correct: 0 }
-        ]
+        finalTest: [{ q: "Membasuh najis jilatan anjing dilakukan sebanyak...", a: ["3 kali", "5 kali", "7 kali"], correct: 2 }]
       },
       {
         id: "level4", title: "Level 4: Akhlak & Adab", color: "var(--neon-gold)", icon: "fa-hands-holding-child",
         description: "Menghias diri dengan perangai terpuji (Mahmudah) serta membersihkan penyakit hati.",
         subBabs: [
-          {
-            title: "Penyakit Hati (Akhlak Madzmumah)", videoId: "bOInI2Z8xno",
-            summary: `
-              <h3><i class="fas fa-heart-crack"></i> Sifat Merusak Keimanan</h3>
-              <p>Muslim harus menjaga hatinya dari:</p>
-              <ul>
-                <li><strong>Riya:</strong> Beramal demi dilihat orang agar dipuji.</li>
-                <li><strong>Sum'ah:</strong> Beramal agar didengar kebaikannya oleh orang lain.</li>
-                <li><strong>Hasad:</strong> Dengki atau tidak suka melihat orang lain mendapatkan nikmat dari Allah.</li>
-              </ul>
-            `,
-            quiz: [
-              { q: "Sikap beramal saleh agar didengar dan dibicarakan kebaikannya oleh orang lain disebut...", a: ["Riya", "Sum'ah", "Hasad", "Ujub"], correct: 1 }
-            ]
-          }
+          { title: "Akhlak Terpuji (Mahmudah)", videoId: "bOInI2Z8xno", summary: `<p>Sifat ikhlas, jujur (shiddiq), amanah, sabar, syukur, dan tawakal.</p>`, quiz: [{ q: "Sifat jujur dikenal juga dengan istilah...", a: ["Fathanah", "Shiddiq", "Amanah"], correct: 1 }] },
+          { title: "Adab Sosial Islam", videoId: "bOInI2Z8xno", summary: `<p>Adab berbakti pada orang tua (birrul walidain), memuliakan guru, dan tetangga.</p>`, quiz: [{ q: "Berbakti kepada kedua orang tua dinamakan...", a: ["Uququl Walidain", "Birrul Walidain", "Silaturahmi"], correct: 1 }] },
+          { title: "Penyakit Hati (Akhlak Madzmumah)", videoId: "bOInI2Z8xno", summary: `<p>Menghindari sifat riya, sum'ah, hasad, ujub, sombong, dan ghibah.</p>`, quiz: [{ q: "Beramal agar didengar kebaikannya dinamakan...", a: ["Riya", "Sum'ah", "Ujub"], correct: 1 }] }
         ],
-        finalTest: [
-          { q: "Perasaan tidak senang atau benci saat melihat orang lain mendapat kenikmatan disebut...", a: ["Hasad", "Riya", "Takabur", "Ghibah"], correct: 0 }
-        ]
+        finalTest: [{ q: "Sifat dengki atas kebahagiaan orang lain disebut...", a: ["Hasad", "Ghibah", "Sombong"], correct: 0 }]
       },
       {
         id: "level5", title: "Level 5: Sirah Nabawiyah", color: "var(--neon-cyan)", icon: "fa-landmark",
         description: "Meneladani sejarah perjuangan hidup Rasulullah SAW dan mukjizat para Rasul Ulul Azmi.",
         subBabs: [
-          {
-            title: "Perang Besar Penentu", videoId: "bOInI2Z8xno",
-            summary: `
-              <h3><i class="fas fa-shield-halved"></i> Perang Badar Al-Kubra</h3>
-              <p>Perang besar pertama dalam Islam yang terjadi pada tanggal 17 Ramadhan tahun 2 Hijriah. Pasukan muslim berjumlah 313 melawan 1000 tentara Quraisy, dan dimenangkan secara gemilang oleh kaum muslimin atas pertolongan Allah.</p>
-            `,
-            quiz: [
-              { q: "Pada tahun berapakah peristiwa Perang Badar Al-Kubra berkecamuk?", a: ["1 Hijriah", "2 Hijriah", "3 Hijriah", "5 Hijriah"], correct: 1 }
-            ]
-          }
+          { title: "Periode Makkah & Madinah", videoId: "bOInI2Z8xno", summary: `<p>Dakwah sembunyi/terang di Makkah, hijrah, dan Piagam Madinah.</p>`, quiz: [{ q: "Perjanjian perdamaian sosial di Madinah dinamakan...", a: ["Amul Huzni", "Piagam Madinah", "Baiat Aqabah"], correct: 1 }] },
+          { title: "Perang-Perang Besar Penentu", videoId: "bOInI2Z8xno", summary: `<p>Sejarah jalannya Perang Badar (2 H), Perang Uhud (3 H), dan Perang Khandaq (5 H).</p>`, quiz: [{ q: "Tahun berapa terjadinya Perang Badar?", a: ["1 H", "2 H", "3 H"], correct: 1 }] },
+          { title: "Kisah Ulul Azmi & Nabi Pilihan", videoId: "bOInI2Z8xno", summary: `<p>Kisah pengorbanan serta keteguhan luar biasa para Rasul bergelar Ulul Azmi.</p>`, quiz: [{ q: "Ada berapa rasul yang bergelar Ulul Azmi?", a: ["3 Rasul", "5 Rasul", "7 Rasul"], correct: 1 }] }
         ],
-        finalTest: [
-          { q: "Berapakah jumlah pasukan kaum muslimin dalam peristiwa Perang Badar?", a: ["313 orang", "1000 orang", "700 orang", "10.000 orang"], correct: 0 }
-        ]
+        finalTest: [{ q: "Perang Khandaq terjadi pada tahun...", a: ["2 Hijriah", "3 Hijriah", "5 Hijriah"], correct: 2 }]
       },
       {
         id: "level6", title: "Level 6: Sejarah Islam & Peradaban", color: "var(--neon-gold)", icon: "fa-earth-asia",
@@ -427,26 +355,39 @@
         subBabs: [
           {
             title: "Khulafaur Rasyidin", videoId: "-W9_eWrkh7o",
-            summary: `
-              <h3><i class="fas fa-gavel"></i> Mekanisme Suksesi Kepemimpinan</h3>
-              <p>Khulafaur Rasyidin adalah 4 sahabat utama penerus estafet kepemimpinan umat Islam pasca wafatnya Rasulullah SAW:</p>
-              <ul>
-                <li><strong>Abu Bakar Ash-Shiddiq:</strong> Dipilih melalui musyawarah mendesak di Saqifah Bani Sa'idah.</li>
-                <li><strong>Umar bin Khattab:</strong> Dipilih melalui penunjukan atau mandat tertulis dari Abu Bakar sebelum wafat.</li>
-                <li><strong>Utsman bin Affan:</strong> Dipilih melalui tim formatur independen (Dewan Syura) bentukan Umar yang beranggotakan 6 orang.</li>
-                <li><strong>Ali bin Abi Thalib:</strong> Dipilih secara aklamasi oleh mayoritas kaum muslimin di tengah krisis.</li>
-              </ul>
-            `,
-            quiz: [
-              { q: "Siapakah Khalifah yang terpilih menjadi pemimpin melalui sistem Dewan Syura (tim formatur)?", a: ["Abu Bakar RA", "Umar bin Khattab RA", "Utsman bin Affan RA", "Ali bin Abi Thalib RA"], correct: 2 }
-            ]
-          }
+            summary: `<h3>Sistem Suksesi Unik</h3><p>Abu Bakar (Musyawarah Saqifah), Umar (Mandat tertulis), Utsman (Dewan Syura 6 orang), Ali (Aklamasi).</p>`,
+            quiz: [{ q: "Siapa Khalifah yang dipilih melalui tim formatur Dewan Syura?", a: ["Abu Bakar", "Umar", "Utsman", "Ali"], correct: 2 }]
+          },
+          { title: "Daulah Kekhalifahan & Golden Age", videoId: "bOInI2Z8xno", summary: `<p>Kontribusi sains zaman Daulah Umayyah dan Abbasiyah.</p>`, quiz: [{ q: "Pusat sains Abbasiyah di Baghdad bernama...", a: ["Baitul Hikmah", "Al-Azhar", "Cordoba"], correct: 0 }] },
+          { title: "Sejarah Masuknya Islam di Nusantara", videoId: "bOInI2Z8xno", summary: `<p>Teori Gujarat, Persia, Mekkah serta dakwah damai Wali Songo.</p>`, quiz: [{ q: "Dewan ulama penyebar Islam di Jawa bernama...", a: ["Wali Songo", "Syura", "Muhajirin"], correct: 0 }] }
         ],
-        finalTest: [
-          { q: "Mekanisme pemilihan Khalifah Abu Bakar Ash-Shiddiq berlangsung di tempat bernama...", a: ["Saqifah Bani Sa'idah", "Darun Nadwah", "Gua Hira", "Masjid Nabawi"], correct: 0 }
-        ]
+        finalTest: [{ q: "Mekanisme pemilihan Abu Bakar berlangsung di...", a: ["Saqifah Bani Sa'idah", "Darun Nadwah", "Masjid Nabawi"], correct: 0 }]
       }
     ];
+
+    // ROUTING / TAB SWITCHER GLOBAL FIX
+    window.switchTab = function(tabName) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      if (tabName === 'beranda') {
+        document.getElementById('pageBeranda').classList.add('active');
+        document.getElementById('tabBeranda').classList.add('active');
+        renderKurikulumBeranda();
+      } else if (tabName === 'materi') {
+        document.getElementById('pageMateri').classList.add('active');
+        document.getElementById('tabMateri').classList.add('active');
+        bukaDetailBabSistem();
+      } else if (tabName === 'profil') {
+        document.getElementById('pageProfil').classList.add('active');
+        document.getElementById('tabProfil').classList.add('active');
+      }
+    };
+
+    // ATTACH CLICK EVENTS KE MENU BAWAH SECARA MANUAL AGAR PATEN
+    document.getElementById('tabBeranda').onclick = () => window.switchTab('beranda');
+    document.getElementById('tabMateri').onclick = () => window.switchTab('materi');
+    document.getElementById('tabProfil').onclick = () => window.switchTab('profil');
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -483,11 +424,11 @@
         card.className = `level-card ${isLocked ? 'locked' : ''}`;
         card.onclick = () => {
           if (isLocked) {
-            alert("🔒 Maaf, Bab ini masih terkunci! Selesaikan ujian kelulusan tingkat sebelumnya.");
+            alert("🔒 Bab terkunci! Selesaikan ujian tingkat sebelumnya.");
             return;
           }
           selectedLevelId = lvl.id;
-          switchTab('materi');
+          window.switchTab('materi');
         };
 
         card.innerHTML = `
@@ -511,24 +452,6 @@
       });
     }
 
-    window.switchTab = function(tab) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-      if (tab === 'beranda') {
-        document.getElementById('pageBeranda').classList.add('active');
-        document.getElementById('tabBeranda').classList.add('active');
-        renderKurikulumBeranda();
-      } else if (tab === 'materi') {
-        document.getElementById('pageMateri').classList.add('active');
-        document.getElementById('tabMateri').classList.add('active');
-        bukaDetailBabSistem();
-      } else if (tab === 'profil') {
-        document.getElementById('pageProfil').classList.add('active');
-        document.getElementById('tabProfil').classList.add('active');
-      }
-    };
-
     function bukaDetailBabSistem() {
       const dataBab = DATA_MATERI.find(l => l.id === selectedLevelId);
       document.getElementById('lblDetailTitle').innerText = dataBab.title;
@@ -550,7 +473,7 @@
         item.innerHTML = `
           <span>
             <i class="${isSelesai ? 'fas fa-check-circle' : 'fas fa-book-open'}" style="color:${isSelesai ? 'var(--neon-emerald)' : 'var(--neon-cyan)'}; margin-right:12px;"></i>
-            Sub-bab ${index + 1}: ${sub.title}
+            Sub-Bab ${index + 1}: ${sub.title}
           </span>
           <span style="font-size:0.85rem; color:${isSelesai ? 'var(--neon-emerald)' : 'var(--text-dim)'}">
             ${isSelesai ? 'Selesai ✓' : 'Pelajari <i class="fas fa-chevron-right"></i>'}
@@ -649,7 +572,7 @@
       document.getElementById('quizFooter').style.display = 'block';
     }
 
-    window.nextQuestion = function() {
+    document.getElementById('btnNextQuizAction').onclick = function() {
       currentQuestionIdx++;
       if (currentQuestionIdx >= quizQuestions.length) {
         selesaiSesiKuisSistem();
@@ -670,7 +593,6 @@
       resBox.style.display = 'block';
       actionContainer.innerHTML = "";
 
-      // Standar kelulusan: Latihan subbab butuh skor proporsional, Ujian Akhir Bab juga sama.
       const batasLulus = Math.ceil(quizQuestions.length * 0.7);
 
       if (totalCorrectAnswers >= batasLulus) {
@@ -718,14 +640,14 @@
       if (selectedSubBabIndex + 1 < bab.subBabs.length) {
         bukaRuangBelajarSubBab(selectedSubBabIndex + 1);
       } else {
-        alert("🎖️ Semua sub-bab selesai! Silakan ambil Ujian Kelulusan Bab untuk membuka bab selanjutnya.");
-        switchTab('materi');
+        alert("🎖️ Semua sub-bab selesai! Silakan ambil Ujian Kelulusan Bab.");
+        window.switchTab('materi');
       }
     }
 
     async function prosesPenyelesaianTestAkhirBabDatabase() {
       document.getElementById('pageKuisQuizizz').classList.remove('active');
-      const totalXpBaru = (currentUserData.xp || 0) + 100; // Bonus besar lulus Ujian Bab
+      const totalXpBaru = (currentUserData.xp || 0) + 100;
       
       let dataUpdate = {
         xp: totalXpBaru,
@@ -742,28 +664,30 @@
       await updateDoc(doc(db, "users", currentUserId), dataUpdate);
       await muatDataSantri();
       
-      alert("🏆 MasyaAllah! Kamu resmi lulus dari bab ini dan tingkat materi selanjutnya telah terbuka!");
-      switchTab('beranda');
+      alert("🏆 MasyaAllah! Kamu resmi lulus dari bab ini!");
+      window.switchTab('beranda');
     }
 
     async function muatPapanPeringkat() {
-      const q = query(collection(db, "users"), orderBy("xp", "desc"), limit(5));
-      const querySnapshot = await getDocs(q);
-      const box = document.getElementById('leaderboardList');
-      box.innerHTML = "";
+      try {
+        const q = query(collection(db, "users"), orderBy("xp", "desc"), limit(5));
+        const querySnapshot = await getDocs(q);
+        const box = document.getElementById('leaderboardList');
+        box.innerHTML = "";
 
-      let rank = 1;
-      querySnapshot.forEach((doc) => {
-        const u = doc.data();
-        const item = document.createElement('div');
-        item.style = "display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-weight:600;";
-        item.innerHTML = `<span>#${rank} ${u.name}</span> <span style="color:var(--neon-gold)"><i class="fas fa-bolt"></i> ${u.xp || 0} XP</span>`;
-        box.appendChild(item);
-        rank++;
-      });
+        let rank = 1;
+        querySnapshot.forEach((doc) => {
+          const u = doc.data();
+          const item = document.createElement('div');
+          item.style = "display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-weight:600;";
+          item.innerHTML = `<span>#${rank} ${u.name || "Anonim"}</span> <span style="color:var(--neon-gold)"><i class="fas fa-bolt"></i> ${u.xp || 0} XP</span>`;
+          box.appendChild(item);
+          rank++;
+        });
+      } catch (err) { console.error(err); }
     }
 
-    window.handleLogout = async function() {
+    document.getElementById('btnLogoutAction').onclick = async function() {
       await signOut(auth);
       window.location.href = 'auth.html';
     };
