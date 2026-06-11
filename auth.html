@@ -1,206 +1,210 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gerbang Masuk — AzZahra Academy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  :root {
-    --neon-purple: #b026ff; --neon-cyan: #00e5ff; --dark-bg: #050508;
-    --dark-card: #0d0d1a; --text-light: #e8e0ff; --text-dim: #8878aa;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--dark-bg); color: var(--text-light);
-    font-family: 'Exo 2', sans-serif; display: flex;
-    justify-content: center; align-items: center; min-height: 100vh; padding: 20px;
-  }
-  .auth-container {
-    background: var(--dark-card); border: 1px solid rgba(176,38,255,0.2);
-    border-radius: 24px; padding: 40px; width: 100%; max-width: 450px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5); text-align: center;
-  }
-  .logo-title {
-    font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; font-weight: 900;
-    background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px;
-  }
-  .tab-menu { display: flex; gap: 10px; margin-bottom: 25px; background: rgba(255,255,255,0.03); padding: 5px; border-radius: 12px; }
-  .tab-btn {
-    flex: 1; background: none; border: none; color: var(--text-dim); padding: 10px;
-    font-family: 'Exo 2', sans-serif; font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.3s;
-  }
-  .tab-btn.active { background: var(--neon-purple); color: #fff; box-shadow: 0 0 10px rgba(176,38,255,0.4); }
-  .form-group { text-align: left; margin-bottom: 18px; }
-  .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
-  .input-wrapper { position: relative; display: flex; align-items: center; }
-  .input-wrapper i { position: absolute; left: 15px; color: var(--text-dim); }
-  .input-wrapper input {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-    padding: 12px 12px 12px 45px; border-radius: 12px; color: #fff; font-family: 'Exo 2', sans-serif; transition: 0.3s;
-  }
-  .input-wrapper input:focus { border-color: var(--neon-cyan); outline: none; box-shadow: 0 0 10px rgba(0,229,255,0.2); }
-  .submit-btn {
-    width: 100%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-    border: none; color: #fff; padding: 14px; border-radius: 12px; font-family: 'Exo 2', sans-serif;
-    font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s;
-  }
-  .submit-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
-  .hidden { display: none; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerbang Masuk — AzZahra Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --neon-purple: #b026ff; --neon-cyan: #00e5ff; --dark-bg: #050508;
+      --dark-card: #0d0d1a; --text-light: #e8e0ff; --text-dim: #8878aa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--dark-bg); color: var(--text-light);
+      font-family: 'Exo 2', sans-serif; display: flex;
+      justify-content: center; align-items: center; min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .auth-container {
+      background: var(--dark-card); width: 100%; max-width: 420px;
+      padding: 40px 30px; border-radius: 24px;
+      border: 1px solid rgba(176, 38, 255, 0.2);
+      box-shadow: 0 0 30px rgba(176, 38, 255, 0.05);
+      text-align: center;
+    }
+    .logo {
+      font-family: 'Cinzel Decorative', serif; font-size: 2.2rem;
+      color: #fff; font-weight: 700; margin-bottom: 10px;
+    }
+    .subtitle { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 30px; }
+    
+    .tab-toggle {
+      display: flex; background: rgba(255, 255, 255, 0.03);
+      padding: 5px; border-radius: 12px; margin-bottom: 25px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .tab-btn {
+      flex: 1; background: none; border: none; color: var(--text-dim);
+      padding: 10px; font-family: inherit; font-weight: 600;
+      cursor: pointer; border-radius: 8px; transition: 0.3s;
+    }
+    .tab-btn.active {
+      background: var(--neon-purple); color: #fff;
+      box-shadow: 0 0 10px rgba(176, 38, 255, 0.4);
+    }
+
+    .form-group { text-align: left; margin-bottom: 18px; position: relative; }
+    .form-group i {
+      position: absolute; left: 15px; top: 40px; color: var(--text-dim);
+    }
+    label { display: block; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-light); font-weight: 600; }
+    input {
+      width: 100%; background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 15px 12px 42px;
+      border-radius: 10px; color: #fff; font-family: inherit; font-size: 0.95rem;
+      transition: 0.3s;
+    }
+    input:focus {
+      outline: none; border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+      border: none; padding: 14px; color: #fff; font-weight: 700;
+      border-radius: 10px; cursor: pointer; margin-top: 15px;
+      font-family: inherit; font-size: 1rem; transition: 0.3s;
+    }
+    .submit-btn:hover {
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); transform: translateY(-1px);
+    }
+  </style>
 </head>
 <body>
 
-<div class="auth-container">
-  <div class="logo-title"><i class="fas fa-moon" style="color:var(--neon-cyan); margin-right:8px;"></i>AzZahra Academy</div>
-  
-  <div class="tab-menu">
-    <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Masuk</button>
-    <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Daftar Santri</button>
+  <div class="auth-container">
+    <div class="logo"><i class="fas fa-graduation-cap" style="color:var(--neon-purple);"></i> AzZahra</div>
+    <div class="subtitle" id="authSubtitle">Silakan masuk untuk melanjutkan belajar santri</div>
+
+    <div class="tab-toggle">
+      <button class="tab-btn active" id="btnTabLogin" onclick="switchAuthMode('login')">Masuk</button>
+      <button class="tab-btn" id="btnTabRegister" onclick="switchAuthMode('register')">Daftar</button>
+    </div>
+
+    <form id="authForm" onsubmit="handleAuthSubmit(event)">
+      <div class="form-group" id="groupName" style="display: none;">
+        <label>Nama Lengkap Santri</label>
+        <i class="fas fa-user"></i>
+        <input type="text" id="inputName" placeholder="Masukkan nama lengkap">
+      </div>
+
+      <div class="form-group">
+        <label>Alamat Email</label>
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="inputEmail" placeholder="contoh@santri.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Kata Sandi</label>
+        <i class="fas fa-lock"></i>
+        <input type="password" id="inputPassword" placeholder="Minimal 6 karakter" required>
+      </div>
+
+      <button type="submit" class="submit-btn" id="btnSubmitAction">Masuk Ke Kelas</button>
+    </form>
   </div>
 
-  <form id="formLogin" onsubmit="handleSubmit(event, 'login')">
-    <div class="form-group">
-      <label>Alamat Email</label>
-      <div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="loginEmail" required placeholder="nama@email.com"></div>
-    </div>
-    <div class="form-group">
-      <label>Kata Sandi</label>
-      <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="loginPassword" required placeholder="••••••••"></div>
-    </div>
-    <button type="submit" class="submit-btn" id="btnLoginSubmit">Masuk Akun</button>
-  </form>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  <form id="formRegister" class="hidden" onsubmit="handleSubmit(event, 'register')">
-    <div class="form-group">
-      <label>Nama Lengkap Santri</label>
-      <div class="input-wrapper"><i class="fas fa-user"></i><input type="text" id="regName" required placeholder="Masukkan nama lengkap"></div>
-    </div>
-    <div class="form-group">
-      <label>Alamat Email</label>
-      <div class="input-wrapper"><i class="fas fa-envelope"></i><input type="email" id="regEmail" required placeholder="nama@email.com"></div>
-    </div>
-    <div class="form-group">
-      <label>Kata Sandi</label>
-      <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="regPassword" required placeholder="Minimal 6 karakter"></div>
-    </div>
-    <button type="submit" class="submit-btn" id="btnRegisterSubmit">Daftar Sekarang</button>
-  </form>
-</div>
+    // Konfigurasi Firebase Anda
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+      authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+      projectId: "azzahra-academy-ad1ec",
+      storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+      messagingSenderId: "425297111795",
+      appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
+    };
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
-    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
-    projectId: "azzahra-academy-ad1ec",
-    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
-    messagingSenderId: "425297111795",
-    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
-  };
+    let currentMode = 'login';
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  // Variabel penanda agar sistem tahu user baru daftar atau sekadar login biasa
-  let isRegisteringProcess = false;
-
-  onAuthStateChanged(auth, (user) => {
-    // Jika ada user aktif DAN kita tidak sedang dalam proses pendaftaran akun baru, lempar ke index.html
-    if (user && !isRegisteringProcess) {
-      window.location.href = 'index.html';
-    }
-  });
-
-  window.switchTab = function(type) {
-    if(type === 'login') {
-      document.getElementById('tabLogin').classList.add('active');
-      document.getElementById('tabRegister').classList.remove('active');
-      document.getElementById('formLogin').classList.remove('hidden');
-      document.getElementById('formRegister').classList.add('hidden');
-    } else {
-      document.getElementById('tabRegister').classList.add('active');
-      document.getElementById('tabLogin').classList.remove('active');
-      document.getElementById('formRegister').classList.remove('hidden');
-      document.getElementById('formLogin').classList.add('hidden');
-    }
-  }
-
-  window.handleSubmit = async function(e, type) {
-    e.preventDefault();
-    
-    if (type === 'login') {
-      const btn = document.getElementById('btnLoginSubmit');
-      btn.innerText = "MEMPROSES...";
-      btn.disabled = true;
-
-      const email = document.getElementById('loginEmail').value;
-      const pass = document.getElementById('loginPassword').value;
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-      } catch (err) {
-        alert("Gagal Masuk: " + err.message);
-        btn.innerText = "Masuk Akun";
-        btn.disabled = false;
+    // Deteksi jika pengguna sudah login sebelumnya, langsung lempar ke index.html
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = 'index.html';
       }
-    } else {
-      const btn = document.getElementById('btnRegisterSubmit');
-      btn.innerText = "MEMPROSES...";
-      btn.disabled = true;
-      isRegisteringProcess = true; // Kunci agar onAuthStateChanged tidak langsung redirect ke index.html
+    });
 
-      const name = document.getElementById('regName').value;
-      const email = document.getElementById('regEmail').value;
-      const pass = document.getElementById('regPassword').value;
-      try {
-        // 1. Daftarkan akun ke Firebase Auth
-        const credential = await createUserWithEmailAndPassword(auth, email, pass);
-        
-        // 2. Perbarui nama profil di Auth
-        await updateProfile(credential.user, { displayName: name });
-        
-        // 3. Simpan data awal santri ke Cloud Firestore Database
-        await setDoc(doc(db, 'users', credential.user.uid), {
-          name: name,
-          email: email,
-          xp: 0,
-          streak: 1,
-          progress: {
-            level1: { percent: 0, unlocked: true },
-            level2: { percent: 0, unlocked: false },
-            level3: { percent: 0, unlocked: false },
-            level4: { percent: 0, unlocked: false },
-            level5: { percent: 0, unlocked: false },
-            level6: { percent: 0, unlocked: false }
-          }
-        });
+    // Pindah Tampilan antara Login & Register
+    window.switchAuthMode = function(mode) {
+      currentMode = mode;
+      const groupName = document.getElementById('groupName');
+      const inputName = document.getElementById('inputName');
+      const btnTabLogin = document.getElementById('btnTabLogin');
+      const btnTabRegister = document.getElementById('btnTabRegister');
+      const btnSubmitAction = document.getElementById('btnSubmitAction');
+      const authSubtitle = document.getElementById('authSubtitle');
 
-        // 4. Keluarkan paksa sesi otomatis agar santri harus login manual
-        await signOut(auth);
-        
-        alert("Pendaftaran Berhasil! Silakan masuk menggunakan akun baru Anda.");
-        
-        // Kembalikan form ke tab login
-        document.getElementById('formRegister').reset();
-        isRegisteringProcess = false;
-        switchTab('login');
-
-      } catch (err) {
-        alert("Gagal Mendaftar: " + err.message);
-        isRegisteringProcess = false;
-      } finally {
-        btn.innerText = "Daftar Sekarang";
-        btn.disabled = false;
+      if (mode === 'register') {
+        groupName.style.display = 'block';
+        inputName.required = true;
+        btnTabRegister.classList.add('active');
+        btnTabLogin.classList.remove('active');
+        btnSubmitAction.innerText = 'Buat Akun Baru';
+        authSubtitle.innerText = 'Daftarkan akun santri baru untuk memulai kurikulum';
+      } else {
+        groupName.style.display = 'none';
+        inputName.required = false;
+        btnTabLogin.classList.add('active');
+        btnTabRegister.classList.remove('active');
+        btnSubmitAction.innerText = 'Masuk Ke Kelas';
+        authSubtitle.innerText = 'Silakan masuk untuk melanjutkan belajar santri';
       }
     }
-  }
-</script>
+
+    // Eksekusi Login atau Register ke Firebase
+    window.handleAuthSubmit = async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('inputEmail').value;
+      const password = document.getElementById('inputPassword').value;
+      const name = document.getElementById('inputName').value;
+
+      try {
+        if (currentMode === 'register') {
+          // PROSES DAFTAR AKUN BARU
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+
+          // Buat struktur default awal untuk progress Level 1-6 di Cloud Firestore
+          await setDoc(doc(db, "users", user.uid), {
+            name: name,
+            email: email,
+            xp: 0,
+            streak: 1,
+            progress: {
+              level1: { percent: 0, unlocked: true }, // Level 1 langsung terbuka awal
+              level2: { percent: 0, unlocked: false },
+              level3: { percent: 0, unlocked: false },
+              level4: { percent: 0, unlocked: false },
+              level5: { percent: 0, unlocked: false },
+              level6: { percent: 0, unlocked: false }
+            }
+          });
+
+          alert("Registrasi Berhasil! Selamat datang di AzZahra Academy.");
+        } else {
+          // PROSES MASUK (LOGIN)
+          await signInWithEmailAndPassword(auth, email, password);
+          alert("Berhasil Masuk!");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Gagal: " + error.message);
+      }
+    }
+  </script>
 </body>
 </html>
