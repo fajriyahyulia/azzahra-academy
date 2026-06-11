@@ -3,434 +3,525 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level 1: Aqidah — AzZahra Academy</title>
-<link rel="stylesheet" href="style-shared.css">
+<title>Level 1: Aqidah (Fondasi Iman) — AzZahra Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--neon-purple:#b026ff;--neon-violet:#7c3aed;--neon-pink:#e040fb;--neon-cyan:#00e5ff;--neon-gold:#ffd700;--dark-bg:#050508;--dark-card:#0d0d1a;--dark-card2:#12122a;--text-light:#e8e0ff;--text-dim:#8878aa;--lvl-color:#7c3aed;--lvl-grad:linear-gradient(135deg,#7c3aed,#b026ff);}
+  :root {
+    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
+    --neon-cyan: #00e5ff; --neon-gold: #ffd700; --dark-bg: #050508;
+    --dark-card: #0d0d1a; --dark-card2: #12122a; --text-light: #e8e0ff; --text-dim: #8878aa;
+  }
 
-/* TOP BAR */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid #b026ff33;display:flex;align-items:center;padding:0 24px;gap:16px;}
-.back-btn{background:#1a1a2e;border:1px solid #b026ff44;color:var(--text-dim);width:36px;height:36px;border-radius:10px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.back-btn:hover{border-color:var(--neon-purple);color:#fff;transform:translateX(-2px);}
-.topbar-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:700;flex:1;}
-.topbar-right{display:flex;align-items:center;gap:14px;}
-.xp-counter{background:#1a1a2e;border:1px solid #ffd70044;border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:700;color:var(--neon-gold);display:flex;align-items:center;gap:6px;}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
 
-/* LAYOUT CONTAINER */
-.layout{display:flex;margin-top:58px;min-height:calc(100vh - 58px);position:relative;}
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* HEADER LEVEL */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(124,58,237,0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(124,58,237,0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-cyan);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(176,38,255,0.15); border: 1px solid var(--neon-purple); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-/* SIDEBAR MAP */
-.sidebar{width:280px;background:#090912;border-right:1px solid #b026ff1a;padding:20px;overflow-y:auto;flex-shrink:0;}
-.sb-title{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700;}
-.sb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.sb-item{background:var(--dark-card);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;position:relative;}
-.sb-item:hover{border-color:#b026ff55;background:#14142a;}
-.sb-item.active{border-color:var(--neon-purple);background:linear-gradient(90deg,#1a0d2e,transparent);box-shadow:inset 3px 0 0 var(--neon-purple);}
-.sb-item.locked{opacity:0.4;cursor:not-allowed;}
-.sb-item.locked:hover{background:var(--dark-card);border-color:rgba(255,255,255,0.03);}
-.sb-idx{width:22px;height:22px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.sb-item.active .sb-idx{background:var(--neon-purple);color:#fff;border-color:var(--neon-purple);}
-.sb-info{flex:1;min-width:0;}
-.sb-name{font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sb-status{font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:4px;}
-.sb-status.done{color:#33ff97;}
-.sb-status.current{color:var(--neon-cyan);}
+  /* MATERI KONTEN */
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-gold); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-purple); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-cyan); }
+  p { margin-bottom: 15px; color: #d0c8ec; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #d0c8ec; }
+  li { margin-bottom: 5px; }
 
-/* MAIN CONTENT WORKSPACE */
-.workspace{flex:1;padding:40px;background:var(--dark-bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
-.content-card{width:100%;max-width:760px;background:var(--dark-card);border:1px solid #b026ff1a;border-radius:24px;padding:36px;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;animation:fadeIn 0.4s ease forwards;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-cyan); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; }
 
-/* CONTENT DETAILS */
-.mat-header{margin-bottom:24px;border-bottom:1px solid rgba(176,38,255,0.1);padding-bottom:16px;}
-.mat-tag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--neon-purple);font-weight:700;margin-bottom:6px;display:block;}
-.mat-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;}
-.mat-body{font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:30px;}
-.mat-body p{margin-bottom:16px;}
-.mat-body strong{color:var(--neon-cyan);}
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(124,58,237,0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(124,58,237,0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* INTERACTIVE COMPONENT - DRAG & DROP PRO */
-.dd-container{background:var(--dark-card2);border:1px solid rgba(176,38,255,0.15);border-radius:16px;padding:24px;margin-top:24px;}
-.dd-instruction{font-size:0.82rem;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-.dd-instruction i { color: var(--neon-cyan); }
-.dd-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
-.dd-word{background:#1a1a2e;border:1px solid #b026ff44;padding:10px 18px;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:grab;transition:all 0.2s;}
-.dd-word:hover{border-color:var(--neon-cyan);box-shadow:0 0 10px rgba(0,225,255,0.2);color:#fff;}
-.dd-word.placed{opacity:0.3;cursor:not-allowed;pointer-events:none;}
-.dd-target-box{background:#050508;border:2px dashed rgba(176,38,255,0.3);border-radius:12px;padding:18px;min-height:60px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;transition:all 0.3s;}
-.dd-target-box.hover{border-color:var(--neon-cyan);background:rgba(0,229,255,0.02);}
-.dd-placed{background:linear-gradient(135deg,var(--neon-purple),var(--neon-violet));color:#fff;padding:8px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(124,58,237,0.3);display:flex;align-items:center;gap:6px;}
+  /* TABEL GAYA DARK NEON */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); }
+  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  th { background-color: rgba(124,58,237,0.25); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(176,38,255,0.05); }
+  .td-arabic { font-family: 'Amiri', serif; font-size: 1.4rem; text-align: right; color: #fff; font-weight: bold; width: 25%; }
 
-/* FOOTER NAV ACTIONS */
-.content-footer{display:flex;justify-content:between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;margin-top:20px;width:100%;max-width:760px;}
-.footer-left, .footer-right { display:flex; gap:12px; }
-.btn-nav{background:#1a1a2e;border:1px solid rgba(176,38,255,0.3);color:var(--text-light);padding:10px 20px;border-radius:30px;font-family:'Exo 2',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
-.btn-nav:hover:not(:disabled){border-color:var(--neon-purple);box-shadow:0 0 15px rgba(176,38,255,0.2);color:#fff;}
-.btn-nav:disabled{opacity:0.25;cursor:not-allowed;}
-.btn-quiz{background:linear-gradient(135deg,var(--neon-purple),var(--neon-violet));border:none;box-shadow:0 0 15px rgba(176,38,255,0.3);color:#fff;font-weight:700;}
-.btn-quiz:hover{box-shadow:0 0 25px rgba(176,38,255,0.5);transform:translateY(-1px);}
+  /* GRID 3 KOLOM KHUSUS ASMAUL HUSNA */
+  .asmaul-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 25px 0; }
+  .asmaul-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 15px; text-align: center; transition: 0.2s; }
+  .asmaul-card:hover { border-color: var(--neon-cyan); background: rgba(0,229,255,0.03); }
+  .asm-num { font-size: 0.75rem; color: var(--text-dim); display: block; margin-bottom: 5px; }
+  .asm-arab { font-family: 'Amiri', serif; font-size: 1.6rem; color: var(--neon-gold); font-weight: 700; display: block; margin-bottom: 4px; }
+  .asm-latin { font-size: 0.9rem; font-weight: 600; color: #fff; display: block; }
+  .asm-arti { font-size: 0.8rem; color: var(--text-dim); display: block; margin-top: 2px; }
 
-/* TOAST NOTIF */
-.toast {
-  position: fixed; bottom: 30px; right: 30px; background: var(--dark-card);
-  border: 1px solid var(--neon-purple); border-radius: 12px; padding: 14px 24px;
-  display: flex; align-items: center; gap: 10px; z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(100px); opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast i { font-size: 1.1rem; }
+  /* KUIS */
+  .quiz-section { background: linear-gradient(135deg, rgba(13,13,26,0.9), rgba(18,18,42,0.9)); border: 2px solid var(--neon-purple); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(176,38,255,0.15); }
+  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+  .quiz-title i { color: var(--neon-pink); }
+  
+  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+  
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
+  .option-item:hover { background: rgba(176,38,255,0.08); border-color: var(--neon-purple); }
+  .option-item input { accent-color: var(--neon-purple); cursor: pointer; width: 18px; height: 18px; }
+
+  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-pink)); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(176,38,255,0.3); transition: 0.3s; }
+  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
+
+  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(0,229,255,0.05); border: 1px solid var(--neon-cyan); }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
+
+  @media (max-width: 768px) {
+    .asmaul-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .asmaul-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <button class="back-btn" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
-  <div class="topbar-title">Level 01: Aqidah & Keimanan</div>
-  <div class="topbar-right">
-    <div class="xp-counter"><i class="fas fa-star"></i> <span id="xpCount">0</span> XP</div>
+<div class="container">
+  
+  <div class="level-header">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+    <h1 class="level-title">Level 1: Aqidah</h1>
+    <span class="level-badge">Fondasi Iman</span>
   </div>
-</div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sb-title">Daftar Sub Materi</div>
-    <ul class="sb-list" id="sidebarList"></ul>
-  </aside>
-
-  <main class="workspace">
-    <div class="content-card" id="workspaceCard">
-      </div>
-
-    <div class="content-footer">
-      <div class="footer-left">
-        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)"><i class="fas fa-chevron-left"></i> Kembali</button>
-      </div>
-      <div class="footer-right">
-        <button class="btn-nav btn-quiz" id="btnAction" onclick="handleActionClick()">Lanjut Quiz <i class="fas fa-chevron-right"></i></button>
-      </div>
+  <div class="materi-card">
+    
+    <div class="sub-bab-title"><i class="fas fa-book-open"></i> Sub-Bab 1: Rukun Iman (6 Perkara)</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/6Qm7HZRZT8A" allowfullscreen></iframe>
     </div>
-  </main>
-</div>
+    
+    <h3>Pengertian Rukun Iman</h3>
+    <p>Rukun artinya tiang atau pilar. Iman artinya percaya dengan hati, diucapkan dengan lisan, dan diamalkan dengan perbuatan. Jadi Rukun Iman adalah pilar-pilar kepercayaan yang menjadi fondasi utama seorang muslim. Tanpa salah satunya, keislaman seseorang bisa dipertanyakan.</p>
+    <div class="dalil-box">
+      <strong>QS. An-Nisa: 136</strong><br>
+      "Wahai orang-orang yang beriman! Tetaplah beriman kepada Allah, Rasul-Nya (Muhammad), Kitab yang diturunkan kepada Rasul-Nya, serta kitab yang diturunkan sebelumnya. Barang siapa ingkar kepada Allah, malaikat-malaikat-Nya, kitab-kitab-Nya, rasul-rasul-Nya, dan hari kemudian, maka sungguh orang itu telah tersesat sangat jauh."
+    </div>
 
-<div class="toast" id="toastEl">
-  <span id="toastIcon"></span><span id="toastMsg"></span>
+    <h3>Rukun Iman 1: Iman Kepada Allah</h3>
+    <p>Ini yang paling utama dari semuanya. Iman kepada Allah bukan sekadar mengakui Allah itu ada, karena bahkan iblis pun tahu Allah ada. Iman yang sesungguhnya meliputi tiga hal:</p>
+    <p><strong>A. Tauhid Rububiyah</strong><br>Percaya bahwa hanya Allah yang menciptakan, memelihara, dan mengatur seluruh alam semesta. Tidak ada yang bisa menghidupkan, mematikan, atau mengatur rezeki selain Allah. (Dalil: QS. Az-Zumar: 62)</p>
+    <p><strong>B. Tauhid Uluhiyah</strong><br>Percaya bahwa hanya Allah yang berhak disembah. Semua ibadah, doa, rasa takut, harapan, hanya ditujukan kepada Allah semata. Inilah inti dari kalimat syahadat "La ilaha illallah." (Dalil: QS. Al-Anbiya: 25)</p>
+    <p><strong>C. Tauhid Asma wa Sifat</strong><br>Percaya bahwa Allah memiliki nama-nama dan sifat-sifat yang sempurna sebagaimana disebutkan dalam Al-Qur'an dan hadis yang shahih, tanpa menyerupakan dengan makhluk, tanpa menolak, dan tanpa mempertanyakan bagaimana caranya.</p>
+    
+    <h4>Konsekuensi iman kepada Allah:</h4>
+    <ul>
+      <li>Tidak boleh meminta pertolongan kepada selain Allah dalam hal yang hanya Allah mampu lakukan</li>
+      <li>Tidak boleh bernazar untuk selain Allah</li>
+      <li>Tidak boleh menyembelih hewan atas nama selain Allah</li>
+      <li>Seluruh hidup harus diorientasikan untuk mendapat ridha Allah</li>
+    </ul>
+
+    <h3>Rukun Iman 2: Iman Kepada Malaikat</h3>
+    <p>Malaikat adalah makhluk gaib yang diciptakan dari cahaya (nur). Mereka tidak berjenis kelamin, tidak makan/minum/tidur, dan selalu taat sedetik pun tanpa pernah bermaksiat.</p>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>No</th><th>Nama Malaikat</th><th>Tugas Utama</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Jibril</td><td>Menyampaikan wahyu kepada para nabi dan rasul</td></tr>
+          <tr><td>2</td><td>Mikail</td><td>Mengatur turunnya hujan dan pembagian rezeki</td></tr>
+          <tr><td>3</td><td>Israfil</td><td>Meniup sangkakala saat kiamat dan hari kebangkitan</td></tr>
+          <tr><td>4</td><td>Izrail (Malak al-Maut)</td><td>Mencabut nyawa seluruh makhluk</td></tr>
+          <tr><td>5</td><td>Munkar</td><td>Menanyai manusia di dalam kubur</td></tr>
+          <tr><td>6</td><td>Nakir</td><td>Menanyai manusia di dalam kubur (bersama Munkar)</td></tr>
+          <tr><td>7</td><td>Raqib</td><td>Mencatat semua amal baik manusia</td></tr>
+          <tr><td>8</td><td>Atid</td><td>Mencatat semua amal buruk manusia</td></tr>
+          <tr><td>9</td><td>Malik</td><td>Menjaga dan memimpin neraka</td></tr>
+          <tr><td>10</td><td>Ridwan</td><td>Menjaga dan memimpin surga</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Rukun Iman 3: Iman Kepada Kitab-Kitab Allah</h3>
+    <p>Allah menurunkan wahyu kepada para nabi-Nya melalui Malaikat Jibril untuk menjadi pedoman hidup umat manusia.</p>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Kitab</th><th>Diturunkan Kepada</th><th>Umat</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Taurat</td><td>Nabi Musa AS</td><td>Bani Israil</td></tr>
+          <tr><td>Zabur</td><td>Nabi Dawud AS</td><td>Bani Israil</td></tr>
+          <tr><td>Injil</td><td>Nabi Isa AS</td><td>Bani Israil</td></tr>
+          <tr><td>Al-Qur'an</td><td>Nabi Muhammad SAW</td><td>Seluruh umat manusia hingga akhir zaman</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Rukun Iman 4: Iman Kepada Nabi Dan Rasul</h3>
+    <p>Nabi adalah manusia pilihan yang menerima wahyu untuk dirinya sendiri, sedangkan Rasul wajib menyampaikan wahyu tersebut kepada umatnya.</p>
+    <p>Ada 5 Rasul dengan keteguhan luar biasa yang mendapat gelar <strong>Ulul Azmi</strong>: Nabi Nuh AS, Nabi Ibrahim AS, Nabi Musa AS, Nabi Isa AS, dan Nabi Muhammad SAW.</p>
+
+    <h3>Rukun Iman 5: Iman Kepada Hari Akhir</h3>
+    <p>Hari berakhirnya seluruh kehidupan dunia dan dimulainya kehidupan akhirat yang abadi. Jalur fasenya: Alam Barzakh → Ba'ats (Kebangkitan) → Mahsyar → Hisab (Perhitungan) → Mizan (Penimbangan) → Shirat → Surga/Neraka.</p>
+
+    <h3>Rukun Iman 6: Iman Kepada Qada Dan Qadar</h3>
+    <p>Qada adalah ketetapan Allah sejak zaman azali, sedangkan Qadar adalah realisasi atau perwujudan dari ketetapan ukuran tersebut di dunia nyata.</p>
+
+    <div class="sub-bab-title"><i class="fas fa-star"></i> Sub-Bab 2: Asmaul Husna (99 Nama Allah)</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/NWqKKkBNIcU" allowfullscreen></iframe>
+    </div>
+    <p>Asmaul Husna adalah nama-nama Allah yang paling indah dan sempurna. Rasulullah SAW bersabda bahwa siapa saja yang menghafal dan mengamalkannya akan masuk surga.</p>
+    
+    <div class="asmaul-grid">
+      <div class="asmaul-card"><span class="asm-num">1</span><span class="asm-arab">الرَّحْمَنُ</span><span class="asm-latin">Ar-Rahman</span><span class="asm-arti">Maha Pengasih</span></div>
+      <div class="asmaul-card"><span class="asm-num">2</span><span class="asm-arab">الرَّحِيمُ</span><span class="asm-latin">Ar-Rahim</span><span class="asm-arti">Maha Penyayang</span></div>
+      <div class="asmaul-card"><span class="asm-num">3</span><span class="asm-arab">الْمَلِكُ</span><span class="asm-latin">Al-Malik</span><span class="asm-arti">Maha Merajai</span></div>
+      <div class="asmaul-card"><span class="asm-num">4</span><span class="asm-arab">الْقُدُّوسُ</span><span class="asm-latin">Al-Quddus</span><span class="asm-arti">Maha Suci</span></div>
+      <div class="asmaul-card"><span class="asm-num">5</span><span class="asm-arab">السَّلَامُ</span><span class="asm-latin">As-Salam</span><span class="asm-arti">Maha Pemberi Selamat</span></div>
+      <div class="asmaul-card"><span class="asm-num">6</span><span class="asm-arab">الْمُؤْمِنُ</span><span class="asm-latin">Al-Mu'min</span><span class="asm-arti">Maha Memberi Keamanan</span></div>
+      <div class="asmaul-card"><span class="asm-num">7</span><span class="asm-arab">الْمُهَيْمِنُ</span><span class="asm-latin">Al-Muhaimin</span><span class="asm-arti">Maha Memelihara</span></div>
+      <div class="asmaul-card"><span class="asm-num">8</span><span class="asm-arab">الْعَزِيزُ</span><span class="asm-latin">Al-'Aziz</span><span class="asm-arti">Maha Perkasa</span></div>
+      <div class="asmaul-card"><span class="asm-num">9</span><span class="asm-arab">الْجَبَّارُ</span><span class="asm-latin">Al-Jabbar</span><span class="asm-arti">Maha Memaksa</span></div>
+      <div class="asmaul-card"><span class="asm-num">10</span><span class="asm-arab">الْمُتَكَبِّرُ</span><span class="asm-latin">Al-Mutakabbir</span><span class="asm-arti">Maha Megah</span></div>
+      <div class="asmaul-card"><span class="asm-num">11</span><span class="asm-arab">الْخَالِقُ</span><span class="asm-latin">Al-Khaliq</span><span class="asm-arti">Maha Pencipta</span></div>
+      <div class="asmaul-card"><span class="asm-num">12</span><span class="asm-arab">الْبَارِئُ</span><span class="asm-latin">Al-Bari'</span><span class="asm-arti">Maha Melepaskan</span></div>
+      <div class="asmaul-card"><span class="asm-num">13</span><span class="asm-arab">الْمُصَوِّرُ</span><span class="asm-latin">Al-Mushawwir</span><span class="asm-arti">Maha Membentuk Rupa</span></div>
+      <div class="asmaul-card"><span class="asm-num">14</span><span class="asm-arab">الْغَفَّارُ</span><span class="asm-latin">Al-Ghaffar</span><span class="asm-arti">Maha Pengampun</span></div>
+      <div class="asmaul-card"><span class="asm-num">15</span><span class="asm-arab">الْقَهَّارُ</span><span class="asm-latin">Al-Qahhar</span><span class="asm-arti">Maha Mengalahkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">16</span><span class="asm-arab">الinputْوَهَّابُ</span><span class="asm-latin">Al-Wahhab</span><span class="asm-arti">Maha Pemberi Karunia</span></div>
+      <div class="asmaul-card"><span class="asm-num">17</span><span class="asm-arab">الرَّزَّاقُ</span><span class="asm-latin">Ar-Razzaq</span><span class="asm-arti">Maha Pemberi Rezeki</span></div>
+      <div class="asmaul-card"><span class="asm-num">18</span><span class="asm-arab">الْفَتَّاحُ</span><span class="asm-latin">Al-Fattah</span><span class="asm-arti">Maha Pembuka Rahmat</span></div>
+      <div class="asmaul-card"><span class="asm-num">19</span><span class="asm-arab">اَلْعَلِيمُ</span><span class="asm-latin">Al-'Alim</span><span class="asm-arti">Maha Mengetahui</span></div>
+      <div class="asmaul-card"><span class="asm-num">20</span><span class="asm-arab">الْقَابِضُ</span><span class="asm-latin">Al-Qabidh</span><span class="asm-arti">Maha Menyempitkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">21</span><span class="asm-arab">الْبَاسِطُ</span><span class="asm-latin">Al-Basith</span><span class="asm-arti">Maha Melapangkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">22</span><span class="asm-arab">الْخَافِضُ</span><span class="asm-latin">Al-Khafidh</span><span class="asm-arti">Maha Merendahkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">23</span><span class="asm-arab">الرَّافِعُ</span><span class="asm-latin">Ar-Rafi'</span><span class="asm-arti">Maha Meninggikan</span></div>
+      <div class="asmaul-card"><span class="asm-num">24</span><span class="asm-arab">الْمُعِزُّ</span><span class="asm-latin">Al-Mu'izz</span><span class="asm-arti">Maha Memuliakan</span></div>
+      <div class="asmaul-card"><span class="asm-num">25</span><span class="asm-arab">الْمُذِلُّ</span><span class="asm-latin">Al-Mudzill</span><span class="asm-arti">Maha Menghinakan</span></div>
+      <div class="asmaul-card"><span class="asm-num">26</span><span class="asm-arab">السَّمِيعُ</span><span class="asm-latin">As-Sami'</span><span class="asm-arti">Maha Mendengar</span></div>
+      <div class="asmaul-card"><span class="asm-num">27</span><span class="asm-arab">الْبَصِيرُ</span><span class="asm-latin">Al-Bashir</span><span class="asm-arti">Maha Melihat</span></div>
+      <div class="asmaul-card"><span class="asm-num">28</span><span class="asm-arab">الْحَكَمُ</span><span class="asm-latin">Al-Hakam</span><span class="asm-arti">Maha Menetapkan Hukum</span></div>
+      <div class="asmaul-card"><span class="asm-num">29</span><span class="asm-arab">الْعَدْلُ</span><span class="asm-latin">Al-'Adl</span><span class="asm-arti">Maha Adil</span></div>
+      <div class="asmaul-card"><span class="asm-num">30</span><span class="asm-arab">اللَّطِيفُ</span><span class="asm-latin">Al-Lathif</span><span class="asm-arti">Maha Lembut</span></div>
+      <div class="asmaul-card"><span class="asm-num">31</span><span class="asm-arab">الْخَبِيرُ</span><span class="asm-latin">Al-Khabir</span><span class="asm-arti">Maha Mengenal</span></div>
+      <div class="asmaul-card"><span class="asm-num">32</span><span class="asm-arab">الْحَلِيمُ</span><span class="asm-latin">Al-Halim</span><span class="asm-arti">Maha Penyantun</span></div>
+      <div class="asmaul-card"><span class="asm-num">33</span><span class="asm-arab">الْعَظِيمُ</span><span class="asm-latin">Al-'Azhim</span><span class="asm-arti">Maha Agung</span></div>
+      <div class="asmaul-card"><span class="asm-num">34</span><span class="asm-arab">الْغَفُورُ</span><span class="asm-latin">Al-Ghafur</span><span class="asm-arti">Maha Pengampun</span></div>
+      <div class="asmaul-card"><span class="asm-num">35</span><span class="asm-arab">الشَّكُورُ</span><span class="asm-latin">Asy-Syakur</span><span class="asm-arti">Maha Pembalas Budi</span></div>
+      <div class="asmaul-card"><span class="asm-num">36</span><span class="asm-arab">الْعَلِيُّ</span><span class="asm-latin">Al-'Aliy</span><span class="asm-arti">Maha Tinggi</span></div>
+      <div class="asmaul-card"><span class="asm-num">37</span><span class="asm-arab">الْكَبِيرُ</span><span class="asm-latin">Al-Kabir</span><span class="asm-arti">Maha Besar</span></div>
+      <div class="asmaul-card"><span class="asm-num">38</span><span class="asm-arab">الْحَفِيظُ</span><span class="asm-latin">Al-Hafizh</span><span class="asm-arti">Maha Memelihara</span></div>
+      <div class="asmaul-card"><span class="asm-num">39</span><span class="asm-arab">الْمُقِيتُ</span><span class="asm-latin">Al-Muqit</span><span class="asm-arti">Maha Pemberi Kecukupan</span></div>
+      <div class="asmaul-card"><span class="asm-num">40</span><span class="asm-arab">الْحَسِيبُ</span><span class="asm-latin">Al-Hasib</span><span class="asm-arti">Maha Membuat Perhitungan</span></div>
+      <div class="asmaul-card"><span class="asm-num">41</span><span class="asm-arab">الْجَلِيلُ</span><span class="asm-latin">Al-Jalil</span><span class="asm-arti">Maha Mulia</span></div>
+      <div class="asmaul-card"><span class="asm-num">42</span><span class="asm-arab">الْكَرِيمُ</span><span class="asm-latin">Al-Karim</span><span class="asm-arti">Maha Pemurah</span></div>
+      <div class="asmaul-card"><span class="asm-num">43</span><span class="asm-arab">الرَّقِيبُ</span><span class="asm-latin">Ar-Raqib</span><span class="asm-arti">Maha Mengawasi</span></div>
+      <div class="asmaul-card"><span class="asm-num">44</span><span class="asm-arab">الْمُجِيبُ</span><span class="asm-latin">Al-Mujib</span><span class="asm-arti">Maha Mengabulkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">45</span><span class="asm-arab">الtargetْوَاسِعُ</span><span class="asm-latin">Al-Wasi'</span><span class="asm-arti">Maha Luas</span></div>
+      <div class="asmaul-card"><span class="asm-num">46</span><span class="asm-arab">الْحَكِيمُ</span><span class="asm-latin">Al-Hakim</span><span class="asm-arti">Maha Bijaksana</span></div>
+      <div class="asmaul-card"><span class="asm-num">47</span><span class="asm-arab">الْوَدُودُ</span><span class="asm-latin">Al-Wadud</span><span class="asm-arti">Maha Mencintai</span></div>
+      <div class="asmaul-card"><span class="asm-num">48</span><span class="asm-arab">الْمَجِيدُ</span><span class="asm-latin">Al-Majid</span><span class="asm-arti">Maha Mulia</span></div>
+      <div class="asmaul-card"><span class="asm-num">49</span><span class="asm-arab">الْبَاعِثُ</span><span class="asm-latin">Al-Ba'its</span><span class="asm-arti">Maha Membangkitkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">50</span><span class="asm-arab">الشَّهِيدُ</span><span class="asm-latin">Asy-Syahid</span><span class="asm-arti">Maha Menyaksikan</span></div>
+      <div class="asmaul-card"><span class="asm-num">51</span><span class="asm-arab">الْحَقُّ</span><span class="asm-latin">Al-Haqq</span><span class="asm-arti">Maha Benar</span></div>
+      <div class="asmaul-card"><span class="asm-num">52</span><span class="asm-arab">الْوَكِيلُ</span><span class="asm-latin">Al-Wakil</span><span class="asm-arti">Maha Memelihara</span></div>
+      <div class="asmaul-card"><span class="asm-num">53</span><span class="asm-arab">الْقَوِيُّ</span><span class="asm-latin">Al-Qawiy</span><span class="asm-arti">Maha Kuat</span></div>
+      <div class="asmaul-card"><span class="asm-num">54</span><span class="asm-arab">الْمَتِينُ</span><span class="asm-latin">Al-Matin</span><span class="asm-arti">Maha Kokoh</span></div>
+      <div class="asmaul-card"><span class="asm-num">55</span><span class="asm-arab">الْوَلِيُّ</span><span class="asm-latin">Al-Waliy</span><span class="asm-arti">Maha Melindungi</span></div>
+      <div class="asmaul-card"><span class="asm-num">56</span><span class="asm-arab">الْحَمِيدُ</span><span class="asm-latin">Al-Hamid</span><span class="asm-arti">Maha Terpuji</span></div>
+      <div class="asmaul-card"><span class="asm-num">57</span><span class="asm-arab">الْمُحْصِيُ</span><span class="asm-latin">Al-Muhshi</span><span class="asm-arti">Maha Menghitung</span></div>
+      <div class="asmaul-card"><span class="asm-num">58</span><span class="asm-arab">الْمُبْدِئُ</span><span class="asm-latin">Al-Mubdi</span><span class="asm-arti">Maha Memulai</span></div>
+      <div class="asmaul-card"><span class="asm-num">59</span><span class="asm-arab">الْمُعِيدُ</span><span class="asm-latin">Al-Mu'id</span><span class="asm-arti">Maha Mengembalikan</span></div>
+      <div class="asmaul-card"><span class="asm-num">60</span><span class="asm-arab">الْمُحْيِي</span><span class="asm-latin">Al-Muhyi</span><span class="asm-arti">Maha Menghidupkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">61</span><span class="asm-arab">اَلْمُمِيتُ</span><span class="asm-latin">Al-Mumit</span><span class="asm-arti">Maha Mematikan</span></div>
+      <div class="asmaul-card"><span class="asm-num">62</span><span class="asm-arab">الْحَيُّ</span><span class="asm-latin">Al-Hayyu</span><span class="asm-arti">Maha Hidup</span></div>
+      <div class="asmaul-card"><span class="asm-num">63</span><span class="asm-arab">الْقَيُّومُ</span><span class="asm-latin">Al-Qayyum</span><span class="asm-arti">Maha Mandiri</span></div>
+      <div class="asmaul-card"><span class="asm-num">64</span><span class="asm-arab">الْوَاجِدُ</span><span class="asm-latin">Al-Wajid</span><span class="asm-arti">Maha Penemu</span></div>
+      <div class="asmaul-card"><span class="asm-num">65</span><span class="asm-arab">الْمَاجِدُ</span><span class="asm-latin">Al-Majid</span><span class="asm-arti">Maha Mulia</span></div>
+      <div class="asmaul-card"><span class="asm-num">66</span><span class="asm-arab">الْواحِدُ</span><span class="asm-latin">Al-Wahid</span><span class="asm-arti">Maha Tunggal</span></div>
+      <div class="asmaul-card"><span class="asm-num">67</span><span class="asm-arab">اَلاَحَدُ</span><span class="asm-latin">Al-Ahad</span><span class="asm-arti">Maha Esa</span></div>
+      <div class="asmaul-card"><span class="asm-num">68</span><span class="asm-arab">الصَّمَدُ</span><span class="asm-latin">As-Shamad</span><span class="asm-arti">Maha Dibutuhkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">69</span><span class="asm-arab">الْقَادِرُ</span><span class="asm-latin">Al-Qadir</span><span class="asm-arti">Maha Menentukan</span></div>
+      <div class="asmaul-card"><span class="asm-num">70</span><span class="asm-arab">الْمُقْتَدِرُ</span><span class="asm-latin">Al-Muqtadir</span><span class="asm-arti">Maha Berkuasa</span></div>
+      <div class="asmaul-card"><span class="asm-num">71</span><span class="asm-arab">الْمُقَدِّمُ</span><span class="asm-latin">Al-Muqaddim</span><span class="asm-arti">Maha Mendahulukan</span></div>
+      <div class="asmaul-card"><span class="asm-num">72</span><span class="asm-arab">الْمُؤَخِّرُ</span><span class="asm-latin">Al-Mu'akhkhir</span><span class="asm-arti">Maha Mengakhirkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">73</span><span class="asm-arab">الْأَوَّلُ</span><span class="asm-latin">Al-Awwal</span><span class="asm-arti">Maha Awal</span></div>
+      <div class="asmaul-card"><span class="asm-num">74</span><span class="asm-arab">الْأَخِرُ</span><span class="asm-latin">Al-Akhir</span><span class="asm-arti">Maha Akhir</span></div>
+      <div class="asmaul-card"><span class="asm-num">75</span><span class="asm-arab">الظَّاهِرُ</span><span class="asm-latin">Azh-Zhahir</span><span class="asm-arti">Maha Nyata</span></div>
+      <div class="asmaul-card"><span class="asm-num">76</span><span class="asm-arab">الْبَاطِنُ</span><span class="asm-latin">Al-Bathin</span><span class="asm-arti">Maha Tersembunyi</span></div>
+      <div class="asmaul-card"><span class="asm-num">77</span><span class="asm-arab">الْوَالِي</span><span class="asm-latin">Al-Wali</span><span class="asm-arti">Maha Memerintah</span></div>
+      <div class="asmaul-card"><span class="asm-num">78</span><span class="asm-arab">الْمُتَعَالِي</span><span class="asm-latin">Al-Muta'ali</span><span class="asm-arti">Maha Tinggi</span></div>
+      <div class="asmaul-card"><span class="asm-num">79</span><span class="asm-arab">الْبَرُّ</span><span class="asm-latin">Al-Barr</span><span class="asm-arti">Maha Dermawan</span></div>
+      <div class="asmaul-card"><span class="asm-num">80</span><span class="asm-arab">التَّوَّابُ</span><span class="asm-latin">At-Tawwab</span><span class="asm-arti">Maha Penerima Tobat</span></div>
+      <div class="asmaul-card"><span class="asm-num">81</span><span class="asm-arab">الْمُنْتَقِمُ</span><span class="asm-latin">Al-Muntaqim</span><span class="asm-arti">Maha Pemberi Balasan</span></div>
+      <div class="asmaul-card"><span class="asm-num">82</span><span class="asm-arab">الْعَفُوُّ</span><span class="asm-latin">Al-'Afuw</span><span class="asm-arti">Maha Pemaaf</span></div>
+      <div class="asmaul-card"><span class="asm-num">83</span><span class="asm-arab">الرَّؤُوفُ</span><span class="asm-latin">Ar-Ra'uf</span><span class="asm-arti">Maha Pengasih</span></div>
+      <div class="asmaul-card"><span class="asm-num">84</span><span class="asm-arab">مَالِكُ الْمُلْكِ</span><span class="asm-latin">Malikul Mulk</span><span class="asm-arti">Maha Penguasa Kerajaan</span></div>
+      <div class="asmaul-card"><span class="asm-num">85</span><span class="asm-arab">ذُوالْجَلاَلِ وَالْإِكْرَامِ</span><span class="asm-latin">Dzul Jalali wal Ikram</span><span class="asm-arti">Maha Pemilik Keagungan</span></div>
+      <div class="asmaul-card"><span class="asm-num">86</span><span class="asm-arab">الْمُقْسِطُ</span><span class="asm-latin">Al-Muqsith</span><span class="asm-arti">Maha Pemberi Keadilan</span></div>
+      <div class="asmaul-card"><span class="asm-num">87</span><span class="asm-arab">الْجَامِعُ</span><span class="asm-latin">Al-Jami'</span><span class="asm-arti">Maha Mengumpulkan</span></div>
+      <div class="asmaul-card"><span class="asm-num">88</span><span class="asm-arab">الْغَنِيُّ</span><span class="asm-latin">Al-Ghani</span><span class="asm-arti">Maha Kaya</span></div>
+      <div class="asmaul-card"><span class="asm-num">89</span><span class="asm-arab">الْمُغْنِي</span><span class="asm-latin">Al-Mughni</span><span class="asm-arti">Maha Pemberi Kekayaan</span></div>
+      <div class="asmaul-card"><span class="asm-num">90</span><span class="asm-arab">اَلْمَانِعُ</span><span class="asm-latin">Al-Mani'</span><span class="asm-arti">Maha Mencegah</span></div>
+      <div class="asmaul-card"><span class="asm-num">91</span><span class="asm-arab">الضَّارُّ</span><span class="asm-latin">Ad-Dharr</span><span class="asm-arti">Maha Pemberi Derita</span></div>
+      <div class="asmaul-card"><span class="asm-num">92</span><span class="asm-arab">النَّافِعُ</span><span class="asm-latin">An-Nafi'</span><span class="asm-arti">Maha Memberi Manfaat</span></div>
+      <div class="asmaul-card"><span class="asm-num">93</span><span class="asm-arab">النُّورُ</span><span class="asm-latin">An-Nur</span><span class="asm-arti">Maha Bercahaya</span></div>
+      <div class="asmaul-card"><span class="asm-num">94</span><span class="asm-arab">الْهَادِي</span><span class="asm-latin">Al-Hadi</span><span class="asm-arti">Maha Pemberi Petunjuk</span></div>
+      <div class="asmaul-card"><span class="asm-num">95</span><span class="asm-arab">الْبَدِيعُ</span><span class="asm-latin">Al-Badi'</span><span class="asm-arti">Maha Pencipta</span></div>
+      <div class="asmaul-card"><span class="asm-num">96</span><span class="asm-arab">اَلْبَاقِي</span><span class="asm-latin">Al-Baqi</span><span class="asm-arti">Maha Kekal</span></div>
+      <div class="asmaul-card"><span class="asm-num">97</span><span class="asm-arab">الْوَارِثُ</span><span class="asm-latin">Al-Warits</span><span class="asm-arti">Maha Pewaris</span></div>
+      <div class="asmaul-card"><span class="asm-num">98</span><span class="asm-arab">الرَّشِيدُ</span><span class="asm-latin">Ar-Rasyid</span><span class="asm-arti">Maha Pandai</span></div>
+      <div class="asmaul-card"><span class="asm-num">99</span><span class="asm-arab">الصَّبُورُ</span><span class="asm-latin">As-Shabur</span><span class="asm-arti">Maha Sabar</span></div>
+    </div>
+
+    <div class="sub-bab-title"><i class="fas fa-shield-halved"></i> Sub-Bab 3: Sifat-Sifat Allah</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/EosFmGWQXKs" allowfullscreen></iframe>
+    </div>
+    <p>Sifat Allah adalah segala hal yang melekat pada Dzat Allah sebagaimana diterangkan dalam Al-Qur'an dan hadis yang shahih. Mempelajari sifat Allah bertujuan agar kita mengenal-Nya dengan benar dan tidak menyimpang.</p>
+    
+    <h3>A. Sifat Wajib Allah (20 Sifat)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>No</th><th>Sifat Wajib</th><th>Arti</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Wujud</td><td>Ada</td></tr>
+          <tr><td>2</td><td>Qidam</td><td>Terdahulu / Azali</td></tr>
+          <tr><td>3</td><td>Baqa'</td><td>Kekal</td></tr>
+          <tr><td>4</td><td>Mukhalafatu lil hawadits</td><td>Berbeda dengan makhluk</td></tr>
+          <tr><td>5</td><td>Qiyamuhu binafsihi</td><td>Berdiri sendiri</td></tr>
+          <tr><td>6</td><td>Wahdaniyah</td><td>Esa (Tunggal)</td></tr>
+          <tr><td>7</td><td>Qudrah</td><td>Kuasa</td></tr>
+          <tr><td>8</td><td>Iradah</td><td>Berkehendak</td></tr>
+          <tr><td>9</td><td>'Ilmu</td><td>Mengetahui</td></tr>
+          <tr><td>10</td><td>Hayah</td><td>Hidup</td></tr>
+          <tr><td>11</td><td>Sama'</td><td>Mendengar</td></tr>
+          <tr><td>12</td><td>Bashar</td><td>Melihat</td></tr>
+          <tr><td>13</td><td>Kalam</td><td>Berfirman / Berkata-kata</td></tr>
+          <tr><td>14-20</td><td>Kaunuhu Qadiran, Muridan, dsb</td><td>Keadaan Allah Yang Maha Kuasa, Berkehendak, dst</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>B. Sifat Mustahil Allah (20 Sifat)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>No</th><th>Sifat Mustahil</th><th>Arti</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>'Adam</td><td>Tidak ada</td></tr>
+          <tr><td>2</td><td>Huduts</td><td>Baru (ada permulaannya)</td></tr>
+          <tr><td>3</td><td>Fana'</td><td>Binasa / bisa hancur</td></tr>
+          <tr><td>4</td><td>Mumatsalatu lil hawadits</td><td>Menyerupai makhluk</td></tr>
+          <tr><td>5</td><td>Ihtiyaju lighairihi</td><td>Butuh kepada selain-Nya</td></tr>
+          <tr><td>6</td><td>Ta'addud</td><td>Berbilang (lebih dari satu)</td></tr>
+          <tr><td>7</td><td>'Ajzu</td><td>Lemah</td></tr>
+          <tr><td>8</td><td>Karahah</td><td>Terpaksa</td></tr>
+          <tr><td>9</td><td>Jahl</td><td>Bodoh</td></tr>
+          <tr><td>10</td><td>Maut</td><td>Mati</td></tr>
+          <tr><td>11</td><td>Shamam</td><td>Tuli</td></tr>
+          <tr><td>12</td><td>'Ama</td><td>Buta</td></tr>
+          <tr><td>13</td><td>Bukm</td><td>Bisu</td></tr>
+          <tr><td>14-20</td><td>Kaunuhu 'Ajizan, dst</td><td>Keadaan lemah, terpaksa, bodoh, dst</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>C. Sifat Jaiz Allah (1 Sifat)</h3>
+    <p>Sifat jaiz Allah adalah: <em>"Fi'lu kulli mumkinin aw tarkuhu"</em>, artinya boleh bagi Allah untuk melakukan sesuatu yang mungkin (seperti menciptakan makhluk, memberi rezeki) atau meninggalkannya secara bebas mutlak sesuai kehendak-Nya.</p>
+
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-graduation-cap"></i> Kuis Evaluasi Level 1</div>
+    <form id="quizForm">
+      
+      <div class="question-box">
+        <div class="question-text">1. Apa inti makna dari konsep Tauhid Uluhiyah?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> Percaya Allah pencipta alam semesta</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> Percaya bahwa hanya Allah yang satu-satunya berhak disembah</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> Mengimani nama-nama indah Allah</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">2. Malaikat yang mendapat amanah meniup terompet sangkakala hari kiamat adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> Jibril</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> Israfil</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> Izrail</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">3. Kitab suci Taurat diturunkan khusus kepada nabi...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Nabi Musa AS</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Nabi Dawud AS</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Nabi Isa AS</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">4. Siapa saja rasul pilihan yang menyandang gelar keteguhan 'Ulul Azmi'?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Adam, Idris, Nuh, Hud, Shalih</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Nuh, Ibrahim, Musa, Isa, Muhammad SAW</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Ibrahim, Ismail, Ishaq, Ya'qub, Yusuf</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">5. Apa nama tempat berkumpulnya seluruh makhluk setelah dibangkitkan dari alam kubur?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> Alam Barzakh</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> Jembatan Shirat</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> Padang Mahsyar</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">6. Sifat wajib rasul 'Tabligh' artinya...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> Cerdas dan bijaksana</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> Menyampaikan wahyu, tidak menyembunyikannya</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> Jujur tidak pernah bohong</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">7. Arti dari nama Allah 'Ar-Razzaq' di dalam Asmaul Husna adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> Maha Pengampun</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> Maha Pemberi Rezeki</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> Maha Mendengar</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">8. Sifat wajib Allah 'Mukhalafatu lil hawadits' menegaskan bahwa Allah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Berbeda dengan makhluk ciptaan-Nya</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Berdiri sendiri tanpa bantuan</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Kekal selamanya</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">9. Pemahaman fatalis keliru yang menganggap manusia robot pasrah tanpa pilihan bebas takdir disebut...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Qadariyah</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Jabariyah</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Ahlussunnah</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">10. Berapa jumlah sifat Jaiz yang dimiliki oleh Allah SWT?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> 20 Sifat</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> 1 Sifat</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> 99 Sifat</label>
+        </div>
+      </div>
+
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Semangat Belajar!</p>
+    </div>
+  </div>
+
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// Menggunakan Firebase Config Baru Kamu
-const firebaseConfig = {
-  apiKey: "AIzaSyCsX-3QTSbmRKEZiNsjM6jWAZ6l2hTqC38",
-  authDomain: "azzahra-web.firebaseapp.com",
-  projectId: "azzahra-web",
-  storageBucket: "azzahra-web.firebasestorage.app",
-  messagingSenderId: "716860109019",
-  appId: "1:716860109019:web:433065a2294026ae665cfe",
-  measurementId: "G-G7X3S5QRHP"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-let userXP = 0;
-let userProgress = {};
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'auth.html';
-    return;
-  }
-  currentUser = user;
-
-  // Mengambil progres user langsung dari Firestore
-  const userDocRef = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userDocRef);
-
-  if (userSnap.exists()) {
-    const data = userSnap.data();
-    userXP = data.xp || 0;
-    userProgress = data.progress || {};
-
-    document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-    // Sinkronisasi data lokal dari Firestore ke peta subbabs
-    if (userProgress.level1) {
-      const savedSubs = userProgress.level1.subProgress || [];
-      savedSubs.forEach((saved, index) => {
-        if (subbabs[index]) {
-          subbabs[index].unlocked = saved.unlocked;
-          subbabs[index].completed = saved.completed;
-        }
-      });
-    }
-  }
-
-  // Render komponen halaman awal setelah data sinkron
-  renderSidebar();
-  renderMateri(currentSub);
-});
-
-// Fungsi simpan progres terintegrasi Firestore
-window.saveProgressToFirebase = async function(xpBonus, nextSubIdx) {
-  if (!currentUser) return;
-
-  userXP += xpBonus;
-  document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-  // Susun data status sub bab untuk diunggah
-  const subProgressArray = subbabs.map(s => ({
-    unlocked: s.unlocked,
-    completed: s.completed
-  }));
-
-  // Hitung persentase level 1 secara keseluruhan
-  const completedCount = subbabs.filter(s => s.completed).length;
-  const percentTotal = Math.round((completedCount / subbabs.length) * 100);
-  const totalStars = percentTotal === 100 ? 3 : percentTotal >= 50 ? 2 : percentTotal >= 25 ? 1 : 0;
-
-  // Persiapkan objek update data terstruktur
-  const userDocRef = doc(db, "users", currentUser.uid);
-  
-  // Mengupdate field xp utama dan map progress sub bab
-  userProgress["level1"] = {
-    percent: percentTotal,
-    stars: totalStars,
-    unlocked: true,
-    subProgress: subProgressArray
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+    projectId: "azzahra-academy-ad1ec",
+    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+    messagingSenderId: "425297111795",
+    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
   };
 
-  // Jika level 1 beres total, secara otomatis buka gembok level 2 di index
-  if (percentTotal === 100) {
-    if (!userProgress["level2"]) {
-      userProgress["level2"] = { percent: 0, stars: 0, unlocked: true, subProgress: [] };
-    } else {
-      userProgress["level2"].unlocked = true;
-    }
-  }
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUserId = null;
 
-  try {
-    await updateDoc(userDocRef, {
-      xp: userXP,
-      progress: userProgress
-    });
-  } catch (error) {
-    console.error("Gagal menyimpan progres ke cloud database:", error);
-  }
-};
-</script>
-
-<script>
-// Data Pembelajaran Lokal Level 1
-const subbabs = [
-  { id: 1, title: "Pengertian Aqidah Islam", unlocked: true, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 01 — Fondasi</span><h2 class='mat-title'>Apa itu Aqidah Islam?</h2></div><div class='mat-body'><p>Secara bahasa, kata <strong>Aqidah</strong> berasal dari bahasa Arab <em>'al-aqdu'</em> yang berarti ikatan, simpul, atau perjanjian yang kokoh. Secara istilah syariat, Aqidah adalah keyakinan hati yang mutlak dan pasti kepada kebenaran Islam tanpa ada keraguan sedikit pun.</p><p>Aqidah Islam diibaratkan sebagai pondasi sebuah bangunan raksasa. Jika pondasinya retak atau rapuh, maka seluruh amal ibadah di atasnya (seperti sholat, puasa, zakat) bisa ikut runtuh dan sia-sia di hadapan Allah SWT.</p></div>", type: "dragdrop", answer: ["Ikatan", "Pondasi"], options: ["Ikatan", "Pondasi", "Cabang", "Hiasan"] },
-  { id: 2, title: "Rukun Iman & Maknanya", unlocked: false, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 02 — Pilar</span><h2 class='mat-title'>Enam Pilar Tiang Keimanan</h2></div><div class='mat-body'><p>Inti dari aqidah seorang muslim terangkum sempurna di dalam <strong>Enam Rukun Iman</strong> berdasarkan hadits Jibril alaihissalam. Mengimani rukun ini bukan sekadar ucapan lisan, melainkan pembenaran penuh di dalam hati dan diaplikasikan melalui tindakan nyata sehari-hari.</p><p>Urutan rukun iman meliputi: Iman kepada Allah, Iman kepada Malaikat-Nya, Iman kepada Kitab-kitab-Nya, Iman kepada Rasul-rasul-Nya, Iman kepada Hari Akhir, serta Iman kepada Qadha dan Qadar (takdir baik maupun buruk).</p></div>", type: "dragdrop", answer: ["Enam", "Hati"], options: ["Enam", "Hati", "Lima", "Lisan"] },
-  { id: 3, title: "Konsep Tauhid (Keesaan)", unlocked: false, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 03 — Inti</span><h2 class='mat-title'>Mengenal Pembagian Tauhid</h2></div><div class='mat-body'><p><strong>Tauhid</strong> artinya mengesakan Allah SWT dalam segala hal khusus bagi-Nya. Para ulama membagi tauhid menjadi 3 bagian penting: <strong>Rububiyah</strong> (meyakini Allah satu-satunya Pencipta dan Pengatur alam), <strong>Uluhiyah</strong> (mengarahkan semua jenis ibadah hanya untuk Allah), dan <strong>Asma was Sifat</strong> (menetapkan nama dan sifat mulia Allah sesuai Al-Qur'an dan Hadits).</p><p>Lawan dari tauhid adalah <em>Syirik</em> (menyekutukan Allah), sebuah dosa terbesar yang tidak akan diampuni jika pelakunya meninggal dunia sebelum sempat bertaubat nasuha.</p></div>", type: "dragdrop", answer: ["Uluhiyah", "Syirik"], options: ["Uluhiyah", "Syirik", "Rububiyah", "Fasik"] }
-];
-
-let currentSub = 0;
-let quizMode = false;
-let userSelections = [];
-
-function renderSidebar() {
-  const list = document.getElementById('sidebarList');
-  if(!list) return;
-  list.innerHTML = subbabs.map((s, idx) => {
-    let statusClass = 'locked';
-    let statusTxt = '<i class="fas fa-lock"></i> Terkunci';
-    
-    if (s.completed) { statusClass = 'done'; statusTxt = '<i class="fas fa-check-circle"></i> Selesai'; }
-    else if (s.unlocked) { statusClass = 'current'; statusTxt = '<i class="fas fa-book-open"></i> Terbuka'; }
-    
-    return `
-      <li class="sb-item ${idx === currentSub ? 'active' : ''} ${!s.unlocked ? 'locked' : ''}" 
-          onclick="${s.unlocked ? `goToSub(${idx})` : `toast('🔒 Selesaikan materi sebelumnya terlebih dahulu!','warn')`}">
-        <div class="sb-idx">${s.id}</div>
-        <div class="sb-info">
-          <div class="sb-name">${s.title}</div>
-          <div class="sb-status ${statusClass}">${statusTxt}</div>
-        </div>
-      </li>`;
-  }).join('');
-}
-
-function renderMateri(idx) {
-  const card = document.getElementById('workspaceCard');
-  const current = subbabs[idx];
-  
-  if(!quizMode) {
-    // Render Halaman Bacaan Materi
-    card.innerHTML = current.text;
-    document.getElementById('btnAction').innerHTML = `Mulai Quiz <i class="fas fa-gamepad"></i>`;
-    document.getElementById('btnAction').className = "btn-nav btn-quiz";
-  } else {
-    // Render Halaman Game / Quiz Interaktif Drag and Drop Professional
-    userSelections = [];
-    let processedText = current.text;
-    
-    // Menyembunyikan kata kunci di dalam materi dengan kotak drop box interaktif kosong
-    current.answer.forEach((ans, i) => {
-      processedText = processedText.replace(ans, `<span class="dd-target-box" data-index="${i}" data-correct="${ans}"></span>`);
-    });
-
-    card.innerHTML = `
-      ${processedText}
-      <div class="dd-container">
-        <div class="dd-instruction"><i class="fas fa-info-circle"></i> Seret (Drag) kata kunci di bawah ini ke dalam kotak bergaris putus-putus di atas:</div>
-        <div class="dd-options">
-          ${current.options.map(opt => `<div class="dd-word" draggable="true" id="word-${opt}" data-word="${opt}">${opt}</div>`).join('')}
-        </div>
-      </div>
-    `;
-    
-    initDragDrop();
-    document.getElementById('btnAction').innerHTML = `Periksa Jawaban <i class="fas fa-check-double"></i>`;
-    document.getElementById('btnAction').className = "btn-nav btn-quiz";
-  }
-
-  // Update tombol kembali di bagian bawah
-  document.getElementById('btnPrev').disabled = (idx === 0 && !quizMode);
-}
-
-function initDragDrop() {
-  const words = document.querySelectorAll('.dd-word');
-  const targets = document.querySelectorAll('.dd-target-box');
-  let dragged = null;
-
-  words.forEach(w => {
-    w.addEventListener('dragstart', () => { dragged = w; });
+  onAuthStateChanged(auth, (user) => {
+    if (user) { currentUserId = user.uid; }
   });
 
-  targets.forEach(t => {
-    t.addEventListener('dragover', e => e.preventDefault());
-    t.addEventListener('dragenter', () => t.classList.add('hover'));
-    t.addEventListener('dragleave', () => t.classList.remove('hover'));
+  window.checkAnswers = async function() {
+    const answers = { q1: 'B', q2: 'B', q3: 'A', q4: 'B', q5: 'C', q6: 'B', q7: 'B', q8: 'A', q9: 'B', q10: 'B' };
+    let score = 0;
     
-    t.addEventListener('drop', () => {
-      t.classList.remove('hover');
-      if(!dragged) return;
-
-      // Kembalikan kata lama jika kotak drop target sudah terisi sebelumnya
-      const existing = t.querySelector('.dd-placed');
-      if(existing) {
-        const oldWord = document.getElementById('word-' + existing.dataset.word);
-        if(oldWord) { oldWord.classList.remove('placed'); oldWord.style.display = ''; }
-        existing.remove();
+    for (let i = 1; i <= 10; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === answers[`q${i}`]) {
+        score += 10;
       }
-
-      dragged.classList.add('placed');
-      const placed = document.createElement('div');
-      placed.className = 'dd-placed';
-      placed.textContent = dragged.dataset.word;
-      placed.dataset.word = dragged.dataset.word;
-      placed.title = "Klik untuk hapus";
-      
-      // Kembalikan kata jika diklik di dalam target
-      placed.addEventListener('click', () => {
-        const src = document.getElementById('word-' + placed.dataset.word);
-        if (src) { src.classList.remove('placed'); src.style.display = ''; }
-        placed.remove();
-      });
-      
-      t.appendChild(placed);
-      dragged = null;
-    });
-  });
-}
-
-function handleActionClick() {
-  if(!quizMode) {
-    quizMode = true;
-    renderMateri(currentSub);
-  } else {
-    // Validasi Jawaban Drag & Drop
-    const targets = document.querySelectorAll('.dd-target-box');
-    let allCorrect = true;
-    let unfilled = false;
-
-    targets.forEach(t => {
-      const placed = t.querySelector('.dd-placed');
-      if(!placed) { unfilled = true; }
-      else if(placed.dataset.word !== t.dataset.correct) { allCorrect = false; }
-    });
-
-    if(unfilled) {
-      toast('⚠️ Silakan lengkapi semua kotak drop kosong yang tersedia!', 'warn');
-      return;
     }
 
-    if(allCorrect) {
-      const current = subbabs[currentSub];
-      current.completed = true;
-      
-      let nextSubText = "";
-      if (currentSub + 1 < subbabs.length) {
-        subbabs[currentSub + 1].unlocked = true;
-        nextSubText = "Materi berikutnya terbuka!";
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const feedbackText = document.getElementById('feedbackText');
+
+    resultBox.style.display = 'block';
+    scoreText.textContent = `Skor Kamu: ${score} / 100`;
+
+    // SYARAT KELULUSAN MINIMAL BENAR 7 SOAL (SKOR >= 70)
+    if (score >= 70) {
+      feedbackText.textContent = `Mumtaz! Kamu lulus tingkat ini dengan skor ${score}/100. Bonus +100 XP ditambahkan ke akunmu dan segel gembok Level 2 kini telah resmi terbuka!`;
+      if (currentUserId) {
+        try {
+          const userRef = doc(db, 'users', currentUserId);
+          await updateDoc(userRef, {
+            xp: increment(100),
+            "progress.level1.percent": score,  
+            "progress.level2.unlocked": true  
+          });
+        } catch (e) { console.error("Gagal menyimpan ke basis data:", e); }
       }
-
-      toast('🏆 Sempurna! +150 XP berhasil diraih.', 'gold');
-      
-      // Panggil fungsi cloud update firebase config baru
-      if(window.saveProgressToFirebase) {
-        window.saveProgressToFirebase(150, currentSub + 1);
-      }
-
-      setTimeout(() => {
-        if(currentSub + 1 < subbabs.length) {
-          currentSub++;
-          quizMode = false;
-          renderSidebar();
-          renderMateri(currentSub);
-        } else {
-          toast('🎉 Selamat! Seluruh materi Level 1 Aqidah telah diselesaikan!', 'success');
-          setTimeout(() => window.location.href = 'index.html', 2000);
-        }
-      }, 1500);
-
     } else {
-      toast('❌ Jawaban masih keliru. Periksa susunannya kembali!', 'warn');
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas minimal kelulusan (70% atau minimal benar 7 soal). Jangan berkecil hati, yuk baca ulang materi di atas dan coba lagi!`;
     }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
-}
-
-function goToSub(idx) {
-  currentSub = idx;
-  quizMode = false;
-  renderMateri(idx);
-  renderSidebar();
-}
-
-function navigate(dir) {
-  if(quizMode && dir === -1) {
-    quizMode = false;
-    renderMateri(currentSub);
-    return;
-  }
-  const next = currentSub + dir;
-  if (next < 0 || next >= subbabs.length) return;
-  goToSub(next);
-}
-
-function toast(msg, type='info') {
-  const icons={success:'fa-check-circle',warn:'fa-exclamation-triangle',info:'fa-info-circle',gold:'fa-trophy'};
-  const colors={success:'#00e676',warn:'#ff9800',info:'#00e5ff',gold:'#ffd700'};
-  const el=document.getElementById('toastEl');
-  document.getElementById('toastMsg').textContent=msg;
-  document.getElementById('toastIcon').className='fas ' + (icons[type]||'fa-star');
-  el.style.borderColor=colors[type]||'#b026ff';
-  el.style.color=colors[type]||'#fff';
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),3500);
-}
 </script>
 </body>
 </html>
