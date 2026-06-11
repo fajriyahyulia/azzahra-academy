@@ -1,160 +1,332 @@
 /* ==========================================================================
-   AzZahra Academy — Shared Core CSS Framework (Futuristic Cyber-Islamic)
+   AZZAHRA ACADEMY GLOBAL STYLING (THEME: DEEP SPACE CYBER-DARK)
    ========================================================================== */
 
-/* 1. Global Reset & Core Variable System */
-*, *::before, *::after {
-  box-sizing: border-box;
+/* 1. VARIABEL WARNA & UTALITAS */
+:root {
+  --neon-gold: #ffb703;
+  --neon-emerald: #00f5d4;
+  --neon-cyan: #4cc9f0;
+  --neon-violet: #b5179e;
+  --dark-bg: #020206;
+  --dark-card: #090915;
+  --dark-card2: #12122c;
+  --text-light: #e6e6f2;
+  --text-dim: #74749a;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. RESET & FONT BASE */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-:root {
-  /* Color Palette */
-  --neon-purple: #b026ff;
-  --neon-violet: #7c3aed;
-  --neon-pink: #e040fb;
-  --neon-cyan: #00e5ff;
-  --neon-gold: #ffd700;
-  --dark-bg: #050508;
-  --dark-card: #0d0d1a;
-  --dark-card2: #12122a;
-  --text-light: #e8e0ff;
-  --text-dim: #8878aa;
-  
-  /* Defaults Layout */
-  --font-main: 'Exo 2', sans-serif;
-  --font-display: 'Cinzel Decorative', serif;
-  --font-arabic: 'Amiri', serif;
-}
-
-/* 2. Base Document Styling */
-html, body {
+body {
   background-color: var(--dark-bg);
   color: var(--text-light);
-  font-family: var(--font-main);
-  min-height: 100vh;
+  font-family: 'Exo 2', sans-serif;
+  line-height: 1.6;
+  padding-top: 40px;
+  padding-bottom: 60px;
   overflow-x: hidden;
-  line-height: 1.5;
-  scroll-behavior: smooth;
 }
 
-/* Custom Scrollbar Premium */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--dark-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-purple);
+.container {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/* 3. Global Reusable Typography & Animation Components */
-h1, h2, h3, h4, .font-display {
-  font-family: var(--font-display);
+/* 3. DESAIN HEADER LEVEL & NAVIGASI */
+.level-header {
+  background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+  border: 1px solid rgba(255, 183, 3, 0.25);
+  border-radius: 24px;
+  padding: 35px;
+  margin-bottom: 35px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(255, 183, 3, 0.08);
+}
+
+.level-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.level-badge {
+  display: inline-block;
+  background: rgba(255, 183, 3, 0.12);
+  border: 1px solid var(--neon-gold);
+  color: #ffffff;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--neon-gold);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  transition: var(--transition-smooth);
+}
+
+.back-btn:hover {
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+
+/* 4. KARTU KONTEN MATERI */
+.materi-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 24px;
+  padding: 35px;
+  margin-bottom: 35px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.sub-bab-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.25rem;
+  color: var(--neon-cyan);
+  margin-top: 45px;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(76, 201, 240, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.materi-card .sub-bab-title:first-of-type {
+  margin-top: 0;
+}
+
+h3 {
+  color: #ffffff;
+  margin-top: 30px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 1.15rem;
+  border-left: 3px solid var(--neon-gold);
+  padding-left: 12px;
+}
+
+p {
+  margin-bottom: 16px;
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  text-align: justify;
+}
+
+ul, ol {
+  margin-left: 22px;
+  margin-bottom: 18px;
+  color: #cbd5e1;
+}
+
+li {
+  margin-bottom: 7px;
+}
+
+/* 5. BLOK DALIL / QUOTE */
+.dalil-box {
+  background: rgba(255, 255, 255, 0.015);
+  border-left: 4px solid var(--neon-gold);
+  padding: 20px;
+  border-radius: 0 16px 16px 0;
+  margin: 25px 0;
+  font-style: italic;
+  color: #e2e8f0;
+  box-shadow: inset 10px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 6. RESPONSIVE VIDEO EMBED */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(76, 201, 240, 0.15);
+  margin: 25px 0;
+  box-shadow: 0 8px 25px rgba(76, 201, 240, 0.05);
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* 7. TABEL RESPONSIVE */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 25px 0;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  background: rgba(5, 5, 8, 0.4);
+  min-width: 600px;
+}
+
+th, td {
+  padding: 15px 18px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+
+th {
+  background-color: rgba(76, 201, 240, 0.12);
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.78rem;
   letter-spacing: 0.5px;
 }
 
-.arabic-text {
-  font-family: var(--font-arabic);
-  direction: rtl;
-  font-size: 1.8rem;
-  line-height: 2.5;
+tr:hover {
+  background-color: rgba(76, 201, 240, 0.03);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.td-highlight {
+  color: var(--neon-gold);
+  font-weight: 600;
 }
 
-/* 4. Global Input, Form & Card Standards */
-input, button, select, textarea {
-  font-family: var(--font-main);
-  outline: none;
+/* 8. KOMPONEN KUIS INTERAKTIF */
+.quiz-section {
+  background: linear-gradient(135deg, rgba(9, 9, 21, 0.98), rgba(18, 18, 44, 0.98));
+  border: 2px solid var(--neon-gold);
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 0 35px rgba(255, 183, 3, 0.12);
 }
 
-button {
+.quiz-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.35rem;
+  color: #ffffff;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.question-box {
+  margin-bottom: 25px;
+  background: rgba(255, 255, 255, 0.015);
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.question-text {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 14px 18px;
+  border-radius: 12px;
   cursor: pointer;
-  user-select: none;
+  transition: var(--transition-smooth);
+  font-size: 0.92rem;
 }
 
-/* 5. Utility Layout (Responsive Fixes untuk Workspace, Sidebar, & Profil) */
-@media (max-width: 992px) {
-  .layout {
-    flex-direction: column !important;
-  }
-  
-  .sidebar {
-    width: 100% !important;
-    border-right: none !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-    max-height: 180px;
-  }
-  
-  .workspace {
-    padding: 24px 16px !important;
-  }
-  
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-  
-  .user-hero-card {
-    flex-direction: column !important;
-    text-align: center;
-    padding: 24px !important;
-  }
-  
-  .user-email {
-    justify-content: center;
-  }
+.option-item:hover {
+  background: rgba(255, 183, 3, 0.06);
+  border-color: var(--neon-gold);
 }
 
-@media (max-width: 576px) {
-  .topbar {
-    padding: 0 16px !important;
-  }
-  
-  .topbar-title {
-    font-size: 0.85rem !important;
-  }
-  
-  .content-card {
-    padding: 20px !important;
-    border-radius: 16px !important;
-  }
-  
-  .content-footer {
-    flex-direction: column-reverse !important;
-    gap: 12px;
-  }
-  
-  .footer-left, .footer-right {
-    width: 100%;
-  }
-  
-  .btn-nav {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .toast {
-    left: 20px !important;
-    right: 20px !important;
-    bottom: 20px !important;
-    justify-content: center;
-  }
+.option-item input {
+  accent-color: var(--neon-gold);
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.submit-quiz-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet));
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(255, 183, 3, 0.2);
+  transition: var(--transition-smooth);
+}
+
+.submit-quiz-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.result-box {
+  display: none;
+  text-align: center;
+  margin-top: 25px;
+  padding: 25px;
+  border-radius: 16px;
+  background: rgba(76, 201, 240, 0.04);
+  border: 1px solid var(--neon-cyan);
+}
+
+.result-score {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--neon-gold);
+  margin-bottom: 10px;
+}
+
+/* 9. MEDIA QUERIES (RESPONSIVITAS MOBILE) */
+@media (max-width: 768px) {
+  body { padding-top: 20px; padding-bottom: 40px; }
+  .level-header { padding: 25px; border-radius: 20px; }
+  .level-title { font-size: 1.5rem; }
+  .materi-card { padding: 22px; border-radius: 20px; }
+  .quiz-section { padding: 22px; }
+  th, td { padding: 12px; font-size: 0.85rem; }
 }
