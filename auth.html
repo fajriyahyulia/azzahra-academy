@@ -71,7 +71,7 @@
       <label>Kata Sandi</label>
       <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="loginPassword" required placeholder="••••••••"></div>
     </div>
-    <button type="submit" class="submit-btn">Masuk Akun</button>
+    <button type="submit" class="submit-btn" id="btnLoginSubmit">Masuk Akun</button>
   </form>
 
   <form id="formRegister" class="hidden" onsubmit="handleSubmit(event, 'register')">
@@ -87,13 +87,13 @@
       <label>Kata Sandi</label>
       <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="regPassword" required placeholder="Minimal 6 karakter"></div>
     </div>
-    <button type="submit" class="submit-btn">Daftar Sekarang</button>
+    <button type="submit" class="submit-btn" id="btnRegisterSubmit">Daftar Sekarang</button>
   </form>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -109,8 +109,14 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
+  // Variabel penanda agar sistem tahu user baru daftar atau sekadar login biasa
+  let isRegisteringProcess = false;
+
   onAuthStateChanged(auth, (user) => {
-    if (user) window.location.href = 'index.html';
+    // Jika ada user aktif DAN kita tidak sedang dalam proses pendaftaran akun baru, lempar ke index.html
+    if (user && !isRegisteringProcess) {
+      window.location.href = 'index.html';
+    }
   });
 
   window.switchTab = function(type) {
@@ -129,22 +135,38 @@
 
   window.handleSubmit = async function(e, type) {
     e.preventDefault();
+    
     if (type === 'login') {
+      const btn = document.getElementById('btnLoginSubmit');
+      btn.innerText = "MEMPROSES...";
+      btn.disabled = true;
+
       const email = document.getElementById('loginEmail').value;
       const pass = document.getElementById('loginPassword').value;
       try {
         await signInWithEmailAndPassword(auth, email, pass);
       } catch (err) {
         alert("Gagal Masuk: " + err.message);
+        btn.innerText = "Masuk Akun";
+        btn.disabled = false;
       }
     } else {
+      const btn = document.getElementById('btnRegisterSubmit');
+      btn.innerText = "MEMPROSES...";
+      btn.disabled = true;
+      isRegisteringProcess = true; // Kunci agar onAuthStateChanged tidak langsung redirect ke index.html
+
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
       const pass = document.getElementById('regPassword').value;
       try {
+        // 1. Daftarkan akun ke Firebase Auth
         const credential = await createUserWithEmailAndPassword(auth, email, pass);
+        
+        // 2. Perbarui nama profil di Auth
         await updateProfile(credential.user, { displayName: name });
         
+        // 3. Simpan data awal santri ke Cloud Firestore Database
         await setDoc(doc(db, 'users', credential.user.uid), {
           name: name,
           email: email,
@@ -159,8 +181,23 @@
             level6: { percent: 0, unlocked: false }
           }
         });
+
+        // 4. Keluarkan paksa sesi otomatis agar santri harus login manual
+        await signOut(auth);
+        
+        alert("Pendaftaran Berhasil! Silakan masuk menggunakan akun baru Anda.");
+        
+        // Kembalikan form ke tab login
+        document.getElementById('formRegister').reset();
+        isRegisteringProcess = false;
+        switchTab('login');
+
       } catch (err) {
         alert("Gagal Mendaftar: " + err.message);
+        isRegisteringProcess = false;
+      } finally {
+        btn.innerText = "Daftar Sekarang";
+        btn.disabled = false;
       }
     }
   }
