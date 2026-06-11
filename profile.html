@@ -7,15 +7,38 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style-shared.css">
 <style>
-  /* Hanya menyisipkan sedikit gaya khusus untuk halaman profil */
+  :root {
+    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
+    --neon-cyan: #00e5ff; --neon-gold: #ffd700; --neon-emerald: #00c896; --dark-bg: #050508;
+    --dark-card: #0d0d1a; --dark-card2: #12122a; --text-light: #e8e0ff; --text-dim: #8878aa;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg);
+    color: var(--text-light);
+    font-family: 'Exo 2', sans-serif;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 800px; margin: 0 auto; }
+
   .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
+  
+  .back-btn {
+    color: var(--neon-cyan); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; text-shadow: 0 0 10px var(--neon-cyan); }
+
   .logout-btn {
     background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444;
     padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.3s;
   }
   .logout-btn:hover { background: #ef4444; color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+  
   .profile-card {
     background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
     border: 1px solid rgba(0, 245, 212, 0.2); border-radius: 24px;
@@ -30,11 +53,13 @@
   .avatar-container i { font-size: 3rem; color: var(--neon-emerald); }
   .user-name { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: #fff; margin-bottom: 5px; }
   .user-email { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 15px; }
+  
   .xp-badge {
     display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 183, 3, 0.1);
     border: 1px solid var(--neon-gold); color: var(--neon-gold); padding: 6px 18px;
     border-radius: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 0 15px rgba(255, 183, 3, 0.1);
   }
+  
   .section-title { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: var(--neon-cyan); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
   .progress-container { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; }
   .level-row { margin-bottom: 20px; }
@@ -44,6 +69,7 @@
   .level-score { color: var(--neon-emerald); }
   .progress-bar-bg { background: rgba(255,255,255,0.05); height: 10px; border-radius: 10px; overflow: hidden; position: relative; }
   .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--neon-emerald), var(--neon-cyan)); width: 0%; transition: width 1s ease-in-out; }
+  
   .loading-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark-bg); display: flex; justify-content: center; align-items: center; z-index: 999; font-size: 1.2rem; color: var(--neon-emerald); }
 </style>
 </head>
@@ -84,7 +110,7 @@
 
     <div class="level-row">
       <div class="level-info">
-        <span class="level-name">Level 2: Fiqih Ibadah</span>
+        <span class="level-name">Level 2: Al-Qur'an & Tajwid</span>
         <span class="level-score" id="lvl2Score">Belum Selesai</span>
       </div>
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="lvl2Bar"></div></div>
@@ -92,7 +118,7 @@
 
     <div class="level-row">
       <div class="level-info">
-        <span class="level-name">Level 3: Al-Qur'an Hadits</span>
+        <span class="level-name">Level 3: Fiqih Ibadah</span>
         <span class="level-score" id="lvl3Score">Belum Selesai</span>
       </div>
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="lvl3Bar"></div></div>
@@ -146,15 +172,19 @@
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
-      window.location.href = "login.html"; 
-    } else {
+      // PERBAIKAN: Diarahkan ke file login kamu yang benar (auth.html)
+      window.location.href = "auth.html"; 
+      return;
+    }
+
+    try {
       document.getElementById("profileEmail").textContent = user.email;
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
         const data = userSnap.data();
-        document.getElementById("profileName").textContent = data.name || "Ksatria Akademi";
+        document.getElementById("profileName").textContent = data.name || user.displayName || "Ksatria Akademi";
         document.getElementById("profileXP").textContent = data.xp || 0;
 
         renderLevelProgress("level1", "lvl1Score", "lvl1Bar", data);
@@ -164,7 +194,12 @@
         renderLevelProgress("level5", "lvl5Score", "lvl5Bar", data);
         renderLevelProgress("level6", "lvl6Score", "lvl6Bar", data);
       }
-      document.getElementById("loadingOverlay").style.display = "none";
+    } catch (error) {
+      console.error("Gagal mengambil data profil:", error);
+    } finally {
+      // Dijamin overlay tertutup apa pun yang terjadi, tidak akan stuck berputar
+      const overlay = document.getElementById("loadingOverlay");
+      if (overlay) overlay.style.display = "none";
     }
   });
 
@@ -176,17 +211,19 @@
       if (scoreEl) scoreEl.textContent = `${score}% Terkuasai`;
       if (barEl) barEl.style.width = `${score}%`;
     } else {
-      if (scoreEl) scoreEl.textContent = "Belum Ujian";
+      if (scoreEl) scoreEl.textContent = "0% Terkuasai";
       if (barEl) barEl.style.width = "0%";
     }
   }
 
   window.handleLogout = function() {
-    signOut(auth).then(() => {
-      window.location.href = "login.html";
-    }).catch((error) => {
-      console.error("Gagal Logout:", error);
-    });
+    if (confirm('Yakin ingin keluar dari akun?')) {
+      signOut(auth).then(() => {
+        window.location.href = "auth.html"; // PERBAIKAN: Diarahkan ke file yang benar
+      }).catch((error) => {
+        console.error("Gagal Logout:", error);
+      });
+    }
   }
 </script>
 </body>
