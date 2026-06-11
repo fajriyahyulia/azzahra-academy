@@ -31,7 +31,7 @@
     .nav-stats { display: flex; gap: 15px; align-items: center; }
     .stat-badge { background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; font-weight: 600; }
     
-    /* NAVIGASI TOMBOL BAWAH (KAYAK NURANI) */
+    /* NAVIGASI TOMBOL BAWAH */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
       background: var(--card-dark); border-top: 1px solid rgba(255,255,255,0.05);
@@ -50,14 +50,14 @@
     @media (max-width: 768px) { .grid-dashboard { grid-template-columns: 1fr; } }
     .card { background: var(--card-dark); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 20px; }
     
-    /* DAFTAR LEVEL & PERSENAN PROGRES (KAYAK NURANI) */
+    /* DAFTAR LEVEL & PERSENAN PROGRES (KAYAK NURANI ASLI) */
     .level-card {
       display: flex; justify-content: space-between; align-items: center;
       padding: 20px; border-radius: 14px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
       background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
     }
     .level-card:hover { transform: scale(1.01); background: rgba(255,255,255,0.04); }
-    .level-card.locked { opacity: 0.4; cursor: not-allowed; }
+    .level-card.locked { opacity: 0.3; cursor: not-allowed; }
     .level-info h3 { font-size: 1.3rem; margin-bottom: 5px; }
 
     /* DETAIL SUB-BAB */
@@ -247,7 +247,7 @@
     let currentQuestionIdx = 0;
     let totalCorrectAnswers = 0;
 
-    // DATA RESMI LENGKAP MATERI & KUIS PER SUB-BAB (MASING-MASING 10 SOAL)
+    // DATA RESMI LENGKAP LEVEL 1 SAMPAI LEVEL 6 SEPERTI DI DATABASE FIRESTORE KAMU
     const DATA_MATERI = [
       {
         id: "level1", title: "Aqidah", color: "var(--level-1)", icon: "fa-sun",
@@ -284,7 +284,6 @@
             ]
           }
         ],
-        // POOL 25 SOAL UNTUK UJIAN AKHIR BAB 1
         examQuiz: [
           { q: "Berapa jumlah Rukun Iman?", a: ["4", "5", "6", "7"], correct: 2 },
           { q: "Iman pertama adalah iman kepada siapa?", a: ["Malaikat", "Kitab", "Rasul", "Allah"], correct: 3 },
@@ -311,6 +310,41 @@
           { q: "Malaikat pencatat amal buruk bernama?", a: ["Atid", "Raqib", "Malik", "Ridwan"], correct: 0 },
           { q: "Malaikat pencatat amal baik bernama?", a: ["Atid", "Raqib", "Malik", "Ridwan"], correct: 1 },
           { q: "Qadha dan Qadar artinya kehendak dan ketetapan milik?", a: ["Manusia", "Malaikat", "Nabi", "Allah SWT"], correct: 3 }
+        ]
+      },
+      {
+        id: "level2", title: "Fikih Ibadah", color: "var(--level-2)", icon: "fa-water",
+        description: "Panduan tata cara bersuci (Thaharah), berwudhu, serta kesempurnaan salat fardhu.",
+        subBabs: [
+          { title: "Thaharah (Bersuci)", videoId: "bOInI2Z8xno", summary: "Mengenal jenis najis dan cara membersihkannya agar sah beribadah.", quiz: [{q:"Contoh air suci mensucikan adalah air...", a:["Kopi","Teh","Hujan","Susu"], correct:2}] }
+        ]
+      },
+      {
+        id: "level3", title: "Akhlak Mulia", color: "var(--level-3)", icon: "fa-hands-holding-child",
+        description: "Membentuk pribadi luhur melalui adab kepada orang tua, guru, dan teman.",
+        subBabs: [
+          { title: "Adab Orang Tua", videoId: "bOInI2Z8xno", summary: "Berbakti kepada bapak ibu (Birrul Walidain) tanpa berkata kasar.", quiz: [{q:"Berkata kasar 'Ah' kepada orang tua hukumnya...", a:["Boleh","Dosa besar","Makruh","Sunnah"], correct:1}] }
+        ]
+      },
+      {
+        id: "level4", title: "Tarikh Islam", color: "var(--level-4)", icon: "fa-landmark",
+        description: "Meneladani kisah perjuangan dakwah Nabi Muhammad SAW dan Khulafaur Rasyidin.",
+        subBabs: [
+          { title: "Kelahiran Nabi", videoId: "bOInI2Z8xno", summary: "Sejarah Kota Makkah pada Tahun Gajah saat Rasulullah dilahirkan.", quiz: [{q:"Nabi Muhammad SAW lahir pada tahun...", a:["Gajah","Unta","Kuda","Hijriah"], correct:0}] }
+        ]
+      },
+      {
+        id: "level5", title: "Al-Qur'an Tajwid", color: "var(--level-5)", icon: "fa-book-quran",
+        description: "Praktik membaca Al-Qur'an secara tartil menggunakan kaidah tajwid dasar.",
+        subBabs: [
+          { title: "Hukum Nun Mati", videoId: "bOInI2Z8xno", summary: "Memahami cara membaca Izhar, Idgham, Iqlab, dan Ikhfa.", quiz: [{q:"Bila Nun mati bertemu huruf Alif dibaca...", a:["Samar","Mendengkur","Jelas/Izhar","Membalik"], correct:2}] }
+        ]
+      },
+      {
+        id: "level6", title: "Doa & Dzikir", color: "var(--level-6)", icon: "fa-hands-praying",
+        description: "Kumpulan hafalan doa harian penting dan dzikir setelah salat fardhu.",
+        subBabs: [
+          { title: "Doa Orang Tua", videoId: "bOInI2Z8xno", summary: "Lafadz doa harian memohon ampunan untuk ayah dan ibu.", quiz: [{q:"Robbighfirlii waliwaalidayya adalah awal doa...", a:["Makan","Tidur","Kedua Orang Tua","Belajar"], correct:2}] }
         ]
       }
     ];
@@ -410,7 +444,6 @@
         subContainer.appendChild(item);
       });
 
-      // SYARAT TOMBOL UJIAN AKHIR BAB MUNCUL (PERSENAN PROGRESS BAB SUDAH 100%)
       const currentPercent = currentUserData.progress?.[levelId]?.percent || 0;
       const examBox = document.getElementById('examContainer');
       if (currentPercent >= 100 && dataBab.examQuiz) {
@@ -501,7 +534,6 @@
 
       if (currentQuestionIdx >= quizQuestions.length) {
         if (!isExamMode) {
-          // EVALUASI KUIS SUB-BAB (MINIMAL BENAR 7 DARI 10 SOAL)
           if (totalCorrectAnswers >= 7) {
             alert(`🎉 Alhamdulillah LULUS! Kamu menjawab ${totalCorrectAnswers} soal benar. Mendapat +100 XP!`);
             prosesPenyelesaianKuis(true);
@@ -510,7 +542,6 @@
             prosesPenyelesaianKuis(false);
           }
         } else {
-          // EVALUASI UJIAN AKHIR BAB (MINIMAL BENAR 18 DARI 25 SOAL)
           if (totalCorrectAnswers >= 18) {
             alert(`🏆 LUAR BIASA! Lulus Ujian Akhir Bab dengan ${totalCorrectAnswers} jawaban benar! Bab Selanjutnya Terbuka.`);
             prosesPenyelesaianUjianAkhir(true);
@@ -535,10 +566,22 @@
         let persenLama = currentUserData.progress?.[selectedLevelId]?.percent || 0;
         let persenBaru = Math.min(persenLama + bobotPerSub, 100);
 
-        await updateDoc(doc(db, "users", currentUserId), {
+        // Jika subbab selesai dan progres bab menyentuh 100%, gembok level berikutnya langsung otomatis terbuka
+        let dataUpdate = {
           xp: totalXpBaru,
           [`progress.${selectedLevelId}.percent`]: persenBaru
-        });
+        };
+
+        if (persenBaru >= 100) {
+          const urutanLevel = ["level1", "level2", "level3", "level4", "level5", "level6"];
+          const indexSekarang = urutanLevel.indexOf(selectedLevelId);
+          if (indexSekarang !== -1 && indexSekarang < urutanLevel.length - 1) {
+            const levelBerikutnya = urutanLevel[indexSekarang + 1];
+            dataUpdate[`progress.${levelBerikutnya}.unlocked`] = true;
+          }
+        }
+
+        await updateDoc(doc(db, "users", currentUserId), dataUpdate);
         await muatDataSantri();
         bukaDetailBab(selectedLevelId);
       } else {
@@ -553,9 +596,11 @@
         const totalXpBaru = (currentUserData.xp || 0) + 500;
         let updateData = { xp: totalXpBaru };
         
-        // Contoh: Jika lulus Bab 1, otomatis buka gembok Bab 2 di database
-        if (selectedLevelId === "level1") {
-          updateData["progress.level2.unlocked"] = true;
+        const urutanLevel = ["level1", "level2", "level3", "level4", "level5", "level6"];
+        const indexSekarang = urutanLevel.indexOf(selectedLevelId);
+        if (indexSekarang !== -1 && indexSekarang < urutanLevel.length - 1) {
+          const levelBerikutnya = urutanLevel[indexSekarang + 1];
+          updateData[`progress.${levelBerikutnya}.unlocked`] = true;
         }
 
         await updateDoc(doc(db, "users", currentUserId), updateData);
