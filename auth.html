@@ -3,118 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerbang Masuk — AzZahra Academy</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Nurani — Masuk / Daftar Santri</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --neon-purple: #b026ff; --neon-cyan: #00e5ff; --dark-bg: #050508;
-      --dark-card: #0d0d1a; --text-light: #e8e0ff; --text-dim: #8878aa;
+      --bg-dark: #07070c; --card-dark: #0f0f1e; --text-main: #e2d9f3;
+      --text-muted: #84799f; --neon-purple: #b026ff; --neon-cyan: #00e5ff;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--dark-bg); color: var(--text-light);
+      background: var(--bg-dark); color: var(--text-main);
       font-family: 'Exo 2', sans-serif; display: flex;
-      justify-content: center; align-items: center; min-height: 100vh;
-      padding: 20px;
+      justify-content: center; align-items: center; min-height: 100vh; padding: 20px;
     }
-    
-    .auth-container {
-      background: var(--dark-card); width: 100%; max-width: 420px;
-      padding: 40px 30px; border-radius: 24px;
-      border: 1px solid rgba(176, 38, 255, 0.2);
-      box-shadow: 0 0 30px rgba(176, 38, 255, 0.05);
-      text-align: center;
-    }
-    .logo {
-      font-family: 'Cinzel Decorative', serif; font-size: 2.2rem;
-      color: #fff; font-weight: 700; margin-bottom: 10px;
-    }
-    .subtitle { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 30px; }
-    
-    .tab-toggle {
-      display: flex; background: rgba(255, 255, 255, 0.03);
-      padding: 5px; border-radius: 12px; margin-bottom: 25px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .tab-btn {
-      flex: 1; background: none; border: none; color: var(--text-dim);
-      padding: 10px; font-family: inherit; font-weight: 600;
-      cursor: pointer; border-radius: 8px; transition: 0.3s;
-    }
-    .tab-btn.active {
-      background: var(--neon-purple); color: #fff;
-      box-shadow: 0 0 10px rgba(176, 38, 255, 0.4);
-    }
-
-    .form-group { text-align: left; margin-bottom: 18px; position: relative; }
-    .form-group i {
-      position: absolute; left: 15px; top: 40px; color: var(--text-dim);
-    }
-    label { display: block; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-light); font-weight: 600; }
-    input {
-      width: 100%; background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 15px 12px 42px;
-      border-radius: 10px; color: #fff; font-family: inherit; font-size: 0.95rem;
-      transition: 0.3s;
-    }
-    input:focus {
-      outline: none; border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
-    }
-
-    .submit-btn {
-      width: 100%; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-      border: none; padding: 14px; color: #fff; font-weight: 700;
-      border-radius: 10px; cursor: pointer; margin-top: 15px;
-      font-family: inherit; font-size: 1rem; transition: 0.3s;
-    }
-    .submit-btn:hover {
-      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); transform: translateY(-1px);
-    }
+    .auth-container { background: var(--card-dark); padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 0 30px rgba(176,38,255,0.1); }
+    h2 { text-align: center; margin-bottom: 10px; font-weight: 700; }
+    p.subtitle { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: var(--text-muted); font-weight: 600; }
+    .form-group input { width: 100%; padding: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: inherit; font-size: 1rem; }
+    .form-group input:focus { border-color: var(--neon-cyan); outline: none; }
+    .btn-auth { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan)); border: none; border-radius: 8px; color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+    .btn-auth:hover { opacity: 0.9; transform: translateY(-1px); }
+    .switch-mode { text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-muted); }
+    .switch-mode span { color: var(--neon-cyan); cursor: pointer; font-weight: 600; }
   </style>
 </head>
 <body>
 
   <div class="auth-container">
-    <div class="logo"><i class="fas fa-graduation-cap" style="color:var(--neon-purple);"></i> AzZahra</div>
-    <div class="subtitle" id="authSubtitle">Silakan masuk untuk melanjutkan belajar santri</div>
-
-    <div class="tab-toggle">
-      <button class="tab-btn active" id="btnTabLogin" onclick="switchAuthMode('login')">Masuk</button>
-      <button class="tab-btn" id="btnTabRegister" onclick="switchAuthMode('register')">Daftar</button>
-    </div>
-
-    <form id="authForm" onsubmit="handleAuthSubmit(event)">
-      <div class="form-group" id="groupName" style="display: none;">
-        <label>Nama Lengkap Santri</label>
-        <i class="fas fa-user"></i>
-        <input type="text" id="inputName" placeholder="Masukkan nama lengkap">
+    <h2 id="authTitle">Selamat Datang</h2>
+    <p class="subtitle" id="authSubtitle">Silakan masuk ke akun santri untuk melanjutkan belajar.</p>
+    
+    <form id="authForm">
+      <div class="form-group" id="nameGroup" style="display: none;">
+        <label>NAMA LENGKAP SANTRI</label>
+        <input type="text" id="txtInputName" placeholder="Masukkan nama lengkap">
       </div>
-
       <div class="form-group">
-        <label>Alamat Email</label>
-        <i class="fas fa-envelope"></i>
-        <input type="email" id="inputEmail" placeholder="contoh@santri.com" required>
+        <label>EMAIL AKUN</label>
+        <input type="email" id="txtInputEmail" placeholder="nama@santri.com" required>
       </div>
-
       <div class="form-group">
-        <label>Kata Sandi</label>
-        <i class="fas fa-lock"></i>
-        <input type="password" id="inputPassword" placeholder="Minimal 6 karakter" required>
+        <label>KATA SANDI (PASSWORD)</label>
+        <input type="password" id="txtInputPassword" placeholder="••••••••" required>
       </div>
-
-      <button type="submit" class="submit-btn" id="btnSubmitAction">Masuk Ke Kelas</button>
+      
+      <button type="submit" class="btn-auth" id="btnSubmitAuth">Masuk Akun</button>
     </form>
+
+    <div class="switch-mode">
+      <p id="lblToggleText">Belum punya akun? <span onclick="toggleAuthMode()">Daftar Sekarang</span></p>
+    </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // Konfigurasi Firebase Anda
     const firebaseConfig = {
       apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
       authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
@@ -128,83 +76,68 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    let currentMode = 'login';
+    let isLoginMode = true;
 
-    // Deteksi jika pengguna sudah login sebelumnya, langsung lempar ke index.html
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.href = 'index.html';
-      }
-    });
+    window.toggleAuthMode = function() {
+      isLoginMode = !isLoginMode;
+      const title = document.getElementById('authTitle');
+      const subtitle = document.getElementById('authSubtitle');
+      const nameGroup = document.getElementById('nameGroup');
+      const btnSubmit = document.getElementById('btnSubmitAuth');
+      const toggleText = document.getElementById('lblToggleText');
 
-    // Pindah Tampilan antara Login & Register
-    window.switchAuthMode = function(mode) {
-      currentMode = mode;
-      const groupName = document.getElementById('groupName');
-      const inputName = document.getElementById('inputName');
-      const btnTabLogin = document.getElementById('btnTabLogin');
-      const btnTabRegister = document.getElementById('btnTabRegister');
-      const btnSubmitAction = document.getElementById('btnSubmitAction');
-      const authSubtitle = document.getElementById('authSubtitle');
-
-      if (mode === 'register') {
-        groupName.style.display = 'block';
-        inputName.required = true;
-        btnTabRegister.classList.add('active');
-        btnTabLogin.classList.remove('active');
-        btnSubmitAction.innerText = 'Buat Akun Baru';
-        authSubtitle.innerText = 'Daftarkan akun santri baru untuk memulai kurikulum';
+      if (isLoginMode) {
+        title.innerText = "Selamat Datang";
+        subtitle.innerText = "Silakan masuk ke akun santri untuk melanjutkan belajar.";
+        nameGroup.style.display = "none";
+        btnSubmit.innerText = "Masuk Akun";
+        toggleText.innerHTML = `Belum punya akun? <span onclick="toggleAuthMode()">Daftar Sekarang</span>`;
       } else {
-        groupName.style.display = 'none';
-        inputName.required = false;
-        btnTabLogin.classList.add('active');
-        btnTabRegister.classList.remove('active');
-        btnSubmitAction.innerText = 'Masuk Ke Kelas';
-        authSubtitle.innerText = 'Silakan masuk untuk melanjutkan belajar santri';
+        title.innerText = "Daftar Akun Baru";
+        subtitle.innerText = "Buat akun belajarmu untuk mulai mengumpulkan poin XP.";
+        nameGroup.style.display = "block";
+        btnSubmit.innerText = "Buat Akun Santri";
+        toggleText.innerHTML = `Sudah punya akun? <span onclick="toggleAuthMode()">Masuk di Sini</span>`;
       }
-    }
+    };
 
-    // Eksekusi Login atau Register ke Firebase
-    window.handleAuthSubmit = async function(e) {
+    document.getElementById('authForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      const email = document.getElementById('inputEmail').value;
-      const password = document.getElementById('inputPassword').value;
-      const name = document.getElementById('inputName').value;
+      const email = document.getElementById('txtInputEmail').value;
+      const password = document.getElementById('txtInputPassword').value;
+      const name = document.getElementById('txtInputName').value;
 
       try {
-        if (currentMode === 'register') {
-          // PROSES DAFTAR AKUN BARU
+        if (isLoginMode) {
+          // PROSES MASUK
+          await signInWithEmailAndPassword(auth, email, password);
+          window.location.href = 'index.html';
+        } else {
+          // PROSES DAFTAR BARU
+          if(!name) { alert("Nama lengkap tidak boleh kosong!"); return; }
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
 
-          // Buat struktur default awal untuk progress Level 1-6 di Cloud Firestore
+          // Set default skema database santri di Firestore
           await setDoc(doc(db, "users", user.uid), {
+            uid: user.uid,
             name: name,
             email: email,
             xp: 0,
             streak: 1,
             progress: {
-              level1: { percent: 0, unlocked: true }, // Level 1 langsung terbuka awal
-              level2: { percent: 0, unlocked: false },
-              level3: { percent: 0, unlocked: false },
-              level4: { percent: 0, unlocked: false },
-              level5: { percent: 0, unlocked: false },
-              level6: { percent: 0, unlocked: false }
+              level1: { percent: 0, unlocked: true },
+              level2: { percent: 0, unlocked: false }
             }
           });
 
-          alert("Registrasi Berhasil! Selamat datang di AzZahra Academy.");
-        } else {
-          // PROSES MASUK (LOGIN)
-          await signInWithEmailAndPassword(auth, email, password);
-          alert("Berhasil Masuk!");
+          alert("Pendaftaran berhasil! Akun santri siap digunakan.");
+          window.location.href = 'index.html';
         }
       } catch (error) {
-        console.error(error);
-        alert("Gagal: " + error.message);
+        alert("Terjadi kendala keamanan: " + error.message);
       }
-    }
+    });
   </script>
 </body>
 </html>
