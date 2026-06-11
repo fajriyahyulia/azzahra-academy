@@ -7,36 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style-shared.css">
 <style>
-  :root {
-    --neon-gold: #ffb703; --neon-emerald: #00f5d4; --neon-cyan: #4cc9f0;
-    --dark-bg: #020206; --dark-card: #090915; --dark-card2: #12122c;
-    --text-light: #e6e6f2; --text-dim: #74749a;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--dark-bg); color: var(--text-light);
-    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
-  }
-
-  .container { max-width: 850px; margin: 0 auto; padding: 0 20px; }
-  
-  /* HEADER BUTTONS */
+  /* Hanya menyisipkan sedikit gaya khusus untuk halaman profil */
   .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-gold);
-    text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: 0.3s;
-  }
-  .back-btn:hover { color: #fff; transform: translateX(-3px); }
-  
   .logout-btn {
     background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444;
     padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.3s;
   }
   .logout-btn:hover { background: #ef4444; color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
-
-  /* PROFILE CARD */
   .profile-card {
     background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
     border: 1px solid rgba(0, 245, 212, 0.2); border-radius: 24px;
@@ -51,27 +30,20 @@
   .avatar-container i { font-size: 3rem; color: var(--neon-emerald); }
   .user-name { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: #fff; margin-bottom: 5px; }
   .user-email { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 15px; }
-  
   .xp-badge {
     display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 183, 3, 0.1);
     border: 1px solid var(--neon-gold); color: var(--neon-gold); padding: 6px 18px;
     border-radius: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 0 15px rgba(255, 183, 3, 0.1);
   }
-
-  /* ACADEMIC PROGRESS SECTION */
   .section-title { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; color: var(--neon-cyan); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
   .progress-container { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; }
-  
   .level-row { margin-bottom: 20px; }
   .level-row:last-child { margin-bottom: 0; }
   .level-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.92rem; font-weight: 600; }
   .level-name { color: #fff; }
   .level-score { color: var(--neon-emerald); }
-  
   .progress-bar-bg { background: rgba(255,255,255,0.05); height: 10px; border-radius: 10px; overflow: hidden; position: relative; }
   .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--neon-emerald), var(--neon-cyan)); width: 0%; transition: width 1s ease-in-out; }
-  
-  /* LOADING STATE */
   .loading-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--dark-bg); display: flex; justify-content: center; align-items: center; z-index: 999; font-size: 1.2rem; color: var(--neon-emerald); }
 </style>
 </head>
@@ -174,32 +146,24 @@
 
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
-      // Jika belum login, tendang ke halaman login/index
       window.location.href = "login.html"; 
     } else {
-      // Ambil data profil dari Firestore
       document.getElementById("profileEmail").textContent = user.email;
-      
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
         const data = userSnap.data();
-        
-        // Pasang Nama dan XP
         document.getElementById("profileName").textContent = data.name || "Ksatria Akademi";
         document.getElementById("profileXP").textContent = data.xp || 0;
 
-        // Render Progres Level-Level
         renderLevelProgress("level1", "lvl1Score", "lvl1Bar", data);
-        renderLevelProgress("level2", "lvl2Score", "level2Bar", data); // Fallback handling
+        renderLevelProgress("level2", "lvl2Score", "lvl2Bar", data);
         renderLevelProgress("level3", "lvl3Score", "lvl3Bar", data);
         renderLevelProgress("level4", "lvl4Score", "lvl4Bar", data);
         renderLevelProgress("level5", "lvl5Score", "lvl5Bar", data);
         renderLevelProgress("level6", "lvl6Score", "lvl6Bar", data);
       }
-      
-      // Matikan overlay loading
       document.getElementById("loadingOverlay").style.display = "none";
     }
   });
@@ -207,8 +171,6 @@
   function renderLevelProgress(levelKey, scoreId, barId, userData) {
     const scoreEl = document.getElementById(scoreId);
     const barEl = document.getElementById(barId);
-    
-    // Cek apakah struktur progress dari kuis tersedia di database
     if (userData.progress && userData.progress[levelKey]) {
       const score = userData.progress[levelKey].percent || 0;
       if (scoreEl) scoreEl.textContent = `${score}% Terkuasai`;
