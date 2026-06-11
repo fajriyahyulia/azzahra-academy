@@ -4,410 +4,433 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Level 3: Fiqih Ibadah — AzZahra Academy</title>
-<link rel="stylesheet" href="style-shared.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{
-  --neon-purple:#b026ff;--neon-violet:#7c3aed;--neon-pink:#e040fb;--neon-cyan:#00e5ff;--neon-gold:#ffd700;--dark-bg:#050508;--dark-card:#0d0d1a;--dark-card2:#12122a;--text-light:#e8e0ff;--text-dim:#8878aa;
-  --lvl-color:#00c896;--lvl-grad:linear-gradient(135deg,#00966e,#00c896);
-}
+  :root {
+    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
+    --neon-cyan: #00e5ff; --neon-gold: #ffd700; --dark-bg: #050508;
+    --dark-card: #0d0d1a; --dark-card2: #12122a; --text-light: #e8e0ff; --text-dim: #8878aa;
+  }
 
-/* TOP BAR */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,200,150,0.2);display:flex;align-items:center;padding:0 24px;gap:16px;}
-.back-btn{background:#1a1a2e;border:1px solid rgba(0,200,150,0.3);color:var(--text-dim);width:36px;height:36px;border-radius:10px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.back-btn:hover{border-color:var(--lvl-color);color:#fff;transform:translateX(-2px);}
-.topbar-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:700;flex:1;color:#fff;}
-.topbar-title span{color:var(--lvl-color);}
-.topbar-right{display:flex;align-items:center;gap:14px;}
-.xp-counter{background:#1a1a2e;border:1px solid #ffd70044;border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:700;color:var(--neon-gold);display:flex;align-items:center;gap:6px;}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
 
-/* LAYOUT CONTAINER */
-.layout{display:flex;margin-top:58px;min-height:calc(100vh - 58px);position:relative;}
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* HEADER LEVEL */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-cyan);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(0, 229, 255, 0.15); border: 1px solid var(--neon-cyan); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-/* SIDEBAR MAP */
-.sidebar{width:280px;background:#090912;border-right:1px solid rgba(0,200,150,0.1);padding:20px;overflow-y:auto;flex-shrink:0;}
-.sb-title{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700;}
-.sb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.sb-item{background:var(--dark-card);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;position:relative;}
-.sb-item:hover{border-color:rgba(0,200,150,0.4);background:#0d1f1a;}
-.sb-item.active{border-color:var(--lvl-color);background:linear-gradient(90deg,#071b15,transparent);box-shadow:inset 3px 0 0 var(--lvl-color);}
-.sb-item.locked{opacity:0.4;cursor:not-allowed;}
-.sb-item.locked:hover{background:var(--dark-card);border-color:rgba(255,255,255,0.03);}
-.sb-idx{width:22px;height:22px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.sb-item.active .sb-idx{background:var(--lvl-color);color:#050508;border-color:var(--lvl-color);}
-.sb-info{flex:1;min-width:0;}
-.sb-name{font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sb-status{font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:4px;}
-.sb-status.done{color:#33ff97;}
-.sb-status.current{color:var(--lvl-color);}
+  /* MATERI KONTEN */
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-gold); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-cyan); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-pink); }
+  p { margin-bottom: 15px; color: #d0c8ec; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #d0c8ec; }
+  li { margin-bottom: 5px; }
 
-/* MAIN CONTENT WORKSPACE */
-.workspace{flex:1;padding:40px;background:var(--dark-bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
-.content-card{width:100%;max-width:760px;background:var(--dark-card);border:1px solid rgba(0,200,150,0.1);border-radius:24px;padding:36px;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;animation:fadeIn 0.4s ease forwards;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-purple); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; }
 
-/* CONTENT DETAILS */
-.mat-header{margin-bottom:24px;border-bottom:1px solid rgba(0,200,150,0.1);padding-bottom:16px;}
-.mat-tag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--lvl-color);font-weight:700;margin-bottom:6px;display:block;}
-.mat-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;}
-.mat-body{font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:30px;}
-.mat-body p{margin-bottom:16px;}
-.mat-body strong{color:var(--lvl-color);}
-.arabic-quote{font-family:'Amiri',serif;font-size:1.6rem;color:var(--neon-gold);background:#050508;padding:14px;border-radius:12px;text-align:center;margin:16px 0;border:1px solid rgba(0,200,150,0.15);}
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(0, 229, 255, 0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(0, 229, 255, 0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* INTERACTIVE COMPONENT - DRAG & DROP PRO */
-.dd-container{background:var(--dark-card2);border:1px solid rgba(0,200,150,0.15);border-radius:16px;padding:24px;margin-top:24px;}
-.dd-instruction{font-size:0.82rem;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-.dd-instruction i { color: var(--lvl-color); }
-.dd-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
-.dd-word{background:#1a1a2e;border:1px solid rgba(0,200,150,0.3);padding:10px 18px;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:grab;transition:all 0.2s;}
-.dd-word:hover{border-color:var(--lvl-color);box-shadow:0 0 10px rgba(0,200,150,0.2);color:#fff;}
-.dd-word.placed{opacity:0.3;cursor:not-allowed;pointer-events:none;}
-.dd-target-box{background:#050508;border:2px dashed rgba(0,200,150,0.3);border-radius:12px;padding:6px 16px;min-height:42px;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:all 0.3s;vertical-align:middle;margin:0 4px;}
-.dd-target-box.hover{border-color:var(--lvl-color);background:rgba(0,200,150,0.05);}
-.dd-placed{background:var(--lvl-grad);color:#fff;padding:4px 12px;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(0,150,110,0.3);display:flex;align-items:center;gap:6px;}
+  /* TABEL GAYA DARK NEON RESPONSIVE */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); min-width: 600px; }
+  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+  th { background-color: rgba(0, 229, 255, 0.15); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(0, 229, 255, 0.04); }
+  .td-highlight { color: var(--neon-cyan); font-weight: 600; }
+  .td-gold { color: var(--neon-gold); font-weight: 600; }
 
-/* FOOTER NAV ACTIONS */
-.content-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;margin-top:20px;width:100%;max-width:760px;}
-.footer-left, .footer-right { display:flex; gap:12px; }
-.btn-nav{background:#1a1a2e;border:1px solid rgba(0,200,150,0.3);color:var(--text-light);padding:10px 20px;border-radius:30px;font-family:'Exo 2',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
-.btn-nav:hover:not(:disabled){border-color:var(--lvl-color);box-shadow:0 0 15px rgba(0,200,150,0.2);color:#fff;}
-.btn-nav:disabled{opacity:0.25;cursor:not-allowed;}
-.btn-quiz{background:var(--lvl-grad);border:none;box-shadow:0 0 15px rgba(0,200,150,0.3);color:#fff;font-weight:700;}
-.btn-quiz:hover{box-shadow:0 0 25px rgba(0,200,150,0.5);transform:translateY(-1px);}
+  /* ARABIC TEXT WRAPPER */
+  .arabic-text { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--neon-gold); direction: rtl; text-align: right; margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; }
 
-/* TOAST NOTIF */
-.toast {
-  position: fixed; bottom: 30px; right: 30px; background: var(--dark-card);
-  border: 1px solid var(--lvl-color); border-radius: 12px; padding: 14px 24px;
-  display: flex; align-items: center; gap: 10px; z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(100px); opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast i { font-size: 1.1rem; }
+  /* KUIS */
+  .quiz-section { background: linear-gradient(135deg, rgba(13,13,26,0.9), rgba(18,18,42,0.9)); border: 2px solid var(--neon-cyan); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(0,229,255,0.15); }
+  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+  .quiz-title i { color: var(--neon-pink); }
+  
+  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+  
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
+  .option-item:hover { background: rgba(0,229,255,0.08); border-color: var(--neon-cyan); }
+  .option-item input { accent-color: var(--neon-cyan); cursor: pointer; width: 18px; height: 18px; }
+
+  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,229,255,0.3); transition: 0.3s; }
+  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
+
+  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(0,229,255,0.05); border: 1px solid var(--neon-cyan); }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <button class="back-btn" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
-  <div class="topbar-title">Level 03: <span>Fiqih Ibadah</span></div>
-  <div class="topbar-right">
-    <div class="xp-counter"><i class="fas fa-star"></i> <span id="xpCount">0</span> XP</div>
+<div class="container">
+  
+  <div class="level-header">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+    <h1 class="level-title">Level 3: Fiqih Ibadah</h1>
+    <span class="level-badge">Syariat & Tata Cara Bersuci Hingga Haji</span>
   </div>
-</div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sb-title">Materi Fiqih</div>
-    <ul class="sb-list" id="sidebarList"></ul>
-  </aside>
-
-  <main class="workspace">
-    <div class="content-card" id="workspaceCard">
-      </div>
-
-    <div class="content-footer">
-      <div class="footer-left">
-        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)"><i class="fas fa-chevron-left"></i> Kembali</button>
-      </div>
-      <div class="footer-right">
-        <button class="btn-nav btn-quiz" id="btnAction" onclick="handleActionClick()">Lanjut Quiz <i class="fas fa-chevron-right"></i></button>
-      </div>
+  <div class="materi-card">
+    
+    <div class="sub-bab-title"><i class="fas fa-pump-soap"></i> Sub-Bab 1: Thaharah (Bersuci)</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/qutzjf5trN8" allowfullscreen></iframe>
     </div>
-  </main>
-</div>
+    
+    <h3>Pengertian & Pembagian Thaharah</h3>
+    <p>Thaharah secara bahasa berarti bersih dan suci. Menurut istilah syariat, thaharah adalah menghilangkan hadats dan najis menggunakan metode yang ditentukan agar sah dalam menjalankan ibadah seperti sholat, thawaf, dan menyentuh mushaf Al-Qur'an.</p>
+    
+    <div class="dalil-box">
+      <strong>QS. Al-Baqarah: 222</strong><br>
+      "Sesungguhnya Allah menyukai orang-orang yang bertaubat dan menyukai orang-orang yang mensucikan diri."
+    </div>
 
-<div class="toast" id="toastEl">
-  <span id="toastIcon"></span><span id="toastMsg"></span>
+    <h4>1. Thaharah dari Hadats (Kondisi tidak suci pada diri seseorang)</h4>
+    <ul>
+      <li><strong>Hadats Kecil:</strong> Disebabkan kentut, buang air, hilang kesadaran (tidur nyenyak). Disucikan dengan <strong>Wudhu</strong> atau <strong>Tayammum</strong>.</li>
+      <li><strong>Hadats Besar:</strong> Disebabkan keluar mani, jima', haidh, nifas, melahirkan, meninggal dunia. Disucikan dengan <strong>Mandi Wajib (Ghusl)</strong>.</li>
+    </ul>
+
+    <h4>Rukun Wudhu (6 Perkara Wajib)</h4>
+    <ol>
+      <li>Niat dalam hati</li>
+      <li>Membasuh seluruh area wajah</li>
+      <li>Membasuh kedua tangan hingga mencapai siku</li>
+      <li>Mengusap sebagian kecil area kepala</li>
+      <li>Membasuh kedua belah kaki hingga kedua mata kaki</li>
+      <li>Tertib (Berurutan secara runtut)</li>
+    </ol>
+    
+    <div class="arabic-text">أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ</div>
+
+    <h4>2. Thaharah dari Najis (Kotoran fisik pada badan/pakaian/tempat)</h4>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Kategori Najis</th><th>Contoh Objek</th><th>Metode Menyucikan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-highlight">Mughallazhah (Berat)</td><td>Anjing, babi, dan keturunannya</td><td>Dicuci 7 kali, salah satunya wajib dicampur tanah bersih</td></tr>
+          <tr><td class="td-highlight">Mutawassithah (Sedang)</td><td>Darah, nanah, muntah, kotoran, air kencing dewasa</td><td>Dicuci dengan air mengalir sampai hilang warna, bau, dan rasanya</td></tr>
+          <tr><td class="td-highlight">Mukhaffafah (Ringan)</td><td>Air kencing bayi laki-laki (&lt; 2 tahun) yang hanya minum ASI</td><td>Cukup dipercikkan air secara merata pada area yang terkena najis</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Air dan Pembagiannya</h3>
+    <ul>
+      <li><strong>Air Muthlaq (Suci & Menyucikan):</strong> Air murni asli alam (air hujan, laut, sungai, sumur, mata air).</li>
+      <li><strong>Air Musta'mal (Suci tapi Tidak Menyucikan):</strong> Air sisa basuhan wudhu atau mandi wajib yang kurang dari dua kulah.</li>
+      <li><strong>Air Mutanajjis (Najis):</strong> Air yang kejatuhan najis dan berubah warna, bau, atau rasanya (atau volume &lt; 270 liter).</li>
+    </ul>
+
+    <div class="sub-bab-title"><i class="fas fa-kaaba"></i> Sub-Bab 2: Sholat fardhu & Sunnah</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/1r6kMmQaRDQ" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Waktu Sholat Fardhu 5 Waktu</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nama Sholat</th><th>Waktu Pelaksanaan</th><th>Jumlah Rakaat</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-gold">Shubuh</td><td>Terbit fajar shadiq hingga sesaat sebelum terbit matahari</td><td>2 Rakaat</td></tr>
+          <tr><td class="td-gold">Dzuhur</td><td>Matahari tergelincir ke barat hingga bayangan sama panjang dengan benda</td><td>4 Rakaat</td></tr>
+          <tr><td class="td-gold">Ashar</td><td>Akhir waktu dzuhur hingga sesaat sebelum matahari tenggelam/menguning</td><td>4 Rakaat</td></tr>
+          <tr><td class="td-gold">Maghrib</td><td>Matahari terbenam hingga hilangnya mega merah di ufuk barat</td><td>3 Rakaat</td></tr>
+          <tr><td class="td-gold">Isya</td><td>Hilangnya mega merah hingga pertengahan malam/fajar shadiq</td><td>4 Rakaat</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>13 Rukun Sholat (Wajib Dipenuhi)</h3>
+    <p>Rukun sholat adalah pilar inti yang jika ditinggalkan secara sengaja atau lupa, maka sholatnya otomatis batal:</p>
+    <ol>
+      <li>Niat dalam hati</li>
+      <li>Takbiratul Ihram (Mengucapkan "Allahu Akbar")</li>
+      <li>Berdiri tegak bagi yang mampu</li>
+      <li>Membaca Surah Al-Fatihah di setiap rakaat</li>
+      <li>Ruku' disertai Tuma'ninah</li>
+      <li>I'tidal disertai Tuma'ninah</li>
+      <li>Sujud dua kali di setiap rakaat disertai Tuma'ninah</li>
+      <li>Duduk di antara dua sujud disertai Tuma'ninah</li>
+      <li>Duduk Tasyahhud Akhir</li>
+      <li>Membaca bacaan Tasyahhud Akhir</li>
+      <li>Membaca Sholawat atas Nabi Muhammad SAW di tasyahhud akhir</li>
+      <li>Mengucapkan Salam yang pertama (ke arah kanan)</li>
+      <li>Tertib (Runtat dan berurutan)</li>
+    </ol>
+
+    <h3>Sujud Sahwi</h3>
+    <p>Dua kali sujud yang dilakukan sebelum salam di akhir sholat dikarenakan lupa/ragu jumlah rakaat atau tidak sengaja meninggalkan sunnah ab'adh (seperti tasyahhud awal atau qunut subuh).</p>
+
+    <div class="sub-bab-title"><i class="fas fa-moon"></i> Sub-Bab 3: Puasa Wajib & Sunnah</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/7XzHVOJNgAE" allowfullscreen></iframe>
+    </div>
+    <p>Puasa (Shaum) secara istilah adalah menahan diri dari segala hal yang membatalkan mulai dari terbit fajar shadiq (subuh) hingga terbenamnya matahari (maghrib) dengan niat ikhlas karena Allah SWT.</p>
+
+    <h3>Klasifikasi Hukum Puasa</h3>
+    <ul>
+      <li><strong>Puasa Wajib:</strong> Ramadhan, puasa Qadha (mengganti hutang), puasa Kaffarah (denda), dan puasa Nadzar.</li>
+      <li><strong>Puasa Sunnah:</strong> Senin-Kamis, Ayyamul Bidh (13, 14, 15 Hijriyah), 6 hari Syawal, Puasa Arafah (9 Dzulhijjah), dan Puasa Daud.</li>
+      <li><strong>Puasa Haram:</strong> Hari Raya Idul Fitri (1 Syawal), Idul Adha (10 Dzulhijjah), Hari Tasyrik (11, 12, 13 Dzulhijjah), serta wanita sedang haidh/nifas.</li>
+    </ul>
+
+    <h3>Golongan yang Memiliki Keringanan Tidak Berpuasa Ramadhan</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Golongan Berhalangan</th><th>Konsekuensi Pengganti</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Musafir (Perjalanan Jauh) & Orang Sakit Ringan</td><td>Wajib melakukan <strong>Qadha</strong> (Ganti hari di bulan lain)</td></tr>
+          <tr><td>Wanita Hamil / Menyusui (Khawatir anak)</td><td>Wajib <strong>Qadha + Membayar Fidyah</strong> (Menurut sebagian madzhab)</td></tr>
+          <tr><td>Lansia & Orang Sakit Menahun (Tidak ada harapan sembuh)</td><td>Hanya wajib <strong>Membayar Fidyah</strong> (Beras ~600-750 gram per hari)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-bab-title"><i class="fas fa-hand-holding-dollar"></i> Sub-Bab 4: Hukum & Perhitungan Zakat</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/trXEeGUNQm4" allowfullscreen></iframe>
+    </div>
+    
+    <h3>1. Zakat Fitrah (Zakat Jiwa)</h3>
+    <p>Wajib dikeluarkan oleh setiap individu muslim di bulan Ramadhan hingga sebelum sholat Idul Fitri sebesar <strong>1 Sha' makanan pokok (atau setara dengan 2.5 kg s.d 3 kg / 3.5 liter beras)</strong>.</p>
+
+    <h3>2. Zakat Mal (Zakat Harta)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Jenis Aset Harta</th><th>Nishab (Batas Minimal Harta)</th><th>Kadar Nilai Zakat</th><th>Waktu Kepemilikan (Haul)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Emas murni & Tabungan Uang</td><td>85 Gram Emas Murni</td><td>2.5 %</td><td>Wajib dimiliki selama 1 Tahun</td></tr>
+          <tr><td>Aset Perdagangan</td><td>Setara Nilai 85 Gram Emas</td><td>2.5 %</td><td>Wajib dimiliki selama 1 Tahun</td></tr>
+          <tr><td>Hasil Pertanian (Padi/Biji)</td><td>653 Kg Hasil Panen</td><td>5% (Irigasi berbiaya) / 10% (Tadah Hujan)</td><td>Setiap kali masa panen (Tanpa Haul)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>8 Golongan Penerima Zakat (Mustahiq - QS. At-Taubah: 60)</h3>
+    <p>Fakir, Miskin, Amil (Pengelola), Muallaf, Riqab (Budak), Gharim (Orang terlilit hutang), Fi Sabilillah (Pejuang), dan Ibnu Sabil (Musafir kehabisan bekal).</p>
+
+    <div class="sub-bab-title"><i class="fas fa-plane-departure"></i> Sub-Bab 5: Manasik Haji & Umroh</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/4zdrz5B7-HY" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Perbedaan Utama Rukun Haji vs Rukun Umroh</h3>
+    <p>Jika rukun ditinggalkan, ibadah otomatis tidak sah dan tidak bisa diganti/ditebus dengan membayar denda (Dam).</p>
+    <ul>
+      <li><strong>Rukun Haji (6):</strong> Ihram, Wukuf di Padang Arafah, Thawaf Ifadhah, Sa'i, Tahallul (Cukur Rambut), dan Tertib.</li>
+      <li><strong>Rukun Umroh (5):</strong> Ihram, Thawaf, Sa'i, Tahallul, dan Tertib. *(Umroh TIDAK memiliki agenda Wukuf di Arafah)*.</li>
+    </ul>
+
+    <h3>Jenis Pelaksanaan Haji</h3>
+    <ol>
+      <li><strong>Haji Tamattu':</strong> Melaksanakan ibadah Umroh terlebih dahulu di bulan haji, baru kemudian melaksanakan Haji (Wajib bayar Dam).</li>
+      <li><strong>Haji Ifrad:</strong> Melaksanakan ibadah Haji secara mandiri saja tanpa umroh (Tanpa kewajiban Dam).</li>
+      <li><strong>Haji Qiran:</strong> Menggabungkan niat dan aktivitas ibadah Haji dan Umroh sekaligus secara bersamaan (Wajib bayar Dam).</li>
+    </ol>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-graduation-cap"></i> Kuis Evaluasi Tingkat 3</div>
+    <form id="quizForm">
+      
+      <div class="question-box">
+        <div class="question-text">1. Manakah di bawah ini yang tergolong ke dalam struktur rukun/fardhu wudhu yang wajib dilakukan?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> Membaca Bismillah di awal</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> Berkumur-kumur dan membasuh telapak tangan 3 kali</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> Membasuh wajah dan membasuh kedua tangan hingga siku</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">2. Bagaimana cara menyucikan objek benda yang terkena najis berat (Mughallazhah) seperti air liur anjing?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> Cukup dipercikkan air jernih sampai basah</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> Dicuci 7 kali, yang salah satunya wajib dicampur menggunakan tanah bersih</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> Dialiri air hangat sampai baunya hilang</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">3. Air yang volumenya kurang dari dua kulah dan telah digunakan untuk membasuh anggota wudhu dinamakan air...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Musta'mal</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Mutanajjis</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Muthlaq</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">4. Di antara perkara berikut, manakah komponen yang termasuk ke dalam bagian Rukun Sholat (Bukan Sunnah)?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Membaca doa iftitah di rakaat pertama</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Membaca surah Al-Fatihah di setiap rakaat</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Membaca doa qunut pada waktu sholat shubuh</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">5. Apa tindakan yang disyariatkan jika kita ragu jumlah rakaat atau tidak sengaja melewati tasyahhud awal saat sholat?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> Melakukan sujud sahwi dua kali sebelum salam</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> Sholatnya batal dan wajib diulang penuh dari awal</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> Membayar denda atau fidyah makanan pokok</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">6. Hari-hari yang diharamkan secara mutlak bagi umat muslim untuk melaksanakan ibadah puasa adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> Hari senin dan hari kamis</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> Dua hari raya (Idul Fitri & Idul Adha) serta Hari Tasyrik</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> Tanggal 13, 14, dan 15 setiap bulan Hijriyah</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">7. Berapakah batas minimal nishab harta untuk kategori emas murni agar wajib dikeluarkan zakat mal kepemilikannya?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> 50 Gram</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> 85 Gram</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> 100 Gram</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">8. Orang yang terlilit hutang demi memenuhi kebutuhan pokok yang dibenarkan syariat (Bukan Maksiat) disebut...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Gharim</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Ibnu Sabil</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Muallaf</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">9. Apa aktivitas rukun utama haji yang membedakannya dengan ibadah umroh (Tidak ada di rukun umroh)?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Thawaf mengelilingi Ka'bah</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Wukuf di Padang Arafah pada 9 Dzulhijjah</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Sa'i di antara bukit Shafa dan Marwa</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">10. Istilah untuk metode pelaksanaan haji di mana seseorang mendahulukan Umroh baru kemudian Haji dinamakan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> Haji Ifrad</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> Haji Qiran</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> Haji Tamattu'</label>
+        </div>
+      </div>
+
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Semangat Belajar!</p>
+    </div>
+  </div>
+
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCsX-3QTSbmRKEZiNsjM6jWAZ6l2hTqC38",
-  authDomain: "azzahra-web.firebaseapp.com",
-  projectId: "azzahra-web",
-  storageBucket: "azzahra-web.firebasestorage.app",
-  messagingSenderId: "716860109019",
-  appId: "1:716860109019:web:433065a2294026ae665cfe",
-  measurementId: "G-G7X3S5QRHP"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-let userXP = 0;
-let userProgress = {};
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'auth.html';
-    return;
-  }
-  currentUser = user;
-
-  const userDocRef = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userDocRef);
-
-  if (userSnap.exists()) {
-    const data = userSnap.data();
-    userXP = data.xp || 0;
-    userProgress = data.progress || {};
-
-    document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-    // Sinkronisasi data progres level 3 dari Firestore
-    if (userProgress.level3) {
-      const savedSubs = userProgress.level3.subProgress || [];
-      savedSubs.forEach((saved, index) => {
-        if (subbabs[index]) {
-          subbabs[index].unlocked = saved.unlocked;
-          subbabs[index].completed = saved.completed;
-        }
-      });
-    }
-  }
-
-  renderSidebar();
-  renderMateri(currentSub);
-});
-
-window.saveProgressToFirebase = async function(xpBonus, nextSubIdx) {
-  if (!currentUser) return;
-
-  userXP += xpBonus;
-  document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-  const subProgressArray = subbabs.map(s => ({
-    unlocked: s.unlocked,
-    completed: s.completed
-  }));
-
-  const completedCount = subbabs.filter(s => s.completed).length;
-  const percentTotal = Math.round((completedCount / subbabs.length) * 100);
-  const totalStars = percentTotal === 100 ? 3 : percentTotal >= 50 ? 2 : percentTotal >= 25 ? 1 : 0;
-
-  const userDocRef = doc(db, "users", currentUser.uid);
-  
-  userProgress["level3"] = {
-    percent: percentTotal,
-    stars: totalStars,
-    unlocked: true,
-    subProgress: subProgressArray
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+    projectId: "azzahra-academy-ad1ec",
+    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+    messagingSenderId: "425297111795",
+    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
   };
 
-  // Jika level 3 beres total, otomatis buka gembok level 4
-  if (percentTotal === 100) {
-    if (!userProgress["level4"]) {
-      userProgress["level4"] = { percent: 0, stars: 0, unlocked: true, subProgress: [] };
-    } else {
-      userProgress["level4"].unlocked = true;
-    }
-  }
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUserId = null;
 
-  try {
-    await updateDoc(userDocRef, {
-      xp: userXP,
-      progress: userProgress
-    });
-  } catch (error) {
-    console.error("Gagal sinkronisasi data ke Firestore:", error);
-  }
-};
-</script>
-
-<script>
-// Data Pembelajaran Lokal Level 3
-const subbabs = [
-  { id: 1, title: "Thaharah (Bersuci)", unlocked: true, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 01 — Bersuci</span><h2 class='mat-title'>Konsep Thaharah dalam Islam</h2></div><div class='mat-body'><p>Secara bahasa, <strong>Thaharah</strong> bermakna membersihkan diri dari kotoran. Sedangkan menurut istilah syariat, Thaharah adalah mengangkat hadats atau menghilangkan najis dengan cara yang telah ditentukan oleh agama Islam agar sah melaksanakan ibadah sholat.</p><p>Thaharah terbagi menjadi dua: Bersuci dari <strong>Hadats</strong> (seperti berwudhu atau mandi wajib) dan bersuci dari <strong>Najis</strong> (membersihkan pakaian, badan, atau tempat dari benda-benda kotor seperti air kencing atau darah).</p></div>", type: "dragdrop", answer: ["Hadats", "Najis"], options: ["Hadats", "Najis", "Kotoran", "Hati"] },
-  { id: 2, title: "Rukun & Pembatal Wudhu", unlocked: false, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 02 — Wudhu</span><h2 class='mat-title'>Syarat Sah & Rukun Wudhu</h2></div><div class='mat-body'><p>Wudhu memiliki <strong>Enam Rukun</strong> wajib yang tidak boleh ditinggalkan. Jika salah satu rukun ini terlewat, maka wudhu dianggap tidak sah. Rukun tersebut meliputi: Niat, Membasuh wajah, Membasuh kedua tangan sampai siku, Mengusap sebagian kepala, Membasuh kedua kaki sampai mata kaki, dan dilakukan secara <strong>Tertib</strong> (berurutan).</p><p>Sesuatu yang membatalkan wudhu di antaranya: keluarnya sesuatu dari kubul/dubur, hilang akal (tidur lelap), atau menyentuh kemaluan tanpa pembatas.</p></div>", type: "dragdrop", answer: ["Enam Rukun", "Tertib"], options: ["Enam Rukun", "Tertib", "Sunnah", "Lima Rukun"] }
-];
-
-let currentSub = 0;
-let quizMode = false;
-
-function renderSidebar() {
-  const list = document.getElementById('sidebarList');
-  if(!list) return;
-  list.innerHTML = subbabs.map((s, idx) => {
-    let statusClass = 'locked';
-    let statusTxt = '<i class="fas fa-lock"></i> Terkunci';
-    
-    if (s.completed) { statusClass = 'done'; statusTxt = '<i class="fas fa-check-circle"></i> Selesai'; }
-    else if (s.unlocked) { statusClass = 'current'; statusTxt = '<i class="fas fa-book-open"></i> Terbuka'; }
-    
-    return `
-      <li class="sb-item ${idx === currentSub ? 'active' : ''} ${!s.unlocked ? 'locked' : ''}" 
-          onclick="${s.unlocked ? `goToSub(${idx})` : `toast('🔒 Selesaikan materi sebelumnya terlebih dahulu!','warn')`}">
-        <div class="sb-idx">${s.id}</div>
-        <div class="sb-info">
-          <div class="sb-name">${s.title}</div>
-          <div class="sb-status ${statusClass}">${statusTxt}</div>
-        </div>
-      </li>`;
-  }).join('');
-}
-
-function renderMateri(idx) {
-  const card = document.getElementById('workspaceCard');
-  const current = subbabs[idx];
-  
-  if(!quizMode) {
-    card.innerHTML = current.text;
-    document.getElementById('btnAction').innerHTML = `Mulai Quiz <i class="fas fa-gamepad"></i>`;
-  } else {
-    let processedText = current.text;
-    current.answer.forEach((ans, i) => {
-      processedText = processedText.replace(ans, `<span class="dd-target-box" data-index="${i}" data-correct="${ans}"></span>`);
-    });
-
-    card.innerHTML = `
-      ${processedText}
-      <div class="dd-container">
-        <div class="dd-instruction"><i class="fas fa-info-circle"></i> Seret kata yang tepat ke dalam kotak bergaris putus-putus:</div>
-        <div class="dd-options">
-          ${current.options.map(opt => `<div class="dd-word" draggable="true" id="word-${opt}" data-word="${opt}">${opt}</div>`).join('')}
-        </div>
-      </div>
-    `;
-    initDragDrop();
-    document.getElementById('btnAction').innerHTML = `Periksa Jawaban <i class="fas fa-check-double"></i>`;
-  }
-  document.getElementById('btnPrev').disabled = (idx === 0 && !quizMode);
-}
-
-function initDragDrop() {
-  const words = document.querySelectorAll('.dd-word');
-  const targets = document.querySelectorAll('.dd-target-box');
-  let dragged = null;
-
-  words.forEach(w => {
-    w.addEventListener('dragstart', () => { dragged = w; });
+  onAuthStateChanged(auth, (user) => {
+    if (user) { currentUserId = user.uid; }
   });
 
-  targets.forEach(t => {
-    t.addEventListener('dragover', e => e.preventDefault());
-    t.addEventListener('dragenter', () => t.classList.add('hover'));
-    t.addEventListener('dragleave', () => t.classList.remove('hover'));
+  window.checkAnswers = async function() {
+    const answers = { q1: 'C', q2: 'B', q3: 'A', q4: 'B', q5: 'A', q6: 'B', q7: 'B', q8: 'A', q9: 'B', q10: 'C' };
+    let score = 0;
     
-    t.addEventListener('drop', () => {
-      t.classList.remove('hover');
-      if(!dragged) return;
-
-      const existing = t.querySelector('.dd-placed');
-      if(existing) {
-        const oldWord = document.getElementById('word-' + existing.dataset.word);
-        if(oldWord) { oldWord.classList.remove('placed'); oldWord.style.display = ''; }
-        existing.remove();
+    for (let i = 1; i <= 10; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === answers[`q${i}`]) {
+        score += 10;
       }
-
-      dragged.classList.add('placed');
-      const placed = document.createElement('div');
-      placed.className = 'dd-placed';
-      placed.textContent = dragged.dataset.word;
-      placed.dataset.word = dragged.dataset.word;
-      
-      placed.addEventListener('click', () => {
-        const src = document.getElementById('word-' + placed.dataset.word);
-        if (src) { src.classList.remove('placed'); src.style.display = ''; }
-        placed.remove();
-      });
-      
-      t.appendChild(placed);
-      dragged = null;
-    });
-  });
-}
-
-function handleActionClick() {
-  if(!quizMode) {
-    quizMode = true;
-    renderMateri(currentSub);
-  } else {
-    const targets = document.querySelectorAll('.dd-target-box');
-    let allCorrect = true;
-    let unfilled = false;
-
-    targets.forEach(t => {
-      const placed = t.querySelector('.dd-placed');
-      if(!placed) { unfilled = true; }
-      else if(placed.dataset.word !== t.dataset.correct) { allCorrect = false; }
-    });
-
-    if(unfilled) {
-      toast('⚠️ Mohon lengkapi seluruh jawaban yang kosong!', 'warn');
-      return;
     }
 
-    if(allCorrect) {
-      const current = subbabs[currentSub];
-      current.completed = true;
-      
-      if (currentSub + 1 < subbabs.length) {
-        subbabs[currentSub + 1].unlocked = true;
-      }
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const feedbackText = document.getElementById('feedbackText');
 
-      toast('🏆 Sempurna! +150 XP berhasil didapatkan.', 'gold');
-      
-      if(window.saveProgressToFirebase) {
-        window.saveProgressToFirebase(150, currentSub + 1);
-      }
+    resultBox.style.display = 'block';
+    scoreText.textContent = `Skor Kamu: ${score} / 100`;
 
-      setTimeout(() => {
-        if(currentSub + 1 < subbabs.length) {
-          currentSub++;
-          quizMode = false;
-          renderSidebar();
-          renderMateri(currentSub);
-        } else {
-          toast('🎉 Selamat! Seluruh materi Level 3 Fiqih Ibadah selesai!', 'success');
-          setTimeout(() => window.location.href = 'index.html', 2000);
-        }
-      }, 1500);
+    // LOGIKA PROgres KELULUSAN SKOR MINIMAL 70 (BENAR 7 DARI 10 SOAL)
+    if (score >= 70) {
+      feedbackText.textContent = `Luar biasa! Kamu berhasil menuntaskan tantangan Level 3 dengan skor ${score}/100. Bonus +100 XP sukses diklaim, dan gerbang Level 4 (Sejarah Kebudayaan Islam) kini telah terbuka lebar!`;
+      if (currentUserId) {
+        try {
+          const userRef = doc(db, 'users', currentUserId);
+          await updateDoc(userRef, {
+            xp: increment(100),
+            "progress.level3.percent": score,  
+            "progress.level4.unlocked": true  
+          });
+        } catch (e) { console.error("Firebase update crash:", e); }
+      }
     } else {
-      toast('❌ Susunan jawaban masih keliru, silakan koreksi kembali!', 'warn');
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai ambang batas kelulusan minimal 70% (Benar 7 dari 10 soal). Yuk, ulas lagi rangkuman tabel di atas dan coba lagi!`;
     }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
-}
-
-function goToSub(idx) {
-  currentSub = idx;
-  quizMode = false;
-  renderMateri(idx);
-  renderSidebar();
-}
-
-function navigate(dir) {
-  if(quizMode && dir === -1) {
-    quizMode = false;
-    renderMateri(currentSub);
-    return;
-  }
-  const next = currentSub + dir;
-  if (next < 0 || next >= subbabs.length) return;
-  goToSub(next);
-}
-
-function toast(msg, type='info') {
-  const icons={success:'fa-check-circle',warn:'fa-exclamation-triangle',info:'fa-info-circle',gold:'fa-trophy'};
-  const colors={success:'#00e676',warn:'#ff9800',info:'#00e5ff',gold:'#ffd700'};
-  const el=document.getElementById('toastEl');
-  document.getElementById('toastMsg').textContent=msg;
-  document.getElementById('toastIcon').className='fas ' + (icons[type]||'fa-star');
-  el.style.borderColor=colors[type]||'#00c896';
-  el.style.color=colors[type]||'#fff';
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 3500);
-}
 </script>
 </body>
 </html>
