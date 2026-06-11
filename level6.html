@@ -7,84 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  :root {
-    --neon-gold: #ffb703; --neon-violet: #b5179e; --neon-cyan: #4cc9f0;
-    --dark-bg: #020206; --dark-card: #090915; --dark-card2: #12122c;
-    --text-light: #e6e6f2; --text-dim: #74749a;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--dark-bg); color: var(--text-light);
-    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
-  }
-
-  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
-  
-  /* HEADER LEVEL */
-  .level-header {
-    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
-    border: 1px solid rgba(255, 183, 3, 0.3); border-radius: 24px;
-    padding: 35px; margin-bottom: 35px; position: relative;
-    box-shadow: 0 10px 30px rgba(255, 183, 3, 0.1);
-  }
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-gold);
-    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
-  }
-  .back-btn:hover { color: #fff; transform: translateX(-3px); }
-  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
-  .level-badge { display: inline-block; background: rgba(255, 183, 3, 0.15); border: 1px solid var(--neon-gold); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-
-  /* MATERI KONTEN */
-  .materi-card {
-    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
-  }
-  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-cyan); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(76,201,240,0.2); display: flex; align-items: center; gap: 10px; }
-  .sub-bab-title:first-of-type { margin-top: 0; }
-  
-  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-gold); padding-left: 10px; }
-  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-purple); }
-  p { margin-bottom: 15px; color: #cbd5e1; }
-  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #cbd5e1; }
-  li { margin-bottom: 6px; }
-
-  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-gold); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; color: #e2e8f0; }
-
-  /* VIDEO EMBED */
-  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(76, 201, 240, 0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(76, 201, 240, 0.1); }
-  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-  /* TABEL RESPONSIVE STYLING */
-  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); min-width: 600px; }
-  th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
-  th { background-color: rgba(76, 201, 240, 0.15); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
-  tr:hover { background-color: rgba(76, 201, 240, 0.04); }
-  .td-highlight { color: var(--neon-gold); font-weight: 600; }
-  .td-cyan { color: var(--neon-cyan); font-weight: 600; }
-
-  /* EVALUASI KUIS */
-  .quiz-section { background: linear-gradient(135deg, rgba(9,9,21,0.95), rgba(18,18,44,0.95)); border: 2px solid var(--neon-gold); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(255,183,3,0.15); }
-  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
-  .quiz-title i { color: var(--neon-cyan); }
-  
-  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
-  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
-  
-  .options-list { display: flex; flex-direction: column; gap: 10px; }
-  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
-  .option-item:hover { background: rgba(255,183,3,0.08); border-color: var(--neon-gold); }
-  .option-item input { accent-color: var(--neon-gold); cursor: pointer; width: 18px; height: 18px; }
-
-  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet)); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255,183,3,0.3); transition: 0.3s; }
-  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
-
-  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(76,201,240,0.05); border: 1px solid var(--neon-cyan); }
-  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
-</style>
+<link rel="stylesheet" href="style-shared.css">
 </head>
 <body>
 
@@ -120,7 +43,7 @@
       <li><strong>Ali bin Abi Thalib RA:</strong> Dipilih secara aklamasi oleh mayoritas umat Islam di tengah situasi krisis politik pasca syahidnya Utsman.</li>
     </ul>
 
-    <div class="sub-bab-title"><i class="fas fa-globe-amr"></i> Sub-Bab 2: Peradaban Islam Dunia & Golden Age</div>
+    <div class="sub-bab-title"><i class="fas fa-globe-asia"></i> Sub-Bab 2: Peradaban Islam Dunia & Golden Age</div>
     <div class="video-container">
       <iframe src="https://www.youtube.com/embed/IabkVcZSy9A" allowfullscreen></iframe>
     </div>
@@ -327,7 +250,6 @@
     resultBox.style.display = 'block';
     scoreText.textContent = `Skor Kamu: ${score} / 100`;
 
-    // LOGIKA GRADUASI KELULUSAN KKM 70%
     if (score >= 70) {
       feedbackText.textContent = `Luar Biasa! Kamu berhasil menyelesaikan Level 6 (Sejarah Islam) dengan skor telak ${score}/100. Klaim +100 XP sukses terverifikasi ke sistem database cloud kamu!`;
       if (currentUserId) {
