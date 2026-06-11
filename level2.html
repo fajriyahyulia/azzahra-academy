@@ -4,410 +4,451 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Level 2: Al-Qur'an & Tajwid — AzZahra Academy</title>
-<link rel="stylesheet" href="style-shared.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{
-  --neon-purple:#b026ff;--neon-violet:#7c3aed;--neon-pink:#e040fb;--neon-cyan:#00e5ff;--neon-gold:#ffd700;--dark-bg:#050508;--dark-card:#0d0d1a;--dark-card2:#12122a;--text-light:#e8e0ff;--text-dim:#8878aa;
-  --lvl-color:#00e5ff;--lvl-grad:linear-gradient(135deg,#00897b,#00e5ff);
-}
+  :root {
+    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
+    --neon-cyan: #00e5ff; --neon-gold: #ffd700; --dark-bg: #050508;
+    --dark-card: #0d0d1a; --dark-card2: #12122a; --text-light: #e8e0ff; --text-dim: #8878aa;
+  }
 
-/* TOP BAR */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.2);display:flex;align-items:center;padding:0 24px;gap:16px;}
-.back-btn{background:#1a1a2e;border:1px solid rgba(0,229,255,0.3);color:var(--text-dim);width:36px;height:36px;border-radius:10px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.back-btn:hover{border-color:var(--neon-cyan);color:#fff;transform:translateX(-2px);}
-.topbar-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:700;flex:1;color:#fff;}
-.topbar-title span{color:var(--neon-cyan);}
-.topbar-right{display:flex;align-items:center;gap:14px;}
-.xp-counter{background:#1a1a2e;border:1px solid #ffd70044;border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:700;color:var(--neon-gold);display:flex;align-items:center;gap:6px;}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
 
-/* LAYOUT CONTAINER */
-.layout{display:flex;margin-top:58px;min-height:calc(100vh - 58px);position:relative;}
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* HEADER LEVEL */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-cyan);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(0, 229, 255, 0.15); border: 1px solid var(--neon-cyan); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-/* SIDEBAR MAP */
-.sidebar{width:280px;background:#090912;border-right:1px solid rgba(0,229,255,0.1);padding:20px;overflow-y:auto;flex-shrink:0;}
-.sb-title{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700;}
-.sb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.sb-item{background:var(--dark-card);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;position:relative;}
-.sb-item:hover{border-color:rgba(0,229,255,0.4);background:#101a2b;}
-.sb-item.active{border-color:var(--neon-cyan);background:linear-gradient(90deg,#0a1b29,transparent);box-shadow:inset 3px 0 0 var(--neon-cyan);}
-.sb-item.locked{opacity:0.4;cursor:not-allowed;}
-.sb-item.locked:hover{background:var(--dark-card);border-color:rgba(255,255,255,0.03);}
-.sb-idx{width:22px;height:22px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.sb-item.active .sb-idx{background:var(--neon-cyan);color:#050508;border-color:var(--neon-cyan);}
-.sb-info{flex:1;min-width:0;}
-.sb-name{font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sb-status{font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:4px;}
-.sb-status.done{color:#33ff97;}
-.sb-status.current{color:var(--neon-cyan);}
+  /* MATERI KONTEN */
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-gold); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-cyan); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-pink); }
+  p { margin-bottom: 15px; color: #d0c8ec; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #d0c8ec; }
+  li { margin-bottom: 5px; }
 
-/* MAIN CONTENT WORKSPACE */
-.workspace{flex:1;padding:40px;background:var(--dark-bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
-.content-card{width:100%;max-width:760px;background:var(--dark-card);border:1px solid rgba(0,229,255,0.1);border-radius:24px;padding:36px;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;animation:fadeIn 0.4s ease forwards;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-purple); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; }
 
-/* CONTENT DETAILS */
-.mat-header{margin-bottom:24px;border-bottom:1px solid rgba(0,229,255,0.1);padding-bottom:16px;}
-.mat-tag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--neon-cyan);font-weight:700;margin-bottom:6px;display:block;}
-.mat-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;}
-.mat-body{font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:30px;}
-.mat-body p{margin-bottom:16px;}
-.mat-body strong{color:var(--neon-cyan);}
-.arabic-example{font-family:'Amiri',serif;font-size:1.8rem;color:var(--neon-gold);background:#050508;padding:12px;border-radius:12px;text-align:center;margin:14px 0;border:1px solid rgba(255,215,0,0.1);box-shadow:0 0 15px rgba(255,215,0,0.05);}
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(0, 229, 255, 0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(0, 229, 255, 0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* INTERACTIVE COMPONENT - DRAG & DROP PRO */
-.dd-container{background:var(--dark-card2);border:1px solid rgba(0,229,255,0.15);border-radius:16px;padding:24px;margin-top:24px;}
-.dd-instruction{font-size:0.82rem;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
-.dd-instruction i { color: var(--neon-cyan); }
-.dd-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
-.dd-word{background:#1a1a2e;border:1px solid rgba(0,229,255,0.3);padding:10px 18px;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:grab;transition:all 0.2s;}
-.dd-word:hover{border-color:var(--neon-cyan);box-shadow:0 0 10px rgba(0,225,255,0.2);color:#fff;}
-.dd-word.placed{opacity:0.3;cursor:not-allowed;pointer-events:none;}
-.dd-target-box{background:#050508;border:2px dashed rgba(0,229,255,0.3);border-radius:12px;padding:8px 18px;min-height:42px;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:all 0.3s;vertical-align:middle;margin:0 4px;}
-.dd-target-box.hover{border-color:var(--neon-cyan);background:rgba(0,229,255,0.05);}
-.dd-placed{background:var(--lvl-grad);color:#fff;padding:4px 12px;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(0,137,123,0.3);display:flex;align-items:center;gap:6px;}
+  /* TABEL GAYA DARK NEON RESPONSIVE */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); min-width: 500px; }
+  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+  th { background-color: rgba(0, 229, 255, 0.15); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(0, 229, 255, 0.04); }
+  .td-arabic { font-family: 'Amiri', serif; font-size: 1.6rem; text-align: center; color: var(--neon-gold); font-weight: bold; width: 20%; }
 
-/* FOOTER NAV ACTIONS */
-.content-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;margin-top:20px;width:100%;max-width:760px;}
-.footer-left, .footer-right { display:flex; gap:12px; }
-.btn-nav{background:#1a1a2e;border:1px solid rgba(0,229,255,0.3);color:var(--text-light);padding:10px 20px;border-radius:30px;font-family:'Exo 2',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
-.btn-nav:hover:not(:disabled){border-color:var(--neon-cyan);box-shadow:0 0 15px rgba(0,229,255,0.2);color:#fff;}
-.btn-nav:disabled{opacity:0.25;cursor:not-allowed;}
-.btn-quiz{background:var(--lvl-grad);border:none;box-shadow:0 0 15px rgba(0,229,255,0.3);color:#fff;font-weight:700;}
-.btn-quiz:hover{box-shadow:0 0 25px rgba(0,229,255,0.5);transform:translateY(-1px);}
+  /* GRID RESPONSIVE HIJAIYAH & ASMAUL HUSNA */
+  .materi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 25px 0; }
+  .materi-grid-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 15px; text-align: center; transition: 0.2s; }
+  .materi-grid-card:hover { border-color: var(--neon-cyan); background: rgba(0,229,255,0.03); }
+  .grid-num { font-size: 0.75rem; color: var(--text-dim); display: block; margin-bottom: 5px; }
+  .grid-arab { font-family: 'Amiri', serif; font-size: 1.8rem; color: #fff; font-weight: 700; display: block; margin-bottom: 4px; }
+  .grid-latin { font-size: 0.9rem; font-weight: 600; color: var(--neon-cyan); display: block; }
+  .grid-arti { font-size: 0.8rem; color: var(--text-dim); display: block; margin-top: 2px; }
 
-/* TOAST NOTIF */
-.toast {
-  position: fixed; bottom: 30px; right: 30px; background: var(--dark-card);
-  border: 1px solid var(--neon-cyan); border-radius: 12px; padding: 14px 24px;
-  display: flex; align-items: center; gap: 10px; z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(100px); opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast i { font-size: 1.1rem; }
+  /* KUIS */
+  .quiz-section { background: linear-gradient(135deg, rgba(13,13,26,0.9), rgba(18,18,42,0.9)); border: 2px solid var(--neon-cyan); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(0,229,255,0.15); }
+  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+  .quiz-title i { color: var(--neon-pink); }
+  
+  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+  
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
+  .option-item:hover { background: rgba(0,229,255,0.08); border-color: var(--neon-cyan); }
+  .option-item input { accent-color: var(--neon-cyan); cursor: pointer; width: 18px; height: 18px; }
+
+  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple)); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,229,255,0.3); transition: 0.3s; }
+  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
+
+  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(0,229,255,0.05); border: 1px solid var(--neon-cyan); }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
+
+  @media (max-width: 768px) { .materi-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .materi-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <button class="back-btn" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
-  <div class="topbar-title">Level 02: <span>Al-Qur'an & Tajwid</span></div>
-  <div class="topbar-right">
-    <div class="xp-counter"><i class="fas fa-star"></i> <span id="xpCount">0</span> XP</div>
+<div class="container">
+  
+  <div class="level-header">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+    <h1 class="level-title">Level 2: Al-Qur'an & Tajwid</h1>
+    <span class="level-badge">Pedoman & Tartil</span>
   </div>
-</div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sb-title">Materi Tajwid</div>
-    <ul class="sb-list" id="sidebarList"></ul>
-  </aside>
-
-  <main class="workspace">
-    <div class="content-card" id="workspaceCard">
-      </div>
-
-    <div class="content-footer">
-      <div class="footer-left">
-        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)"><i class="fas fa-chevron-left"></i> Kembali</button>
-      </div>
-      <div class="footer-right">
-        <button class="btn-nav btn-quiz" id="btnAction" onclick="handleActionClick()">Lanjut Quiz <i class="fas fa-chevron-right"></i></button>
-      </div>
+  <div class="materi-card">
+    
+    <div class="sub-bab-title"><i class="fas fa-book-open"></i> Sub-Bab 1: Huruf Hijaiyah & Makharijul Huruf</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/WTi1nGpNLKU" allowfullscreen></iframe>
     </div>
-  </main>
-</div>
+    
+    <h3>Pengertian Huruf Hijaiyah</h3>
+    <p>Huruf Hijaiyah adalah alfabet Arab yang menjadi dasar membaca Al-Qur'an. Kata "hijaiyah" berasal dari kata <em>haja</em> yang artinya mengeja. Jumlahnya ada 28 huruf menurut mayoritas ulama (atau 29 jika menghitung lam-alif tersendiri).</p>
+    
+    <div class="dalil-box">
+      <strong>Hadis Riwayat Bukhari Muslim:</strong><br>
+      "Orang yang mahir membaca Al-Qur'an akan bersama para malaikat yang mulia. Dan orang yang membaca Al-Qur'an dengan terbata-bata dan susah payah, baginya dua pahala."
+    </div>
 
-<div class="toast" id="toastEl">
-  <span id="toastIcon"></span><span id="toastMsg"></span>
+    <h3>28 Huruf Hijaiyah (Nama & Bunyi)</h3>
+    <div class="materi-grid">
+      <div class="materi-grid-card"><span class="grid-num">1</span><span class="grid-arab">ا</span><span class="grid-latin">Alif</span><span class="grid-arti">A (Panjang)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">2</span><span class="grid-arab">ب</span><span class="grid-latin">Ba</span><span class="grid-arti">B</span></div>
+      <div class="materi-grid-card"><span class="grid-num">3</span><span class="grid-arab">ت</span><span class="grid-latin">Ta</span><span class="grid-arti">T</span></div>
+      <div class="materi-grid-card"><span class="grid-num">4</span><span class="grid-arab">ث</span><span class="grid-latin">Tsa</span><span class="grid-arti">Ts (th Inggris)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">5</span><span class="grid-arab">ج</span><span class="grid-latin">Jim</span><span class="grid-arti">J</span></div>
+      <div class="materi-grid-card"><span class="grid-num">6</span><span class="grid-arab">ح</span><span class="grid-latin">Ha</span><span class="grid-arti">H (Tenggorokan)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">7</span><span class="grid-arab">خ</span><span class="grid-latin">Kha</span><span class="grid-arti">Kh (ch Belanda)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">8</span><span class="grid-arab">د</span><span class="grid-latin">Dal</span><span class="grid-arti">D</span></div>
+      <div class="materi-grid-card"><span class="grid-num">9</span><span class="grid-arab">ذ</span><span class="grid-latin">Dzal</span><span class="grid-arti">Dz</span></div>
+      <div class="materi-grid-card"><span class="grid-num">10</span><span class="grid-arab">ر</span><span class="grid-latin">Ra</span><span class="grid-arti">R</span></div>
+      <div class="materi-grid-card"><span class="grid-num">11</span><span class="grid-arab">ز</span><span class="grid-latin">Zai</span><span class="grid-arti">Z</span></div>
+      <div class="materi-grid-card"><span class="grid-num">12</span><span class="grid-arab">س</span><span class="grid-latin">Sin</span><span class="grid-arti">S</span></div>
+      <div class="materi-grid-card"><span class="grid-num">13</span><span class="grid-arab">ش</span><span class="grid-latin">Syin</span><span class="grid-arti">Sy</span></div>
+      <div class="materi-grid-card"><span class="grid-num">14</span><span class="grid-arab">ص</span><span class="grid-latin">Shad</span><span class="grid-arti">Sh (S tebal)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">15</span><span class="grid-arab">ض</span><span class="grid-latin">Dhad</span><span class="grid-arti">Dh (D tebal)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">16</span><span class="grid-arab">ط</span><span class="grid-latin">Tha</span><span class="grid-arti">Th (T tebal)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">17</span><span class="grid-arab">ظ</span><span class="grid-latin">Zha</span><span class="grid-arti">Zh (Z tebal)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">18</span><span class="grid-arab">ع</span><span class="grid-latin">'Ain</span><span class="grid-arti">' (Tenggorokan dalam)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">19</span><span class="grid-arab">غ</span><span class="grid-latin">Ghain</span><span class="grid-arti">Gh (Kumur)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">20</span><span class="grid-arab">ف</span><span class="grid-latin">Fa</span><span class="grid-arti">F</span></div>
+      <div class="materi-grid-card"><span class="grid-num">21</span><span class="grid-arab">ق</span><span class="grid-latin">Qaf</span><span class="grid-arti">Q (Pangkal tenggorokan)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">22</span><span class="grid-arab">ك</span><span class="grid-latin">Kaf</span><span class="grid-arti">K</span></div>
+      <div class="materi-grid-card"><span class="grid-num">23</span><span class="grid-arab">ل</span><span class="grid-latin">Lam</span><span class="grid-arti">L</span></div>
+      <div class="materi-grid-card"><span class="grid-num">24</span><span class="grid-arab">م</span><span class="grid-latin">Mim</span><span class="grid-arti">M</span></div>
+      <div class="materi-grid-card"><span class="grid-num">25</span><span class="grid-arab">ن</span><span class="grid-latin">Nun</span><span class="grid-arti">N</span></div>
+      <div class="materi-grid-card"><span class="grid-num">26</span><span class="grid-arab">و</span><span class="grid-latin">Waw</span><span class="grid-arti">W</span></div>
+      <div class="materi-grid-card"><span class="grid-num">27</span><span class="grid-arab">ه</span><span class="grid-latin">Ha</span><span class="grid-arti">H ringan (Dada)</span></div>
+      <div class="materi-grid-card"><span class="grid-num">28</span><span class="grid-arab">ي</span><span class="grid-latin">Ya</span><span class="grid-arti">Y</span></div>
+    </div>
+
+    <h3>Bentuk Posisi Huruf Sambung</h3>
+    <p>Setiap huruf memiliki modifikasi bentuk visual berdasarkan posisinya di dalam suatu kata:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Posisi</th><th>Keterangan</th><th>Contoh Visual (Huruf Ba)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Merdeka</td><td>Berdiri Sendiri / Tunggal</td><td class="td-arabic">ب</td></tr>
+          <tr><td>Awal Kata</td><td>Terletak di bagian depan</td><td class="td-arabic">بـ</td></tr>
+          <tr><td>Tengah Kata</td><td>Terletak di bagian tengah</td><td class="td-arabic">ـبـ</td></tr>
+          <tr><td>Akhir Kata</td><td>Terletak di bagian belakang</td><td class="td-arabic">ـب</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>⚠️ <strong>Catatan Penting:</strong> Ada 6 huruf terpisah yang <strong>tidak bisa disambung ke kiri</strong> (ke huruf sesudahnya), yaitu: Alif (ا), Dal (د), Dzal (ذ), Ra (ر), Zai (ز), dan Waw (و).</p>
+
+    <h3>Harakat (Tanda Baca Bunyi Vokal)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Simbol</th><th>Nama Harakat</th><th>Bunyi Vokal</th><th>Contoh Aplikasi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>َ</td><td>Fathah</td><td>A (Pendek)</td><td class="td-arabic">بَ = Ba</td></tr>
+          <tr><td>ِ</td><td>Kasrah</td><td>I (Pendek)</td><td class="td-arabic">بِ = Bi</td></tr>
+          <tr><td>ُ</td><td>Dhammah</td><td>U (Pendek)</td><td class="td-arabic">بُ = Bu</td></tr>
+          <tr><td>ً</td><td>Fathatain / Tanwin</td><td>An</td><td class="td-arabic">بً = Ban</td></tr>
+          <tr><td>ٍ</td><td>Kasratain / Tanwin</td><td>In</td><td class="td-arabic">بٍ = Bin</td></tr>
+          <tr><td>ٌ</td><td>Dhammatain / Tanwin</td><td>Un</td><td class="td-arabic">بٌ = Bun</td></tr>
+          <tr><td>ْ</td><td>Sukun</td><td>Konsonan Mati</td><td class="td-arabic">بْ = B</td></tr>
+          <tr><td>ّ</td><td>Tasydid / Syaddah</td><td>Konsonan Dobel</td><td class="td-arabic">بّ = Bb</td></tr>
+          <tr><td>وْ ِ / يْ ُ / ٰ</td><td>Mad Thabi'i</td><td>Vokal Panjang (2 Harakat)</td><td class="td-arabic">بَا / بِي / بُو</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Makharijul Huruf (5 Area Tempat Keluar Suara)</h3>
+    <ol>
+      <li><strong>Al-Jauf (Rongga Mulut & Dada):</strong> Tempat keluarnya bunyi panjang (huruf mad).</li>
+      <li><strong>Al-Halq (Tenggorokan):</strong> Pangkal (ء, ه), Tengah (ع, ح), dan Ujung (غ, خ).</li>
+      <li><strong>Al-Lisan (Lidah):</strong> Area terpadat yang mencakup total 18 huruf berbeda.</li>
+      <li><strong>Asy-Syafatain (Dua Bibir):</strong> Huruf rapat (ب, م), dengung (م), bulat (و), gigi-bibir (ف).</li>
+      <li><strong>Al-Khaisyum (Rongga Hidung):</strong> Sentralisasi asal suara dengung mendalam (Ghunnah).</li>
+    </ol>
+
+    <div class="sub-bab-title"><i class="fas fa-layer-group"></i> Sub-Bab 2: Hukum Nun Sukun & Tanwin</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/7NFQBn5s8mU" allowfullscreen></iframe>
+    </div>
+    <p>Apabila Nun Sukun (نْ) atau tanda Tanwin (ً ٍ ٌ) bertemu dengan huruf hijaiyah, cara membacanya terbagi menjadi 4 hukum utama:</p>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nama Hukum</th><th>Daftar Huruf</th><th>Metode Membaca</th><th>Contoh Aplikasi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Izhar Halqi</strong></td><td>أ ه ع ح غ خ</td><td>Jelas, Tegas, Tanpa Dengung</td><td class="td-arabic">مَنْ أَمَنَ = Man Amana</td></tr>
+          <tr><td><strong>Idgham Bighunnah</strong></td><td>ي ن م و</td><td>Lebur Masuk & Berdengung (2 Harakat)</td><td class="td-arabic">مَنْ يَعْمَلْ = Mayyya'mal</td></tr>
+          <tr><td><strong>Idgham Bilaghunnah</strong></td><td>ل ر</td><td>Lebur Masuk Tanpa Ada Dengung</td><td class="td-arabic">مِنْ رَبِّكَ = Mirrobbika</td></tr>
+          <tr><td><strong>Iqlab</strong></td><td>ب</td><td>Suara Nun Berubah Menjadi Mim (Dengung)</td><td class="td-arabic">مِنْ بَعْدِ = Mimba'di</td></tr>
+          <tr><td><strong>Ikhfa Haqiqi</strong></td><td>15 Huruf Sisa</td><td>Samar-Samar Menuju Huruf Depan</td><td class="td-arabic">كُنْتُمْ = Kun-tum</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-bab-title"><i class="fas fa-braille"></i> Sub-Bab 3: Hukum Mim Sukun</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/Bvs7f4Nn8OM" allowfullscreen></iframe>
+    </div>
+    <p>Ketika Mim Sukun (مْ) bertemu dengan huruf hijaiyah, maka hukum bacaannya terbagi menjadi 3 struktur:</p>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nama Hukum</th><th>Huruf Syarat</th><th>Metode Pengucapan Suara</th><th>Contoh Aplikasi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Ikhfa Syafawi</strong></td><td>ب</td><td>Disamarkan di bibir disertai dengung mendalam</td><td class="td-arabic">تَرْمِيهِمْ بِحِجَارَةٍ</td></tr>
+          <tr><td><strong>Idgham Mimi</strong></td><td>م</td><td>Peleburan sempurna menjadi kembar (Mim bertasydid)</td><td class="td-arabic">لَهُمْ مَا</td></tr>
+          <tr><td><strong>Izhar Syafawi</strong></td><td>26 Huruf Sisa</td><td>Sangat jelas di bibir, mutlak tanpa dengung</td><td class="td-arabic">هُمْ فِيهَا</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-bab-title"><i class="fas fa-arrows-left-right"></i> Sub-Bab 4: Hukum Mad & Qashar</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/msl45V5_gpk" allowfullscreen></iframe>
+    </div>
+    <p>Mad artinya memanjangkan suara ketukan vokal. Ringkasan klasifikasi panjang harakat:</p>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nama Klasifikasi Mad</th><th>Kondisi / Penyebab Aturan</th><th>Durasi Panjang</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Mad Thabi'i (Asli)</strong></td><td>Huruf mad standar berdiri sendiri (Alif, Waw, Ya mati)</td><td>2 Harakat (2 Ketukan)</td></tr>
+          <tr><td><strong>Mad Wajib Muttashil</strong></td><td>Mad bertemu dengan Hamzah di dalam <strong>satu kata sama</strong></td><td>4 - 5 Harakat</td></tr>
+          <tr><td><strong>Mad Jaiz Munfashil</strong></td><td>Mad bertemu dengan Hamzah di dalam <strong>dua kata terpisah</strong></td><td>2 - 5 Harakat</td></tr>
+          <tr><td><strong>Mad 'Aridh Lissukun</strong></td><td>Mad Thabi'i yang berada di ujung kata/ayat (Berhenti/Waqaf)</td><td>2, 4, atau 6 Harakat</td></tr>
+          <tr><td><strong>Mad Lazim Mutsaqqal</strong></td><td>Mad bertemu huruf bertasydid kuat dalam satu kalimat</td><td>6 Harakat (Wajib)</td></tr>
+          <tr><td><strong>Mad Lin</strong></td><td>Huruf Waw/Ya sukun didahului fathah saat posisi berhenti</td><td>2, 4, atau 6 Harakat</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub-bab-title"><i class="fas fa-circle-stop"></i> Sub-Bab 5: Waqaf & Ibtida</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/riiPhyNLG24" allowfullscreen></iframe>
+    </div>
+    <p>Waqaf adalah menghentikan bacaan sejenak untuk mengambil napas, sedangkan Ibtida adalah memulai kembali bacaan pasca waqaf.</p>
+    
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Simbol</th><th>Nama Tanda Waqaf</th><th>Aturan Regulasi Bacaan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-arabic">م</td><td>Waqaf Lazim</td><td><strong>Wajib Berhenti</strong> (Sempurna)</td></tr>
+          <tr><td class="td-arabic">لا</td><td>La Waqfa Fiih</td><td><strong>Dilarang Berhenti</strong> (Lanjutkan)</td></tr>
+          <tr><td class="td-arabic">ج</td><td>Waqaf Jaiz</td><td>Boleh berhenti, boleh juga terus</td></tr>
+          <tr><td class="td-arabic">قلى</td><td>Al-Waqfu Aula</td><td>Berhenti jauh lebih baik</td></tr>
+          <tr><td class="td-arabic">صلى</td><td>Al-Washlu Aula</td><td>Meneruskan bacaan jauh lebih baik</td></tr>
+          <tr><td class="td-arabic">ۛ…ۛ</td><td>Waqaf Mu'anaqah</td><td>Berhenti di salah satu titik, tidak boleh di keduanya</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-graduation-cap"></i> Kuis Evaluasi Level 2</div>
+    <form id="quizForm">
+      
+      <div class="question-box">
+        <div class="question-text">1. Berapakah jumlah huruf hijaiyah asli menurut pendapat mayoritas ulama?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> 20 Huruf</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> 28 Huruf</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> 35 Huruf</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">2. Manakah di bawah ini yang termasuk dalam kelompok 6 huruf hijaiyah terpisah (tidak bisa menyambung ke kiri)?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> ا, د, ذ, ر, ز, و</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> ب, ت, ث, ج, ح, خ</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> س, ش, ص, ض, ط, ظ</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">3. Huruf hijaiyah yang keluar dari area Al-Khaisyum (Rongga Hidung) dibaca dengan metode...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Jelas tanpa suara samar</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Dengung (Ghunnah)</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Pendek sekali</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">4. Apabila ada Nun Sukun bertemu dengan huruf 'Ba' (ب), maka hukum bacaannya dinamakan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Izhar Halqi</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Idgham Bighunnah</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Iqlab</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">5. Manakah contoh yang paling tepat untuk penerapan hukum Izhar Halqi?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> مَنْ أَمَنَ</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> مَنْ يَعْمَلْ</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> مِنْ بَعْدِ</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">6. Apa hukum bacaan ketika Mim Sukun (مْ) langsung bertemu dengan huruf Mim hidup (م)?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> Izhar Syafawi</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> Idgham Mimi (Mutamatsilain)</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> Ikhfa Syafawi</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">7. Standar ketukan panjang untuk Mad Thabi'i (Mad Asli) adalah sebanyak...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> 2 Harakat</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> 4 Harakat</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> 6 Harakat</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">8. Kondisi di mana huruf Mad bertemu Hamzah dalam satu kata bersambung disebut...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Mad Jaiz Munfashil</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Mad Wajib Muttashil</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Mad 'Aridh Lissukun</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">9. Simbol huruf waqaf (م) kecil di dalam mushaf Al-Qur'an menandakan bahwa pembaca...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Wajib berhenti (Waqaf Lazim)</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Dilarang berhenti</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Lebih baik melanjutkan</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">10. Apabila kata berakhiran Ta Marbuthah (ة) dibaca waqaf/berhenti, maka bunyinya berubah menjadi...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> Huruf Ta mati tetap jernih</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> Huruf Ha mati / desis hembusan napas ringan</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> Bunyi vokal panjang</label>
+        </div>
+      </div>
+
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Semangat Belajar!</p>
+    </div>
+  </div>
+
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCsX-3QTSbmRKEZiNsjM6jWAZ6l2hTqC38",
-  authDomain: "azzahra-web.firebaseapp.com",
-  projectId: "azzahra-web",
-  storageBucket: "azzahra-web.firebasestorage.app",
-  messagingSenderId: "716860109019",
-  appId: "1:716860109019:web:433065a2294026ae665cfe",
-  measurementId: "G-G7X3S5QRHP"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-let userXP = 0;
-let userProgress = {};
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'auth.html';
-    return;
-  }
-  currentUser = user;
-
-  const userDocRef = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userDocRef);
-
-  if (userSnap.exists()) {
-    const data = userSnap.data();
-    userXP = data.xp || 0;
-    userProgress = data.progress || {};
-
-    document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-    // Sinkronisasi data progres level 2 dari Firestore
-    if (userProgress.level2) {
-      const savedSubs = userProgress.level2.subProgress || [];
-      savedSubs.forEach((saved, index) => {
-        if (subbabs[index]) {
-          subbabs[index].unlocked = saved.unlocked;
-          subbabs[index].completed = saved.completed;
-        }
-      });
-    }
-  }
-
-  renderSidebar();
-  renderMateri(currentSub);
-});
-
-window.saveProgressToFirebase = async function(xpBonus, nextSubIdx) {
-  if (!currentUser) return;
-
-  userXP += xpBonus;
-  document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-  const subProgressArray = subbabs.map(s => ({
-    unlocked: s.unlocked,
-    completed: s.completed
-  }));
-
-  const completedCount = subbabs.filter(s => s.completed).length;
-  const percentTotal = Math.round((completedCount / subbabs.length) * 100);
-  const totalStars = percentTotal === 100 ? 3 : percentTotal >= 50 ? 2 : percentTotal >= 25 ? 1 : 0;
-
-  const userDocRef = doc(db, "users", currentUser.uid);
-  
-  userProgress["level2"] = {
-    percent: percentTotal,
-    stars: totalStars,
-    unlocked: true,
-    subProgress: subProgressArray
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+    projectId: "azzahra-academy-ad1ec",
+    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+    messagingSenderId: "425297111795",
+    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
   };
 
-  // Jika level 2 beres total, otomatis buka gembok level 3
-  if (percentTotal === 100) {
-    if (!userProgress["level3"]) {
-      userProgress["level3"] = { percent: 0, stars: 0, unlocked: true, subProgress: [] };
-    } else {
-      userProgress["level3"].unlocked = true;
-    }
-  }
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUserId = null;
 
-  try {
-    await updateDoc(userDocRef, {
-      xp: userXP,
-      progress: userProgress
-    });
-  } catch (error) {
-    console.error("Gagal sinkronisasi data ke Firestore:", error);
-  }
-};
-</script>
-
-<script>
-// Data Pembelajaran Lokal Level 2
-const subbabs = [
-  { id: 1, title: "Hukum Nun Sukun & Tanwin", unlocked: true, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 01 — Tajwid Dasar</span><h2 class='mat-title'>Pengantar Nun Sukun & Tanwin</h2></div><div class='mat-body'><p>Hukum nun sukun (نْ) dan tanwin (ً ٍ ٌ) terjadi jika bertemu dengan huruf-huruf hijaiyah tertentu. Hukum ini terbagi menjadi 4 bagian besar: <strong>Izhkar</strong> (jelas), <strong>Idgham</strong> (memasukkan), <strong>Iqlab</strong> (membalik menjadi suara mim), dan <strong>Ikhfa</strong> (samar-samar).</p><p>Sebagai contoh, jika nun mati bertemu dengan huruf Alif (أ), maka cara membacanya harus jelas tanpa mendengung. Hukum ini dinamakan dengan sebutan hukum Izhar.</p></div>", type: "dragdrop", answer: ["Izhar", "Samar-samar"], options: ["Izhar", "Samar-samar", "Iqlab", "Dengung"] },
-  { id: 2, title: "Idgham Bighunnah & Bilaghunnah", unlocked: false, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 02 — Pembagian Idgham</span><h2 class='mat-title'>Bighunnah vs Bilaghunnah</h2></div><div class='mat-body'><p><strong>Idgham Bighunnah</strong> artinya memasukkan suara nun mati disertai dengungan jika bertemu 4 huruf: <strong>Ya, Nun, Mim, Wawu (ي ن م و)</strong>. Contohnya:</p><div class='arabic-example'>مَنْ يَقُوْلُ</div><p>Sedangkan <strong>Idgham Bilaghunnah</strong> artinya memasukkan suara tanpa mendengung sama sekali jika bertemu dengan huruf <strong>Lam dan Ra (ل, ر)</strong>.</p></div>", type: "dragdrop", answer: ["Dengung", "Lam"], options: ["Dengung", "Lam", "Jelas", "Mim"] }
-];
-
-let currentSub = 0;
-let quizMode = false;
-
-function renderSidebar() {
-  const list = document.getElementById('sidebarList');
-  if(!list) return;
-  list.innerHTML = subbabs.map((s, idx) => {
-    let statusClass = 'locked';
-    let statusTxt = '<i class="fas fa-lock"></i> Terkunci';
-    
-    if (s.completed) { statusClass = 'done'; statusTxt = '<i class="fas fa-check-circle"></i> Selesai'; }
-    else if (s.unlocked) { statusClass = 'current'; statusTxt = '<i class="fas fa-book-open"></i> Terbuka'; }
-    
-    return `
-      <li class="sb-item ${idx === currentSub ? 'active' : ''} ${!s.unlocked ? 'locked' : ''}" 
-          onclick="${s.unlocked ? `goToSub(${idx})` : `toast('🔒 Selesaikan materi sebelumnya terlebih dahulu!','warn')`}">
-        <div class="sb-idx">${s.id}</div>
-        <div class="sb-info">
-          <div class="sb-name">${s.title}</div>
-          <div class="sb-status ${statusClass}">${statusTxt}</div>
-        </div>
-      </li>`;
-  }).join('');
-}
-
-function renderMateri(idx) {
-  const card = document.getElementById('workspaceCard');
-  const current = subbabs[idx];
-  
-  if(!quizMode) {
-    card.innerHTML = current.text;
-    document.getElementById('btnAction').innerHTML = `Mulai Quiz <i class="fas fa-gamepad"></i>`;
-  } else {
-    let processedText = current.text;
-    current.answer.forEach((ans, i) => {
-      processedText = processedText.replace(ans, `<span class="dd-target-box" data-index="${i}" data-correct="${ans}"></span>`);
-    });
-
-    card.innerHTML = `
-      ${processedText}
-      <div class="dd-container">
-        <div class="dd-instruction"><i class="fas fa-info-circle"></i> Tarik kata yang benar ke dalam kotak kosong di atas:</div>
-        <div class="dd-options">
-          ${current.options.map(opt => `<div class="dd-word" draggable="true" id="word-${opt}" data-word="${opt}">${opt}</div>`).join('')}
-        </div>
-      </div>
-    `;
-    initDragDrop();
-    document.getElementById('btnAction').innerHTML = `Periksa Jawaban <i class="fas fa-check-double"></i>`;
-  }
-  document.getElementById('btnPrev').disabled = (idx === 0 && !quizMode);
-}
-
-function initDragDrop() {
-  const words = document.querySelectorAll('.dd-word');
-  const targets = document.querySelectorAll('.dd-target-box');
-  let dragged = null;
-
-  words.forEach(w => {
-    w.addEventListener('dragstart', () => { dragged = w; });
+  onAuthStateChanged(auth, (user) => {
+    if (user) { currentUserId = user.uid; }
   });
 
-  targets.forEach(t => {
-    t.addEventListener('dragover', e => e.preventDefault());
-    t.addEventListener('dragenter', () => t.classList.add('hover'));
-    t.addEventListener('dragleave', () => t.classList.remove('hover'));
+  window.checkAnswers = async function() {
+    const answers = { q1: 'B', q2: 'A', q3: 'B', q4: 'C', q5: 'A', q6: 'B', q7: 'A', q8: 'B', q9: 'A', q10: 'B' };
+    let score = 0;
     
-    t.addEventListener('drop', () => {
-      t.classList.remove('hover');
-      if(!dragged) return;
-
-      const existing = t.querySelector('.dd-placed');
-      if(existing) {
-        const oldWord = document.getElementById('word-' + existing.dataset.word);
-        if(oldWord) { oldWord.classList.remove('placed'); oldWord.style.display = ''; }
-        existing.remove();
+    for (let i = 1; i <= 10; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === answers[`q${i}`]) {
+        score += 10;
       }
-
-      dragged.classList.add('placed');
-      const placed = document.createElement('div');
-      placed.className = 'dd-placed';
-      placed.textContent = dragged.dataset.word;
-      placed.dataset.word = dragged.dataset.word;
-      
-      placed.addEventListener('click', () => {
-        const src = document.getElementById('word-' + placed.dataset.word);
-        if (src) { src.classList.remove('placed'); src.style.display = ''; }
-        placed.remove();
-      });
-      
-      t.appendChild(placed);
-      dragged = null;
-    });
-  });
-}
-
-function handleActionClick() {
-  if(!quizMode) {
-    quizMode = true;
-    renderMateri(currentSub);
-  } else {
-    const targets = document.querySelectorAll('.dd-target-box');
-    let allCorrect = true;
-    let unfilled = false;
-
-    targets.forEach(t => {
-      const placed = t.querySelector('.dd-placed');
-      if(!placed) { unfilled = true; }
-      else if(placed.dataset.word !== t.dataset.correct) { allCorrect = false; }
-    });
-
-    if(unfilled) {
-      toast('⚠️ Tolong isi semua kotak kosong!', 'warn');
-      return;
     }
 
-    if(allCorrect) {
-      const current = subbabs[currentSub];
-      current.completed = true;
-      
-      if (currentSub + 1 < subbabs.length) {
-        subbabs[currentSub + 1].unlocked = true;
-      }
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const feedbackText = document.getElementById('feedbackText');
 
-      toast('🏆 Jawaban Tepat! +150 XP.', 'gold');
-      
-      if(window.saveProgressToFirebase) {
-        window.saveProgressToFirebase(150, currentSub + 1);
-      }
+    resultBox.style.display = 'block';
+    scoreText.textContent = `Skor Kamu: ${score} / 100`;
 
-      setTimeout(() => {
-        if(currentSub + 1 < subbabs.length) {
-          currentSub++;
-          quizMode = false;
-          renderSidebar();
-          renderMateri(currentSub);
-        } else {
-          toast('🎉 Selamat! Seluruh materi Level 2 Tajwid telah selesai!', 'success');
-          setTimeout(() => window.location.href = 'index.html', 2000);
-        }
-      }, 1500);
+    // STRATEGI KELULUSAN SKOR MINIMAL 70 (BENAR 7 DARI 10 SOAL)
+    if (score >= 70) {
+      feedbackText.textContent = `Mumtaz! Kamu lulus tingkat ini dengan skor ${score}/100. Bonus +100 XP ditambahkan ke akunmu dan segel gembok Level 3 (Fiqih Ibadah) kini telah resmi terbuka!`;
+      if (currentUserId) {
+        try {
+          const userRef = doc(db, 'users', currentUserId);
+          await updateDoc(userRef, {
+            xp: increment(100),
+            "progress.level2.percent": score,  
+            "progress.level3.unlocked": true  
+          });
+        } catch (e) { console.error("Gagal melakukan pembaruan data ke Firebase:", e); }
+      }
     } else {
-      toast('❌ Susunan kata masih salah, coba lagi ya!', 'warn');
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas minimal kelulusan (70% atau minimal benar 7 soal). Jangan berkecil hati, yuk baca ulang materi tabel di atas dan coba lagi!`;
     }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
-}
-
-function goToSub(idx) {
-  currentSub = idx;
-  quizMode = false;
-  renderMateri(idx);
-  renderSidebar();
-}
-
-function navigate(dir) {
-  if(quizMode && dir === -1) {
-    quizMode = false;
-    renderMateri(currentSub);
-    return;
-  }
-  const next = currentSub + dir;
-  if (next < 0 || next >= subbabs.length) return;
-  goToSub(next);
-}
-
-function toast(msg, type='info') {
-  const icons={success:'fa-check-circle',warn:'fa-exclamation-triangle',info:'fa-info-circle',gold:'fa-trophy'};
-  const colors={success:'#00e676',warn:'#ff9800',info:'#00e5ff',gold:'#ffd700'};
-  const el=document.getElementById('toastEl');
-  document.getElementById('toastMsg').textContent=msg;
-  document.getElementById('toastIcon').className='fas ' + (icons[type]||'fa-star');
-  el.style.borderColor=colors[type]||'#00e5ff';
-  el.style.color=colors[type]||'#fff';
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 3500);
-}
 </script>
 </body>
 </html>
