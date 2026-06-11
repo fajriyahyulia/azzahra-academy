@@ -3,304 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AzZahra Academy — Login</title>
+<title>Masuk / Daftar Akun — AzZahra Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root {
-  --neon-purple:#b026ff; --neon-violet:#7c3aed; --neon-pink:#e040fb;
-  --neon-cyan:#00e5ff; --neon-gold:#ffd700; --dark-bg:#050508;
-  --dark-card:#0d0d1a; --text-light:#e8e0ff; --text-dim:#8878aa;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  background:var(--dark-bg);color:var(--text-light);font-family:'Exo 2',sans-serif;
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px 0;position:relative;
-}
-.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;}
-.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:floatOrb 8s ease-in-out infinite;}
-.orb1{width:400px;height:400px;background:#b026ff22;top:-100px;left:-100px;}
-.orb2{width:300px;height:300px;background:#00e5ff18;bottom:-80px;right:-80px;}
-@keyframes floatOrb{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(20px,-20px) scale(1.05);}}
-.auth-card{
-  position:relative;z-index:10;width:100%;max-width:460px;margin:20px;
-  background:linear-gradient(135deg,#0d0d1a,#12122a);border:1px solid #b026ff33;
-  border-radius:28px;padding:48px 44px;box-shadow:0 0 60px #b026ff1a;
-}
-.auth-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--neon-purple),var(--neon-cyan),var(--neon-pink));border-radius:28px 28px 0 0;
-}
-.logo-wrap{text-align:center;margin-bottom:32px;}
-.logo-icon{font-size:2.8rem;margin-bottom:8px;display:block;color:var(--neon-cyan);}
-.logo-title{
-  font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;
-  background:linear-gradient(135deg,var(--neon-purple),var(--neon-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.logo-title span{background:linear-gradient(135deg,var(--neon-gold),#ff9500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.logo-sub{font-size:0.75rem;color:var(--text-dim);margin-top:4px;letter-spacing:2px;text-transform:uppercase;}
-.tabs{display:flex;background:#08081a;border:1px solid #b026ff22;border-radius:50px;padding:4px;margin-bottom:32px;}
-.tab-btn{
-  flex:1;padding:10px;border:none;border-radius:50px;background:transparent;
-  color:var(--text-dim);font-family:'Exo 2',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:0.3s;
-}
-.tab-btn.active{background:linear-gradient(135deg,var(--neon-purple),var(--neon-violet));color:white;}
-.form-panel{display:none;}.form-panel.active{display:block;}
-.form-group{margin-bottom:18px;}
-.form-label{display:block;font-size:0.72rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600;}
-.form-input{
-  width:100%;background:#08081a;border:1px solid #b026ff33;border-radius:14px;
-  padding:14px 18px;font-family:'Exo 2',sans-serif;font-size:0.9rem;color:var(--text-light);outline:none;
-}
-.form-input:focus{border-color:var(--neon-purple);background:#0d0d1a;}
-.input-wrap{position:relative;}
-.toggle-pw{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-dim);cursor:pointer;}
-.btn-submit{
-  width:100%;background:linear-gradient(135deg,var(--neon-purple),var(--neon-violet));color:white;
-  border:none;padding:15px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:0.9rem;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;position:relative;box-shadow:0 0 25px #b026ff44;
-}
-.btn-submit:disabled{opacity:0.6;cursor:not-allowed;}
-.btn-submit .btn-loader{display:none;position:absolute;inset:0;align-items:center;justify-content:center;}
-.btn-submit.loading .btn-text{opacity:0;}.btn-submit.loading .btn-loader{display:flex;}
-.spinner{width:20px;height:20px;border:2px solid #ffffff44;border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.msg-box{border-radius:12px;padding:12px 16px;font-size:0.82rem;margin-bottom:16px;display:none;align-items:center;gap:8px;}
-.msg-box.show{display:flex;}
-.msg-box.error-msg{background:#ff174415;border:1px solid #ff174444;color:#ff6b6b;}
-.msg-box.success-msg{background:#00e67615;border:1px solid #00e67644;color:#00e676;}
-.terms-text{font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:16px;}
-.terms-text a{color:var(--neon-purple);text-decoration:none;}
-.welcome-overlay{
-  display:none;position:fixed;inset:0;background:var(--dark-bg);z-index:100;
-  align-items:center;justify-content:center;flex-direction:column;gap:16px;
-}
-.welcome-overlay.show{display:flex;}
-.welcome-icon{font-size:4.5rem;color:var(--neon-gold);}
-.welcome-title{font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:var(--text-light);text-align:center;}
-.welcome-sub{color:var(--text-dim);font-size:0.88rem;}
+  :root {
+    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
+    --neon-cyan: #00e5ff; --dark-bg: #050508; --dark-card: #0d0d1a;
+    --text-light: #e8e0ff; --text-dim: #8878aa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    position: relative; overflow-x: hidden;
+  }
+
+  /* EFEK CAHAYA BACKGROUND BACKDROP */
+  body::before {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(176,38,255,0.15) 0%, rgba(0,0,0,0) 70%);
+    top: -100px; left: -100px; z-index: 0;
+  }
+  body::after {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,229,255,0.12) 0%, rgba(0,0,0,0) 70%);
+    bottom: -100px; right: -100px; z-index: 0;
+  }
+
+  .auth-container {
+    background: linear-gradient(135deg, var(--dark-card), #12122a);
+    border: 1px solid rgba(176,38,255,0.2); border-radius: 28px;
+    padding: 40px; width: 100%; max-width: 440px; z-index: 1;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124,58,237,0.05);
+    transition: 0.3s ease-in-out;
+  }
+
+  .brand-header { text-align: center; margin-bottom: 30px; }
+  .brand-logo { font-family: 'Cinzel Decorative', serif; font-size: 1.6rem; font-weight: 900; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+  .brand-subtitle { font-size: 0.85rem; color: var(--text-dim); letter-spacing: 0.5px; }
+
+  /* TAB LAYOUT */
+  .auth-tabs { display: flex; border-bottom: 2px solid rgba(255,255,255,0.05); margin-bottom: 25px; }
+  .tab-btn { flex: 1; background: none; border: none; padding: 12px; font-family: 'Exo 2', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-dim); cursor: pointer; transition: 0.3s; position: relative; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tab-btn.active { color: var(--neon-cyan); }
+  .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
+
+  /* COMPONENT INPUT FORM */
+  .form-group { margin-bottom: 20px; position: relative; }
+  .form-group i { position: absolute; top: 40px; left: 16px; color: var(--text-dim); font-size: 0.95rem; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: var(--text-light); }
+  .form-control { width: 100%; background: rgba(5,5,8,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 16px 12px 45px; font-family: 'Exo 2', sans-serif; font-size: 0.95rem; color: #fff; transition: 0.3s; }
+  .form-control:focus { border-color: var(--neon-purple); box-shadow: 0 0 12px rgba(176,38,255,0.25); outline: none; background: rgba(5,5,8,0.8); }
+
+  /* BUTTON AKSI */
+  .auth-btn { width: 100%; background: linear-gradient(135deg, var(--neon-violet), var(--neon-pink)); color: #fff; border: none; padding: 14px; border-radius: 50px; font-family: 'Exo 2', sans-serif; font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 10px; transition: 0.3s; box-shadow: 0 4px 15px rgba(176,38,255,0.3); }
+  .auth-btn:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(176,38,255,0.4); }
+  .auth-btn:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; transform: none; }
+
+  /* KOTAK NOTIFIKASI EROR / SUKSES */
+  .alert { padding: 12px 16px; border-radius: 12px; font-size: 0.88rem; margin-bottom: 20px; display: none; font-weight: 600; border-left: 4px solid transparent; }
+  .alert-danger { background: rgba(255,85,85,0.1); border-color: #ff5555; color: #ff7777; }
+  .alert-success { background: rgba(0,229,255,0.1); border-color: var(--neon-cyan); color: var(--neon-cyan); }
 </style>
 </head>
 <body>
 
-<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div></div>
-
-<div class="auth-card">
-  <div class="logo-wrap">
-    <span class="logo-icon"><i class="fa-solid fa-moon"></i></span>
-    <div class="logo-title">Az<span>Zahra</span> Academy</div>
-    <div class="logo-sub">Platform Belajar Islam Interaktif</div>
+<div class="auth-container">
+  <div class="brand-header">
+    <div class="brand-logo"><i class="fas fa-star-and-crescent" style="color:var(--neon-cyan); margin-right:6px;"></i>AzZahra Academy</div>
+    <div class="brand-subtitle">Platform Gamifikasi Pembelajaran Islam</div>
   </div>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('login')">Masuk</button>
-    <button class="tab-btn" onclick="switchTab('register')">Daftar</button>
+  <div class="auth-tabs">
+    <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Masuk</button>
+    <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Daftar</button>
   </div>
 
-  <div class="form-panel active" id="loginPanel">
-    <div class="msg-box" id="loginMsg"></div>
-    <div class="form-group">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-input" id="loginEmail" placeholder="email@contoh.com">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Password</label>
-      <div class="input-wrap">
-        <input type="password" class="form-input" id="loginPassword" placeholder="Masukkan password">
-        <button class="toggle-pw" onclick="togglePw('loginPassword',this)"><i class="fa-solid fa-eye"></i></button>
-      </div>
-    </div>
-    <button class="btn-submit" id="btnLogin" onclick="doLogin()">
-      <span class="btn-text">Masuk Sekarang</span>
-      <span class="btn-loader"><div class="spinner"></div></span>
-    </button>
-    <div class="terms-text">Belum punya akun? <a href="#" onclick="switchTab('register')">Daftar gratis →</a></div>
-  </div>
+  <div class="alert alert-danger" id="authAlert"></div>
 
-  <div class="form-panel" id="registerPanel">
-    <div class="msg-box" id="registerMsg"></div>
-    <div class="form-group">
-      <label class="form-label">Nama Lengkap</label>
-      <input type="text" class="form-input" id="regName" placeholder="Nama kamu">
+  <form id="authForm" onsubmit="handleAuth(event)">
+    <div class="form-group" id="groupNama" style="display: none;">
+      <label>Nama Lengkap Santri</label>
+      <i class="fas fa-user"></i>
+      <input type="text" class="form-control" id="authNama" placeholder="Masukkan nama lengkapmu">
     </div>
-    <div class="form-group">
-      <label class="form-label">Email</label>
-      <input type="email" class="form-input" id="regEmail" placeholder="email@contoh.com">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Password</label>
-      <div class="input-wrap">
-        <input type="password" class="form-input" id="regPassword" placeholder="Minimal 6 karakter">
-        <button class="toggle-pw" onclick="togglePw('regPassword',this)"><i class="fa-solid fa-eye"></i></button>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Konfirmasi Password</label>
-      <input type="password" class="form-input" id="regConfirm" placeholder="Ulangi password">
-    </div>
-    <button class="btn-submit" id="btnRegister" onclick="doRegister()">
-      <span class="btn-text">Buat Akun Gratis</span>
-      <span class="btn-loader"><div class="spinner"></div></span>
-    </button>
-    <div class="terms-text">Sudah punya akun? <a href="#" onclick="switchTab('login')">Masuk di sini →</a></div>
-  </div>
-</div>
 
-<div class="welcome-overlay" id="welcomeOverlay">
-  <div class="welcome-icon"><i class="fa-solid fa-circle-check"></i></div>
-  <div class="welcome-title" id="welcomeTitle">Ahlan Wa Sahlan!</div>
-  <div class="welcome-sub">Memuat dashboard...</div>
+    <div class="form-group">
+      <label>Alamat Email</label>
+      <i class="fas fa-envelope"></i>
+      <input type="email" class="form-control" id="authEmail" placeholder="contoh@domain.com" required>
+    </div>
+
+    <div class="form-group">
+      <label>Kata Sandi (Password)</label>
+      <i class="fas fa-lock"></i>
+      <input type="password" class="form-control" id="authPassword" placeholder="Minimal 6 karakter" required>
+    </div>
+
+    <button type="submit" class="auth-btn" id="btnSubmit">Masuk ke Akademi</button>
+  </form>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ✅ CONFIG SAMA DENGAN INDEX.HTML & PROFILE.HTML
-const firebaseConfig = {
-  apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
-  authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
-  projectId: "azzahra-academy-ad1ec",
-  storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
-  messagingSenderId: "425297111795",
-  appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586",
-  measurementId: "G-BCLC18GYV3"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Pengalihan jika user sudah login aktif
-onAuthStateChanged(auth, (user) => {
-  if (user) window.location.href = 'index.html';
-});
-
-// ── HELPERS ──────────────────────────────────────────────
-function showMsg(id, msg, type='error') {
-  const el = document.getElementById(id);
-  el.className = `msg-box show ${type === 'error' ? 'error-msg' : 'success-msg'}`;
-  el.innerHTML = `<i class="fa-solid fa-${type==='error'?'triangle-exclamation':'circle-check'}"></i><span>${msg}</span>`;
-}
-function clearMsg(id) {
-  const el = document.getElementById(id);
-  el.className = 'msg-box';
-  el.innerHTML = '';
-}
-function setLoading(btnId, loading) {
-  const btn = document.getElementById(btnId);
-  btn.disabled = loading;
-  btn.classList.toggle('loading', loading);
-}
-
-// Terjemahan Firebase Auth Error Code ke Bahasa Indonesia
-function friendlyError(code) {
-  const map = {
-    'auth/user-not-found'      : 'Email tidak terdaftar.',
-    'auth/wrong-password'      : 'Password salah.',
-    'auth/invalid-credential'  : 'Email atau password salah.',
-    'auth/email-already-in-use': 'Email sudah digunakan akun lain.',
-    'auth/weak-password'       : 'Password terlalu lemah, minimal 6 karakter.',
-    'auth/invalid-email'       : 'Format email tidak valid.',
-    'auth/too-many-requests'   : 'Terlalu banyak percobaan. Coba lagi nanti.',
-    'auth/network-request-failed': 'Tidak ada koneksi internet.',
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+    projectId: "azzahra-academy-ad1ec",
+    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+    messagingSenderId: "425297111795",
+    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
   };
-  return map[code] || 'Terjadi kesalahan, coba lagi.';
-}
 
-// Buat dokumen user di Firestore dengan skema progress level awal
-async function createUserDoc(uid, name, email) {
-  const userRef = doc(db, 'users', uid);
-  const snap = await getDoc(userRef);
-  if (!snap.exists()) {
-    await setDoc(userRef, {
-      nama       : name,
-      email      : email,
-      xp         : 0,
-      streak     : 0,
-      lastLogin  : serverTimestamp(),
-      joinDate   : serverTimestamp(),
-      progress   : {
-        level1: { percent:0, stars:0, unlocked:true,  subProgress:[] },
-        level2: { percent:0, stars:0, unlocked:false, subProgress:[] },
-        level3: { percent:0, stars:0, unlocked:false, subProgress:[] },
-        level4: { percent:0, stars:0, unlocked:false, subProgress:[] },
-        level5: { percent:0, stars:0, unlocked:false, subProgress:[] },
-        level6: { percent:0, stars:0, unlocked:false, subProgress:[] },
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let mode = 'login';
+
+  window.switchTab = function(targetMode) {
+    mode = targetMode;
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const groupNama = document.getElementById('groupNama');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const alertBox = document.getElementById('authAlert');
+    
+    alertBox.style.display = 'none';
+
+    if (mode === 'login') {
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      groupNama.style.display = 'none';
+      document.getElementById('authNama').required = false;
+      btnSubmit.textContent = 'Masuk ke Akademi';
+    } else {
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      groupNama.style.display = 'block';
+      document.getElementById('authNama').required = true;
+      btnSubmit.textContent = 'Buat Akun Baru';
+    }
+  }
+
+  window.handleAuth = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value;
+    const nama = document.getElementById('authNama').value.trim();
+    const alertBox = document.getElementById('authAlert');
+    const btnSubmit = document.getElementById('btnSubmit');
+
+    alertBox.style.display = 'none';
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Memproses...';
+
+    try {
+      if (mode === 'login') {
+        // PROSES LOGIN
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = 'index.html';
+      } else {
+        // PROSES DAFTAR AKUN BARU
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Update display name di Firebase Auth
+        await updateProfile(user, { displayName: nama });
+
+        // Inisialisasi data profil & progres awal santri di Firestore database
+        const userDocRef = doc(db, 'users', user.uid);
+        await setDoc(userDocRef, {
+          nama: nama,
+          email: email,
+          xp: 0,
+          streak: 1,
+          progress: {
+            level1: { percent: 0, stars: 0, unlocked: true }, // Level 1 langsung terbuka otomatis
+            level2: { percent: 0, stars: 0, unlocked: false },
+            level3: { percent: 0, stars: 0, unlocked: false },
+            level4: { percent: 0, stars: 0, unlocked: false },
+            level5: { percent: 0, stars: 0, unlocked: false },
+            level6: { percent: 0, stars: 0, unlocked: false }
+          }
+        });
+
+        alertBox.className = 'alert alert-success';
+        alertBox.textContent = 'Pendaftaran sukses! Mengalihkan...';
+        alertBox.style.display = 'block';
+        
+        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
       }
-    });
+    } catch (error) {
+      console.error(error);
+      alertBox.className = 'alert alert-danger';
+      alertBox.style.display = 'block';
+      
+      // Terjemahan pesan error Firebase agar santri paham
+      if (error.code === 'auth/email-already-in-use') alertBox.textContent = 'Email sudah terdaftar! Silakan gunakan email lain.';
+      else if (error.code === 'auth/weak-password') alertBox.textContent = 'Kata sandi terlalu lemah! Gunakan minimal 6 karakter.';
+      else if (error.code === 'auth/invalid-credential') alertBox.textContent = 'Email atau kata sandi salah. Silakan periksa kembali.';
+      else alertBox.textContent = 'Terjadi kesalahan: ' + error.message;
+
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = mode === 'login' ? 'Masuk ke Akademi' : 'Buat Akun Baru';
+    }
   }
-}
-
-// ── REGISTER (Scope Global) ──────────────────────────────────
-window.doRegister = async function() {
-  clearMsg('registerMsg');
-  const name    = document.getElementById('regName').value.trim();
-  const email   = document.getElementById('regEmail').value.trim();
-  const pw      = document.getElementById('regPassword').value;
-  const confirm = document.getElementById('regConfirm').value;
-
-  if (!name || !email || !pw) { showMsg('registerMsg','Semua kolom harus diisi!'); return; }
-  if (pw.length < 6)          { showMsg('registerMsg','Password minimal 6 karakter!'); return; }
-  if (pw !== confirm)         { showMsg('registerMsg','Konfirmasi password tidak cocok!'); return; }
-
-  setLoading('btnRegister', true);
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pw);
-    await updateProfile(cred.user, { displayName: name });
-    await createUserDoc(cred.user.uid, name, email);
-
-    document.getElementById('welcomeTitle').textContent = `Ahlan, ${name}!`;
-    document.getElementById('welcomeOverlay').classList.add('show');
-    setTimeout(() => window.location.href = 'index.html', 2000);
-  } catch(e) {
-    showMsg('registerMsg', friendlyError(e.code));
-    setLoading('btnRegister', false);
-  }
-};
-
-// ── LOGIN (Scope Global - FIXED BUG) ─────────────────────────
-window.doLogin = async function() {
-  clearMsg('loginMsg');
-  const email = document.getElementById('loginEmail').value.trim();
-  const pw    = document.getElementById('loginPassword').value;
-
-  if (!email || !pw) { showMsg('loginMsg','Email dan password harus diisi!'); return; }
-
-  setLoading('btnLogin', true);
-  try {
-    const cred = await signInWithEmailAndPassword(auth, email, pw);
-
-    // Otomatis membuat dokumen jika data pengguna lama belum terdata di firestore
-    await createUserDoc(cred.user.uid, cred.user.displayName || 'Santri', email);
-
-    document.getElementById('welcomeTitle').textContent = `Marhaban kembali!`;
-    document.getElementById('welcomeOverlay').classList.add('show');
-    setTimeout(() => window.location.href = 'index.html', 2000);
-  } catch(e) {
-    showMsg('loginMsg', friendlyError(e.code));
-    setLoading('btnLogin', false);
-  }
-};
-</script>
-
-<script>
-// Fungsi Layouting Tab & Lihat Password (Scope Global Standar)
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) =>
-    b.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1))
-  );
-  document.getElementById('loginPanel').classList.toggle('active', tab==='login');
-  document.getElementById('registerPanel').classList.toggle('active', tab==='register');
-}
-function togglePw(inputId, btn) {
-  const input = document.getElementById(inputId);
-  const show  = input.type === 'password';
-  input.type  = show ? 'text' : 'password';
-  btn.innerHTML = show ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
-}
 </script>
 </body>
 </html>
