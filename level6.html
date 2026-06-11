@@ -3,443 +3,348 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Level 6: Sejarah Islam — AzZahra Academy</title>
-<link rel="stylesheet" href="style-shared.css">
+<title>Level 6: Sejarah Islam & Peradaban Dunia — AzZahra Academy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{
-  --neon-purple:#b026ff;--neon-violet:#7c3aed;--neon-pink:#e040fb;--neon-cyan:#00e5ff;--neon-gold:#ffd700;--dark-bg:#050508;--dark-card:#0d0d1a;--dark-card2:#12122a;--text-light:#e8e0ff;--text-dim:#8878aa;
-  --lvl-color:#00e5ff;--lvl-grad:linear-gradient(135deg,#00e5ff,#007bb5);
-}
+  :root {
+    --neon-gold: #ffb703; --neon-violet: #b5179e; --neon-cyan: #4cc9f0;
+    --dark-bg: #020206; --dark-card: #090915; --dark-card2: #12122c;
+    --text-light: #e6e6f2; --text-dim: #74749a;
+  }
 
-/* TOP BAR */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,255,0.2);display:flex;align-items:center;padding:0 24px;gap:16px;}
-.back-btn{background:#1a1a2e;border:1px solid rgba(0,229,255,0.3);color:var(--text-dim);width:36px;height:36px;border-radius:10px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.back-btn:hover{border-color:var(--lvl-color);color:#fff;transform:translateX(-2px);}
-.topbar-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:700;flex:1;color:#fff;}
-.topbar-title span{color:var(--lvl-color);}
-.topbar-right{display:flex;align-items:center;gap:14px;}
-.xp-counter{background:#1a1a2e;border:1px solid #ffd70044;border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:700;color:var(--neon-gold);display:flex;align-items:center;gap:6px;}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
 
-/* LAYOUT CONTAINER */
-.layout{display:flex;margin-top:58px;min-height:calc(100vh - 58px);position:relative;}
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* HEADER LEVEL */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(255, 183, 3, 0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(255, 183, 3, 0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-gold);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(255, 183, 3, 0.15); border: 1px solid var(--neon-gold); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-/* SIDEBAR MAP */
-.sidebar{width:280px;background:#090912;border-right:1px solid rgba(0,229,255,0.1);padding:20px;overflow-y:auto;flex-shrink:0;}
-.sb-title{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700;}
-.sb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.sb-item{background:var(--dark-card);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;position:relative;}
-.sb-item:hover{border-color:rgba(0,229,255,0.4);background:#07222e;}
-.sb-item.active{border-color:var(--lvl-color);background:linear-gradient(90deg,#041e2b,transparent);box-shadow:inset 3px 0 0 var(--lvl-color);}
-.sb-item.locked{opacity:0.4;cursor:not-allowed;}
-.sb-item.locked:hover{background:var(--dark-card);border-color:rgba(255,255,255,0.03);}
-.sb-idx{width:22px;height:22px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.sb-item.active .sb-idx{background:var(--lvl-color);color:#050508;border-color:var(--lvl-color);}
-.sb-info{flex:1;min-width:0;}
-.sb-name{font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sb-status{font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:4px;}
-.sb-status.done{color:#33ff97;}
-.sb-status.current{color:var(--lvl-color);}
+  /* MATERI KONTEN */
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-cyan); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(76,201,240,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-gold); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-purple); }
+  p { margin-bottom: 15px; color: #cbd5e1; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #cbd5e1; }
+  li { margin-bottom: 6px; }
 
-/* MAIN CONTENT WORKSPACE */
-.workspace{flex:1;padding:40px;background:var(--dark-bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
-.content-card{width:100%;max-width:760px;background:var(--dark-card);border:1px solid rgba(0,229,255,0.1);border-radius:24px;padding:36px;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;animation:fadeIn 0.4s ease forwards;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-gold); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; color: #e2e8f0; }
 
-/* CONTENT DETAILS */
-.mat-header{margin-bottom:24px;border-bottom:1px solid rgba(0,229,255,0.1);padding-bottom:16px;}
-.mat-tag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--lvl-color);font-weight:700;margin-bottom:6px;display:block;}
-.mat-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;}
-.mat-body{font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:20px;}
-.mat-body p{margin-bottom:16px;}
-.mat-body strong{color:var(--lvl-color);}
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(76, 201, 240, 0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(76, 201, 240, 0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* MULTIPLE QUESTIONS QUIZ BOX */
-.quiz-box{margin-top:24px;background:var(--dark-card2);padding:24px;border-radius:16px;border:1px solid rgba(0,229,255,0.15);}
-.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:0.8rem;color:var(--text-dim);}
-.progress-bar-bg{background:#050508;height:6px;border-radius:10px;width:100%;margin-bottom:20px;position:relative;overflow:hidden;}
-.progress-bar-fill{background:var(--lvl-grad);height:100%;width:0%;transition:width 0.4s ease;}
-.quiz-q{font-size:1rem;font-weight:600;margin-bottom:18px;color:#fff;display:flex;align-items:start;gap:10px;}
-.quiz-q i { color: var(--lvl-color); margin-top: 4px; }
-.quiz-options{display:flex;flex-direction:column;gap:12px;}
-.opt-card{background:#050508;border:1px solid rgba(255,255,255,0.06);padding:14px 20px;border-radius:12px;cursor:pointer;font-size:0.9rem;transition:all 0.25s;display:flex;align-items:center;gap:12px;}
-.opt-card:hover{border-color:rgba(0,229,255,0.4);background:#0a1a24;transform:translateX(3px);}
-.opt-card.selected{border-color:var(--lvl-color);background:linear-gradient(90deg,rgba(0,229,255,0.15),transparent);box-shadow:0 0 15px rgba(0,229,255,0.1);}
-.opt-card.correct{border-color:#00e676;background:rgba(0,230,118,0.05);}
-.opt-card.wrong{border-color:#ff1744;background:rgba(255,23,68,0.05);}
-.opt-idx{width:24px;height:24px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.opt-card.selected .opt-idx{background:var(--lvl-color);color:#050508;border-color:var(--lvl-color);}
-.opt-card.correct .opt-idx{background:#00e676;color:#050508;border-color:#00e676;}
-.opt-card.wrong .opt-idx{background:#ff1744;color:#050508;border-color:#ff1744;}
+  /* TABEL RESPONSIVE STYLING */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); min-width: 600px; }
+  th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+  th { background-color: rgba(76, 201, 240, 0.15); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(76, 201, 240, 0.04); }
+  .td-highlight { color: var(--neon-gold); font-weight: 600; }
+  .td-cyan { color: var(--neon-cyan); font-weight: 600; }
 
-/* FOOTER NAV ACTIONS */
-.content-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;margin-top:20px;width:100%;max-width:760px;}
-.footer-left, .footer-right { display:flex; gap:12px; }
-.btn-nav{background:#1a1a2e;border:1px solid rgba(0,229,255,0.3);color:var(--text-light);padding:10px 20px;border-radius:30px;font-family:'Exo 2',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
-.btn-nav:hover:not(:disabled){border-color:var(--lvl-color);box-shadow:0 0 15px rgba(0,229,255,0.2);color:#fff;}
-.btn-nav:disabled{opacity:0.25;cursor:not-allowed;}
-.btn-quiz{background:var(--lvl-grad);border:none;box-shadow:0 0 15px rgba(0,229,255,0.3);color:#fff;font-weight:700;}
-.btn-quiz:hover{box-shadow:0 0 25px rgba(0,229,255,0.5);transform:translateY(-1px);}
+  /* EVALUASI KUIS */
+  .quiz-section { background: linear-gradient(135deg, rgba(9,9,21,0.95), rgba(18,18,44,0.95)); border: 2px solid var(--neon-gold); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(255,183,3,0.15); }
+  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+  .quiz-title i { color: var(--neon-cyan); }
+  
+  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+  
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
+  .option-item:hover { background: rgba(255,183,3,0.08); border-color: var(--neon-gold); }
+  .option-item input { accent-color: var(--neon-gold); cursor: pointer; width: 18px; height: 18px; }
 
-/* TOAST NOTIF */
-.toast {
-  position: fixed; bottom: 30px; right: 30px; background: var(--dark-card);
-  border: 1px solid var(--lvl-color); border-radius: 12px; padding: 14px 24px;
-  display: flex; align-items: center; gap: 10px; z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(100px); opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast i { font-size: 1.1rem; }
+  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet)); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255,183,3,0.3); transition: 0.3s; }
+  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
+
+  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(76,201,240,0.05); border: 1px solid var(--neon-cyan); }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <button class="back-btn" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
-  <div class="topbar-title">Level 06: <span>Sejarah Islam</span></div>
-  <div class="topbar-right">
-    <div class="xp-counter"><i class="fas fa-star"></i> <span id="xpCount">0</span> XP</div>
+<div class="container">
+  
+  <div class="level-header">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+    <h1 class="level-title">Level 6: Sejarah Islam</h1>
+    <span class="level-badge">Khulafaur Rasyidin, Golden Age & Islamisasi Nusantara</span>
   </div>
-</div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sb-title">Materi Tarikh</div>
-    <ul class="sb-list" id="sidebarList"></ul>
-  </aside>
-
-  <main class="workspace">
-    <div class="content-card" id="workspaceCard">
-      </div>
-
-    <div class="content-footer">
-      <div class="footer-left">
-        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)"><i class="fas fa-chevron-left"></i> Kembali</button>
-      </div>
-      <div class="footer-right">
-        <button class="btn-nav btn-quiz" id="btnAction" onclick="handleActionClick()">Mulai Kuis <i class="fas fa-gamepad"></i></button>
-      </div>
+  <div class="materi-card">
+    
+    <div class="sub-bab-title"><i class="fas fa-gavel"></i> Sub-Bab 1: Khulafaur Rasyidin</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/-W9_eWrkh7o" allowfullscreen></iframe>
     </div>
-  </main>
-</div>
+    
+    <h3>Esensi & Periodisasi</h3>
+    <p><strong>Khulafaur Rasyidin</strong> berasal dari kata <em>khulafa</em> (para pemimpin/pengganti) dan <em>rasyidin</em> (yang mendapat petunjuk). Mereka adalah empat sahabat utama penerus kepemimpinan umat Islam pasca wafatnya Rasulullah SAW. Periode ini berlangsung selama sekitar 30 tahun (632-661 M) dan menjadi fondasi perluasan dakwah global.</p>
+    
+    <div class="dalil-box">
+      <strong>HR. Tirmidzi</strong><br>
+      "Pegang teguhlah sunnahku dan sunnah Khulafaur Rasyidin yang mendapat petunjuk setelahku. Gigit dengan gigi gerahammu."
+    </div>
 
-<div class="toast" id="toastEl">
-  <span id="toastIcon"></span><span id="toastMsg"></span>
+    <h3>Sistem Suksesi Kepemimpinan Unik</h3>
+    <p>Menariknya, mekanisme pemilihan keempat khalifah ini menggunakan metode demokratis yang bervariasi, membuktikan keluwesan politik Islam:</p>
+    <ul>
+      <li><strong>Abu Bakar RA:</strong> Dipilih melalui musyawarah terbuka darurat di Saqifah Bani Sa'idah antara kaum Muhajirin dan Anshar.</li>
+      <li><strong>Umar bin Khattab RA:</strong> Dipilih melalui penunjukan langsung oleh Abu Bakar melalui surat wasiat tertulis, yang kemudian diratifikasi dan dibaiat massal oleh para sahabat.</li>
+      <li><strong>Utsman bin Affan RA:</strong> Dipilih oleh tim formatur independen (Dewan Syura) beranggotakan 6 orang sahabat senior yang ditunjuk Umar menjelang wafatnya.</li>
+      <li><strong>Ali bin Abi Thalib RA:</strong> Dipilih secara aklamasi oleh mayoritas umat Islam di tengah situasi krisis politik pasca syahidnya Utsman.</li>
+    </ul>
+
+    <div class="sub-bab-title"><i class="fas fa-globe-amr"></i> Sub-Bab 2: Peradaban Islam Dunia & Golden Age</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/IabkVcZSy9A" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Era Keemasan Dinasti Abbasiyah</h3>
+    <p>Puncak kejayaan sains dan kebudayaan Islam terjadi pada masa <strong>Dinasti Abbasiyah (750-1258 M)</strong>, khususnya di bawah kepemimpinan Khalifah Harun Ar-Rasyid dan Al-Ma'mun. Ibu kota Baghdad menjelma menjadi pusat peradaban dunia dengan didirikannya <strong>Baitul Hikmah</strong> (pusat penerjemahan dan perpustakaan raksasa).</p>
+
+    <h3>Tabel Kontribusi Ilmuwan Muslim Terhadap Dunia Modern</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nama Ilmuwan</th><th>Disiplin Ilmu</th><th>Kontribusi & Karya Monumental</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-highlight">Al-Khawarizmi</td><td>Matematika</td><td>Bapak Aljabar (*Algebra*), penemu sistem desimal, angka nol (0), dan peletak dasar algoritma.</td></tr>
+          <tr><td class="td-highlight">Al-Biruni</td><td>Astronometri / Geodesi</td><td>Berhasil menghitung keliling bumi dengan trigonometri (akurasi meleset hanya 1% dari satelit modern).</td></tr>
+          <tr><td class="td-highlight">Ibnu Sina (Avicenna)</td><td>Kedokteran</td><td>Bapak Kedokteran Modern. Menulis kitab <em>Al-Qanun fit Thibb</em> yang menjadi rujukan wajib universitas Eropa selama 600 tahun. Pencetus konsep karantina.</td></tr>
+          <tr><td class="td-highlight">Az-Zahrawi</td><td>Ilmu Bedah</td><td>Bapak Ilmu Bedah Modern. Menulis kitab <em>Al-Tasrif</em> dan menciptakan lebih dari 200 instrumen bedah orisinal.</td></tr>
+          <tr><td class="td-highlight">Ibnu Al-Haytham</td><td>Fisika / Optika</td><td>Bapak Optik Modern. Membuktikan teori pembiasan cahaya masuk ke mata dan penemu sistem kamera obscura awal.</td></tr>
+          <tr><td class="td-highlight">Jabir bin Hayyan</td><td>Kimia</td><td>Bapak Kimia. Menemukan teknik distilasi, sublimasi, serta mengenalkan istilah alkohol, alkali, dan eliksir.</td></tr>
+          <tr><td class="td-highlight">Ibnu Battutah</td><td>Geografi / Penjelajah</td><td>Menempuh jarak 120.000 km melintasi 3 benua (jauh melampaui Marco Polo). Menulis catatan perjalanan legendaris <em>Rihlah</em>.</td></tr>
+          <tr><td class="td-highlight">Al-Ghazali</td><td>Teologi / Filsafat</td><td>Mendapat gelar <em>Hujjatul Islam</em>. Menulis karya fenomenal <em>Ihya Ulumiddin</em> serta pengkritik filsafat sekuler.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Mata Rantai Transmisi Global Dinasti</h3>
+    <p>Pengetahuan dari dunia Islam mengalir ke Eropa Barat melalui koridor ilmiah di **Toledo (Spanyol Muslim/Andalusia)** dan **Sisilia**. Hal ini memicu runtuhnya abad kegelapan Eropa dan melahirkan era <em>Renaissance</em>. Selain Abbasiyah, dinasti besar lainnya adalah <strong>Dinasti Umayyah Damaskus</strong> (ekspansi geografis terluas), <strong>Fatimiyah Mesir</strong> (pendiri Universitas Al-Azhar Kairo), dan <strong>Utsmaniyah/Ottoman Istanbul</strong> (penakluk Konstantinopel pada 1453 M dipimpin Sultan Mehmed II / Al-Fatih).</p>
+
+    <div class="sub-bab-title"><i class="fas fa-ship"></i> Sub-Bab 3: Islam di Nusantara & Peran Wali Songo</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/mx_nVA8qyHM" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Teori Masuk & Strategi Dakwah</h3>
+    <p>Islamisasi di Nusantara ditandai dengan proses integrasi damai melalui akulturasi budaya tanpa peperangan fisik. Terdapat beberapa teori utama, di antaranya **Teori Arab** (sejak abad ke-7 M berdasarkan catatan Dinasti Tang), **Teori Gujarat** (abad ke-13 melalui jalur dagang India), serta pengaruh **Teori China** dan **Persia**. Penetrasi dakwah berjalan efektif melalui 5 saluran: perdagangan, pernikahan, pendidikan (pesantren), kesenian, dan jalur politik formal kerajaan.</p>
+
+    <h3>Konstelasi Kerajaan Islam Nusantara</h3>
+    <ol>
+      <li><strong>Samudera Pasai:</strong> Kerajaan Islam pertama di Indonesia (Aceh) yang berdiri pada abad ke-13 dengan raja pertamanya Sultan Malik As-Shalih.</li>
+      <li><strong>Kesultanan Aceh Darussalam:</strong> Mencapai masa keemasan di bawah Sultan Iskandar Muda, menjadi pusat ekonomi dan studi Islam terbesar di Asia Tenggara.</li>
+      <li><strong>Kesultanan Demak:</strong> Kerajaan Islam pertama di tanah Jawa yang didirikan oleh Raden Patah atas restu dan bimbingan langsung kolektif Wali Songo.</li>
+      <li><strong>Mataram Islam:</strong> Di bawah kepemimpinan Sultan Agung, kerajaan ini sukses menggabungkan akulturasi kalender Jawa-Hijriyah dan menyerang VOC di Batavia.</li>
+      <li><strong>Ternate-Tidore & Gowa-Tallo:</strong> Penguasa rempah-rempah timur dan pusat maritim Sulawesi yang dipimpin tokoh heroik seperti Sultan Hasanuddin (Ayam Jantan dari Timur).</li>
+    </ol>
+
+    <h3>Metodologi Dakwah Kultural Wali Songo</h3>
+    <ul>
+      <li><strong>Sunan Gresik (Maulana Malik Ibrahim):</strong> Wali pionir, berdakwah humanis lewat jalur pertanian, perdagangan, dan pengobatan gratis.</li>
+      <li><strong>Sunan Ampel (Raden Rahmat):</strong> Pendiri Pesantren Ampeldenta Surabaya, pencetus falsafah moral anti-maksiat *Moh Limo*.</li>
+      <li><strong>Sunan Bonang:</strong> Komponis ulung yang memanfaatkan instrumen gamelan dan menggubah tembang spiritual legendaris <em>Tombo Ati</em>.</li>
+      <li><strong>Sunan Drajat:</strong> Berfokus pada filantropi sosial dan jaminan kesejahteraan kaum miskin serta anak yatim.</li>
+      <li><strong>Sunan Kalijaga (Raden Said):</strong> Wali budayawan paling visioner. Memanfaatkan media wayang kulit purwa, mempopulerkan baju batik, serta menggubah lagu <em>Lir-ilir</em>.</li>
+      <li><strong>Sunan Giri:</strong> Menjadikan jalur mainan anak-anak (Jelungan, Cublak-cublak Suweng) sebagai internalisasi akidah dasar.</li>
+      <li><strong>Sunan Kudus (Ja'far Shadiq):</strong> Manifestasi toleransi tinggi. Membangun Menara Kudus bercorak candi Hindu dan melarang penyembelihan sapi demi menghormati warga lokal.</li>
+      <li><strong>Sunan Muria:</strong> Merambah dakwah di pelosok lereng gunung terpencil, membina komunitas petani dan nelayan tradisional.</li>
+      <li><strong>Sunan Gunung Jati (Syarif Hidayatullah):</strong> Pemimpin politik-religius yang mendirikan Kesultanan Cirebon dan Banten di Jawa Barat.</li>
+    </ul>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-scroll"></i> Uji Kompetensi Teologis & Sejarah Islam</div>
+    <form id="quizForm">
+      
+      <div class="question-box">
+        <div class="question-text">1. Mekanisme suksesi kepemimpinan berbentuk penunjukan langsung melalui surat wasiat tertulis dipraktikkan pada pemilihan khalifah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> Abu Bakar Ash-Shiddiq RA</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> Umar bin Khattab RA</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> Utsman bin Affan RA</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">2. Siapakah ilmuwan muslim luar biasa yang dinobatkan sebagai Bapak Aljabar dan penemu angka nol?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> Al-Khawarizmi</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> Ibnu Sina</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> Al-Biruni</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">3. Karya medis legendaris "Al-Qanun fit Thibb" (Canon of Medicine) yang menjadi buku teks kedokteran Eropa selama 6 abad ditulis oleh...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Az-Zahrawi</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Jabir bin Hayyan</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Ibnu Sina</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">4. Institusi riset ilmiah, perpustakaan, dan pusat penerjemahan akbar yang didirikan masa Dinasti Abbasiyah di Baghdad bernama...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Universitas Al-Azhar</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Baitul Hikmah</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Cordova Center</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">5. Peristiwa takluknya kota Konstantinopel pada tahun 1453 M dipimpin oleh Sultan Mehmed II berhasil mengakhiri kekuasaan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> Kekaisaran Romawi Barat</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> Kekaisaran Romawi Timur (Byzantium)</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> Dinasti Safawi Persia</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">6. Bukti fisik tertua mengenai keberadaan komunitas Muslim di tanah Jawa ditunjukkan oleh penemuan batu nisan Leran di Gresik yang bertanda tahun...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> 1453 M</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> 1082 M (475 H)</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> 1297 M</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">7. Kerajaan Islam pertama di Nusantara yang terletak di wilayah pantai utara Aceh dengan raja pertamanya bernama Sultan Malik As-Shalih adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> Kesultanan Demak</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> Kesultanan Aceh Darussalam</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> Kerajaan Samudera Pasai</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">8. Wali Songo yang sangat terkenal menggubah lagu "Tombo Ati" menggunakan instrumen gamelan sebagai sarana dakwah kultural adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Sunan Kalijaga</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Sunan Bonang</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Sunan Ampel</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">9. Bentuk toleransi dakwah luar biasa diperlihatkan Sunan Kudus dengan melarang para pengikutnya menyembelih hewan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Kambing</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Unta</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Sapi</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">10. Penemu dasar metode kamera obscura dan pembuktian bahwa cahaya merambat dari objek menuju mata (Bapak Optik) adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> Ibnu Al-Haytham</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> Al-Battani</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> Ibnu Rusyd</label>
+        </div>
+      </div>
+
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Tetap Semangat!</p>
+    </div>
+  </div>
+
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCsX-3QTSbmRKEZiNsjM6jWAZ6l2hTqC38",
-  authDomain: "azzahra-web.firebaseapp.com",
-  projectId: "azzahra-web",
-  storageBucket: "azzahra-web.firebasestorage.app",
-  messagingSenderId: "716860109019",
-  appId: "1:716860109019:web:433065a2294026ae665cfe",
-  measurementId: "G-G7X3S5QRHP"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-let userXP = 0;
-let userProgress = {};
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'auth.html';
-    return;
-  }
-  currentUser = user;
-
-  const userDocRef = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userDocRef);
-
-  if (userSnap.exists()) {
-    const data = userSnap.data();
-    userXP = data.xp || 0;
-    userProgress = data.progress || {};
-
-    document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-    // Sinkronisasi status dari cloud database
-    if (userProgress.level6) {
-      const savedSubs = userProgress.level6.subProgress || [];
-      savedSubs.forEach((saved, index) => {
-        if (subbabs[index]) {
-          subbabs[index].unlocked = saved.unlocked;
-          subbabs[index].completed = saved.completed;
-        }
-      });
-    }
-  }
-
-  renderSidebar();
-  renderMateri(currentSub);
-});
-
-window.saveProgressToFirebase = async function(xpBonus) {
-  if (!currentUser) return;
-
-  userXP += xpBonus;
-  document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-  const subProgressArray = subbabs.map(s => ({
-    unlocked: s.unlocked,
-    completed: s.completed
-  }));
-
-  const completedCount = subbabs.filter(s => s.completed).length;
-  const percentTotal = Math.round((completedCount / subbabs.length) * 100);
-  const totalStars = percentTotal === 100 ? 3 : percentTotal >= 50 ? 2 : percentTotal >= 25 ? 1 : 0;
-
-  const userDocRef = doc(db, "users", currentUser.uid);
-  
-  userProgress["level6"] = {
-    percent: percentTotal,
-    stars: totalStars,
-    unlocked: true,
-    subProgress: subProgressArray
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+    projectId: "azzahra-academy-ad1ec",
+    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+    messagingSenderId: "425297111795",
+    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
   };
 
-  // Jika level 6 tamat total, buka gerbang modul kelanjutan berikutnya jika ada
-  try {
-    await updateDoc(userDocRef, {
-      xp: userXP,
-      progress: userProgress
-    });
-  } catch (error) {
-    console.error("Gagal sinkronisasi data progres ke Firestore:", error);
-  }
-};
-</script>
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUserId = null;
 
-<script>
-// Data Pembelajaran Lokal Level 6 (Tarikh & Khulafaur Rasyidin)
-const subbabs = [
-  { 
-    id: 1, 
-    title: "Kekhalifahan Abu Bakar Ash-Shiddiq", 
-    unlocked: true, 
-    completed: false, 
-    text: "<div class='mat-header'><span class='mat-tag'>Materi 01 — Khulafaur Rasyidin</span><h2 class='mat-title'>Abu Bakar: Penyelamat Umat</h2></div><div class='mat-body'><p>Setelah wafatnya Rasulullah SAW, <strong>Abu Bakar Ash-Shiddiq</strong> terpilih menjadi khalifah pertama melalui musyawarah di Saqifah Bani Sa'idah.</p><p>Tantangan utama di masa kepemimpinannya adalah munculnya nabi palsu (Musailamah Al-Kadzdzab) dan gerakan kaum murtad yang enggan membayar zakat. Beliau berhasil menuntaskan polemik ini melalui <strong>Perang Yamamah</strong> serta menginisiasi pengumpulan mushaf Al-Qur'an pertama.</p></div>",
-    questions: [
-      { q: "Di manakah tempat berkumpulnya kaum Anshar dan Muhajirin saat bermusyawarah memilih Abu Bakar sebagai Khalifah?", options: ["Masjid Nabawi", "Saqifah Bani Sa'idah", "Rumah Arqam bin Abil Arqam", "Gua Tsur"], correct: 1 },
-      { q: "Siapakah nama pemimpin nabi palsu yang berhasil ditumpas pada masa kekhalifahan Abu Bakar?", options: ["Aswad Al-Ansi", "Musailamah Al-Kadzdzab", "Tulaihah Al-Asadi", "Sajah binti Al-Harits"], correct: 2 }
-    ]
-  },
-  { 
-    id: 2, 
-    title: "Kekhalifahan Umar bin Khattab", 
-    unlocked: false, 
-    completed: false, 
-    text: "<div class='mat-header'><span class='mat-tag'>Materi 02 — Ekspansi & Administrasi</span><h2 class='mat-title'>Umar bin Khattab: Al-Faruq</h2></div><div class='mat-body'><p>Khalifah kedua, <strong>Umar bin Khattab</strong>, membawa era perluasan wilayah Islam yang sangat masif meliputi Persia, Syam, hingga Mesir.</p><p>Selain perluasan wilayah, Umar menata administrasi negara secara gemilang dengan membentuk kas negara (Baitul Maal), jawatan pos, penataan peradilan, serta menetapkan sistem penanggalan resmi umat Islam yaitu <strong>Kalender Hijriah</strong> yang dimulai dari tahun hijrahnya Nabi.</p></div>",
-    questions: [
-      { q: "Sistem administrasi penanggalan manakah yang resmi dicetuskan dan ditetapkan pada masa Khalifah Umar bin Khattab?", options: ["Kalender Masehi", "Kalender Syamsiyah", "Kalender Hijriah", "Kalender Qomariyah kuno"], correct: 2 },
-      { q: "Lembaga kas keuangan negara resmi di dalam sistem pemerintahan Islam populer dengan sebutan...", options: ["Baitul Maal", "Diwanul Jund", "Majelis Syura", "Mahkamah Syariah"], correct: 0 }
-    ]
-  }
-];
-
-let currentSub = 0;
-let quizMode = false;
-let currentQIdx = 0;
-let selectedOption = null;
-let quizIsChecked = false;
-
-function renderSidebar() {
-  const list = document.getElementById('sidebarList');
-  if(!list) return;
-  list.innerHTML = subbabs.map((s, idx) => {
-    let statusClass = 'locked';
-    let statusTxt = '<i class="fas fa-lock"></i> Terkunci';
-    
-    if (s.completed) { statusClass = 'done'; statusTxt = '<i class="fas fa-check-circle"></i> Selesai'; }
-    else if (s.unlocked) { statusClass = 'current'; statusTxt = '<i class="fas fa-book-open"></i> Terbuka'; }
-    
-    return `
-      <li class="sb-item ${idx === currentSub ? 'active' : ''} ${!s.unlocked ? 'locked' : ''}" 
-          onclick="${s.unlocked ? `goToSub(${idx})` : `toast('🔒 Selesaikan materi sebelumnya terlebih dahulu!','warn')`}">
-        <div class="sb-idx">${s.id}</div>
-        <div class="sb-info">
-          <div class="sb-name">${s.title}</div>
-          <div class="sb-status ${statusClass}">${statusTxt}</div>
-        </div>
-      </li>`;
-  }).join('');
-}
-
-function renderMateri(idx) {
-  const card = document.getElementById('workspaceCard');
-  const current = subbabs[idx];
-  
-  if(!quizMode) {
-    card.innerHTML = current.text;
-    document.getElementById('btnAction').innerHTML = `Mulai Kuis <i class="fas fa-gamepad"></i>`;
-  } else {
-    const qData = current.questions[currentQIdx];
-    const totalQ = current.questions.length;
-    const progressPercent = Math.round(((currentQIdx) / totalQ) * 100);
-
-    card.innerHTML = `
-      <div class="mat-header">
-        <span class="mat-tag">Evaluasi Kuis — ${current.title}</span>
-        <h2 class="mat-title">Uji Kompetensi Sejarah</h2>
-      </div>
-      <div class="quiz-box">
-        <div class="quiz-header">
-          <span>Pertanyaan ${currentQIdx + 1} dari ${totalQ}</span>
-        </div>
-        <div class="progress-bar-bg">
-          <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-        </div>
-        <div class="quiz-q"><i class="fas fa-question-circle"></i> <span>${qData.q}</span></div>
-        <div class="quiz-options">
-          ${qData.options.map((opt, i) => `
-            <div class="opt-card" id="opt-${i}" onclick="selectOption(${i})">
-              <div class="opt-idx">${String.fromCharCode(65 + i)}</div>
-              <div class="opt-text">${opt}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    
-    if (quizIsChecked) {
-      revealAnswers();
-    } else {
-      document.getElementById('btnAction').innerHTML = `Periksa Jawaban <i class="fas fa-check-double"></i>`;
-    }
-  }
-  document.getElementById('btnPrev').disabled = (idx === 0 && !quizMode);
-}
-
-function selectOption(idx) {
-  if (quizIsChecked) return;
-  selectedOption = idx;
-  document.querySelectorAll('.opt-card').forEach(el => el.classList.remove('selected'));
-  document.getElementById(`opt-${idx}`).classList.add('selected');
-}
-
-function revealAnswers() {
-  const current = subbabs[currentSub];
-  const qData = current.questions[currentQIdx];
-  
-  document.querySelectorAll('.opt-card').forEach((el, i) => {
-    el.classList.remove('selected');
-    if (i === qData.correct) {
-      el.classList.add('correct');
-    } else if (i === selectedOption) {
-      el.classList.add('wrong');
-    }
+  onAuthStateChanged(auth, (user) => {
+    if (user) { currentUserId = user.uid; }
   });
 
-  if (currentQIdx + 1 < current.questions.length) {
-    document.getElementById('btnAction').innerHTML = `Soal Berikutnya <i class="fas fa-chevron-right"></i>`;
-  } else {
-    document.getElementById('btnAction').innerHTML = `Selesaikan Kuis <i class="fas fa-trophy"></i>`;
-  }
-}
-
-function handleActionClick() {
-  const current = subbabs[currentSub];
-
-  if(!quizMode) {
-    quizMode = true;
-    currentQIdx = 0;
-    selectedOption = null;
-    quizIsChecked = false;
-    renderMateri(currentSub);
-    return;
-  }
-
-  if (!quizIsChecked) {
-    if(selectedOption === null) {
-      toast('⚠️ Silakan pilih salah satu opsi jawaban terlebih dahulu!', 'warn');
-      return;
-    }
-    quizIsChecked = true;
-    revealAnswers();
-  } else {
-    const qData = current.questions[currentQIdx];
+  window.checkAnswers = async function() {
+    const answers = { q1: 'B', q2: 'A', q3: 'C', q4: 'B', q5: 'B', q6: 'B', q7: 'C', q8: 'B', q9: 'C', q10: 'A' };
+    let score = 0;
     
-    if (selectedOption !== qData.correct) {
-      toast('❌ Jawaban kurang tepat. Kuis diulang kembali dari awal!', 'warn');
-      quizMode = false;
-      renderMateri(currentSub);
-      return;
+    for (let i = 1; i <= 10; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === answers[`q${i}`]) {
+        score += 10;
+      }
     }
 
-    if (currentQIdx + 1 < current.questions.length) {
-      currentQIdx++;
-      selectedOption = null;
-      quizIsChecked = false;
-      renderMateri(currentSub);
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const feedbackText = document.getElementById('feedbackText');
+
+    resultBox.style.display = 'block';
+    scoreText.textContent = `Skor Kamu: ${score} / 100`;
+
+    // LOGIKA GRADUASI KELULUSAN KKM 70%
+    if (score >= 70) {
+      feedbackText.textContent = `Luar Biasa! Kamu berhasil menyelesaikan Level 6 (Sejarah Islam) dengan skor telak ${score}/100. Klaim +100 XP sukses terverifikasi ke sistem database cloud kamu!`;
+      if (currentUserId) {
+        try {
+          const userRef = doc(db, 'users', currentUserId);
+          await updateDoc(userRef, {
+            xp: increment(100),
+            "progress.level6.percent": score,
+            "progress.completedAllCourse": true
+          });
+        } catch (e) { console.error("Firebase Sync Error:", e); }
+      }
     } else {
-      current.completed = true;
-      
-      if (currentSub + 1 < subbabs.length) {
-        subbabs[currentSub + 1].unlocked = true;
-      }
-
-      toast('🏆 Luar Biasa! +150 XP berhasil ditambahkan.', 'gold');
-      
-      if(window.saveProgressToFirebase) {
-        window.saveProgressToFirebase(150);
-      }
-
-      setTimeout(() => {
-        if(currentSub + 1 < subbabs.length) {
-          currentSub++;
-          quizMode = false;
-          renderSidebar();
-          renderMateri(currentSub);
-        } else {
-          toast('🎉 Selamat! Anda telah menamatkan Level 6: Sejarah Islam!', 'success');
-          setTimeout(() => window.location.href = 'index.html', 2000);
-        }
-      }, 1500);
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas ketuntasan minimal 70% (Benar 7 dari 10 soal). Baca kembali kronologi sejarah serta profil para ilmuwan di atas dan coba lagi ya!`;
     }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
-}
-
-function goToSub(idx) {
-  currentSub = idx;
-  quizMode = false;
-  renderMateri(idx);
-  renderSidebar();
-}
-
-function navigate(dir) {
-  if(quizMode && dir === -1) {
-    quizMode = false;
-    renderMateri(currentSub);
-    return;
-  }
-  const next = currentSub + dir;
-  if (next < 0 || next >= subbabs.length) return;
-  goToSub(next);
-}
-
-function toast(msg, type='info') {
-  const icons={success:'fa-check-circle',warn:'fa-exclamation-triangle',info:'fa-info-circle',gold:'fa-trophy'};
-  const colors={success:'#00e676',warn:'#ff9800',info:'#00e5ff',gold:'#ffd700'};
-  const el=document.getElementById('toastEl');
-  document.getElementById('toastMsg').textContent=msg;
-  document.getElementById('toastIcon').className='fas ' + (icons[type]||'fa-star');
-  el.style.borderColor=colors[type]||'#00e5ff';
-  el.style.color=colors[type]||'#fff';
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 3500);
-}
 </script>
 </body>
 </html>
