@@ -3,151 +3,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Santri — AzZahra Academy</title>
+  <title>Nurani — Dashboard Belajar Santri</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --neon-purple: #b026ff; --neon-cyan: #00e5ff; --dark-bg: #050508;
-      --dark-card: #0d0d1a; --text-light: #e8e0ff; --text-dim: #8878aa;
-      --success-green: #00e676; --error-red: #ff1744;
+      --bg-dark: #07070c; --card-dark: #0f0f1e; --text-main: #e2d9f3;
+      --text-muted: #84799f; --neon-purple: #b026ff; --neon-cyan: #00e5ff;
+      --level-1: #10b981; --level-2: #3b82f6; --level-3: #8b5cf6;
+      --level-4: #ec4899; --level-5: #f59e0b; --level-6: #ef4444;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      background: var(--dark-bg); color: var(--text-light);
+      background: var(--bg-dark); color: var(--text-main);
       font-family: 'Exo 2', sans-serif; padding-bottom: 90px;
     }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     
-    /* Top Header */
-    header {
-      background: var(--dark-card); padding: 20px; border-bottom: 1px solid rgba(176,38,255,0.2);
-      display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;
+    /* NAV BAR ATAS */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 20px; background: var(--card-dark);
+      border-bottom: 1px solid rgba(176,38,255,0.1); margin-bottom: 25px;
     }
-    .logo { font-family: 'Cinzel Decorative', serif; font-size: 1.5rem; color: #fff; font-weight:700; }
-    .btn-logout { background: none; border: 1px solid var(--error-red); color: var(--error-red); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-    .btn-logout:hover { background: var(--error-red); color: #fff; }
+    .brand { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; font-weight:700; color:#fff; }
+    .nav-stats { display: flex; gap: 15px; align-items: center; }
+    .stat-badge { background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; font-weight: 600; }
+    
+    /* NAVIGASI TOMBOL BAWAH (KAYAK NURANI) */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
+      background: var(--card-dark); border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+    }
+    .nav-item { color: var(--text-muted); text-align: center; cursor: pointer; text-decoration: none; font-size: 0.85rem; flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; }
+    .nav-item i { font-size: 1.4rem; margin-bottom: 4px; }
+    .nav-item.active { color: var(--neon-cyan); background: rgba(0, 229, 255, 0.02); }
 
-    /* Main Container */
-    .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+    /* LAYOUT HALAMAN */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* Progress Cards & Utilities */
-    .welcome-box { margin-bottom: 30px; }
-    .progress-card { background: var(--dark-card); border-radius: 16px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
-    .progress-bar-bg { background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; margin-top: 10px; overflow: hidden; }
-    .progress-bar-fill { background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan)); height: 100%; width: 0%; transition: width 0.5s ease; }
-
-    /* Level / Materi Menu */
-    .level-block { background: var(--dark-card); border-radius: 18px; padding: 25px; margin-bottom: 25px; border: 1px solid rgba(176,38,255,0.1); }
-    .level-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-    .subbab-list { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
-    .subbab-item { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
-    .subbab-item.locked { opacity: 0.4; cursor: not-allowed; }
-    .btn-study { background: var(--neon-purple); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-    .btn-study:disabled { background: #333; cursor: not-allowed; color: #777; }
-
-    /* Video & Quiz Arena */
-    .arena-container { background: var(--dark-card); padding: 30px; border-radius: 20px; border: 1px solid var(--neon-cyan); }
-    .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border-radius: 12px; overflow: hidden; }
-    .video-wrapper iframe { position: absolute; top:0; left:0; width:100%; height:100%; }
-    .quiz-box { margin-top: 25px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; }
-    .option-btn { display: block; width: 100%; text-align: left; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 14px; margin-bottom: 10px; border-radius: 10px; color: #fff; cursor: pointer; font-family: inherit; font-size: 1rem; transition: 0.2s; }
-    .option-btn:hover:not(:disabled) { border-color: var(--neon-cyan); background: rgba(0,229,255,0.05); }
-    .option-btn.correct { background: var(--success-green) !important; color: #000; font-weight: bold; }
-    .option-btn.wrong { background: var(--error-red) !important; color: #fff; }
-    .action-quiz-btn { background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan)); border:none; padding:12px 24px; color:#fff; font-weight:700; border-radius:10px; cursor:pointer; margin-top:15px; }
-
-    /* Bottom Navigation Bar */
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 70px; background: #0b0b16;
-      border-top: 1px solid rgba(176,38,255,0.2); display: flex; justify-content: space-around; align-items: center; z-index: 100;
+    /* BERANDA / KURIKULUM */
+    .grid-dashboard { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .grid-dashboard { grid-template-columns: 1fr; } }
+    .card { background: var(--card-dark); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 20px; }
+    
+    /* DAFTAR LEVEL & PERSENAN PROGRES (KAYAK NURANI) */
+    .level-card {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px; border-radius: 14px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
     }
-    .nav-item { background: none; border: none; color: var(--text-dim); display: flex; flex-direction: column; align-items: center; font-size: 0.85rem; cursor: pointer; gap: 4px; font-family: inherit; }
-    .nav-item i { font-size: 1.3rem; }
-    .nav-item.active { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,229,255,0.4); }
+    .level-card:hover { transform: scale(1.01); background: rgba(255,255,255,0.04); }
+    .level-card.locked { opacity: 0.4; cursor: not-allowed; }
+    .level-info h3 { font-size: 1.3rem; margin-bottom: 5px; }
 
-    /* Profile View */
-    .profile-card { text-align: center; padding: 30px; }
-    .avatar-circle { width: 90px; height: 90px; background: var(--neon-purple); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; margin: 0 auto 15px; color: #fff; box-shadow: 0 0 15px rgba(176,38,255,0.4); }
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 25px; }
-    .stat-box { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+    /* DETAIL SUB-BAB */
+    .subbab-list { display: grid; gap: 10px; margin-top: 15px; }
+    .subbab-item {
+      background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .subbab-item:hover { background: rgba(255,255,255,0.05); border-color: var(--neon-cyan); }
+    
+    /* PEMUTAR VIDEO YOUTUBE MATERI */
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 20px 0; }
+    .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+    
+    .action-buttons { display: flex; gap: 15px; margin-top: 15px; }
+    .btn {
+      flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700;
+      font-family: inherit; cursor: pointer; text-align: center; transition: 0.2s;
+    }
+    .btn-quiz { background: var(--level-1); color: #fff; }
+    .btn-game { background: var(--level-3); color: #fff; }
+    .btn-back { background: rgba(255,255,255,0.1); color: #fff; margin-bottom: 15px; width: fit-content; padding: 8px 15px; }
+    
+    .btn-exam {
+      background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff;
+      padding: 16px; font-size: 1.1rem; border-radius: 12px; font-weight: 700;
+      width: 100%; border: none; cursor: pointer; margin-top: 25px; box-shadow: 0 0 15px rgba(239,68,68,0.2);
+    }
+
+    /* KUIS INTERAKTIF MODEL QUIZIZZ */
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .progress-bar-container { background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; width: 100%; margin-bottom: 25px; overflow: hidden; }
+    .quiz-progress { background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan)); height: 100%; width: 0%; transition: 0.3s; }
+    .question-box { font-size: 1.4rem; font-weight: 600; margin-bottom: 25px; text-align: center; line-height: 1.5; }
+    .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .option-btn {
+      background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.08);
+      padding: 16px; border-radius: 12px; text-align: left; color: #fff;
+      font-family: inherit; font-size: 1.05rem; cursor: pointer; transition: 0.2s;
+    }
+    .option-btn:hover:not([disabled]) { border-color: var(--neon-purple); background: rgba(176,38,255,0.05); }
+    .option-btn.correct { background: #10b981 !important; border-color: #047857 !important; }
+    .option-btn.wrong { background: #ef4444 !important; border-color: #b91c1c !important; }
+    
+    .quiz-footer { margin-top: 30px; text-align: right; display: none; }
+    .btn-next { background: var(--neon-cyan); color: #000; padding: 12px 30px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; }
+    
+    /* HALAMAN PROFIL */
+    .profile-card { text-align: center; max-width: 500px; margin: 0 auto; padding: 40px 20px; }
+    .avatar { width: 90px; height: 90px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan)); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: white; box-shadow: 0 0 20px rgba(0,229,255,0.2); }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo"><i class="fas fa-graduation-cap" style="color:var(--neon-purple); margin-right:8px;"></i>AzZahra</div>
-    <button class="btn-logout" onclick="logoutAccount()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
-  </header>
+  <nav>
+    <div class="brand"><i class="fas fa-heart" style="color:var(--neon-purple)"></i> Nurani</div>
+    <div class="nav-stats">
+      <div class="stat-badge" style="color: #f59e0b;"><i class="fas fa-star"></i> <span id="lblTopXp">0</span> XP</div>
+      <div class="stat-badge" style="color: #ef4444;"><i class="fas fa-fire"></i> <span id="lblTopStreak">1</span> Hari</div>
+    </div>
+  </nav>
 
   <div class="container">
     
-    <section id="pageBeranda" class="page active">
-      <div class="welcome-box">
-        <h1 id="txtGreeting">Assalamu'alaikum, Santri!</h1>
-        <p style="color:var(--text-dim); margin-top:5px;">Mari lanjutkan pemahaman materi dan kuasai tingkatan belajarmu hari ini.</p>
+    <div id="pageBeranda" class="page active">
+      <div class="grid-dashboard">
+        <div>
+          <div class="card">
+            <h2>Progres Kurikulum Santri</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Selesaikan kuis di setiap sub-bab untuk meningkatkan progres belajarmu.</p>
+            <div id="levelContainer"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h3>Papan Peringkat</h3>
+            <div id="leaderboardList" style="margin-top:15px;">Pemuatan rangking...</div>
+          </div>
+        </div>
       </div>
-      <h3 style="margin-bottom: 15px;"><i class="fas fa-chart-line" style="color:var(--neon-cyan); margin-right:8px;"></i>Ringkasan Progress Belajar</h3>
-      <div id="berandaProgressContainer">
-        </div>
-    </section>
+    </div>
 
-    <section id="pageMateri" class="page">
-      <h2 style="margin-bottom: 20px;">Materi Pembelajaran</h2>
-      <div id="materiLevelsContainer">
-        </div>
-    </section>
-
-    <section id="pageArena" class="page">
-      <button class="action-quiz-btn" style="margin-bottom:20px; background:#222;" onclick="changeTab('materi')"><i class="fas fa-arrow-left"></i> Kembali ke Materi</button>
-      <div class="arena-container">
-        <h2 id="arenaTitle">Memuat Materi...</h2>
-        <p id="arenaSubtitle" style="color:var(--text-dim); margin-bottom:20px;"></p>
+    <div id="pageDetailBab" class="page">
+      <button class="btn btn-back" onclick="switchTab('beranda')"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</button>
+      <div class="card">
+        <h2 id="lblDetailTitle">Nama Bab</h2>
+        <p id="lblDetailDesc" style="color: var(--text-muted); margin-bottom: 20px;"></p>
+        <h3>Daftar Sub-Bab Materi:</h3>
         
-        <div class="video-wrapper" id="arenaVideoBox">
-          </div>
+        <div id="subbabContainer" class="subbab-list"></div>
 
-        <div class="quiz-box" id="arenaQuizBox">
-          <h3 id="quizQuestion">Pertanyaan akan muncul di sini</h3>
-          <div id="quizOptions" style="margin-top: 15px;"></div>
-          <button id="btnNextQuestion" class="action-quiz-btn" style="display:none;" onclick="nextQuestion()">Soal Berikutnya <i class="fas fa-chevron-right"></i></button>
+        <div id="examContainer" style="display: none;">
+          <button class="btn btn-exam" id="btnMulaiUjianAkhir"><i class="fas fa-trophy"></i> Ikuti Ujian Akhir Bab (25 Soal)</button>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section id="pageProfil" class="page">
-      <div class="progress-card profile-card">
-        <div class="avatar-circle" id="profInitial">S</div>
-        <h2 id="profName">Nama Santri</h2>
-        <p id="profEmail" style="color:var(--text-dim); font-size:0.9rem; margin-top:4px;"></p>
+    <div id="pageRuangBelajar" class="page">
+      <button class="btn btn-back" onclick="kembaliKeDetailBab()"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Sub-bab</button>
+      <div class="card">
+        <h2 id="lblMateriTitle">Judul Sub-Bab</h2>
+        <div class="video-container">
+          <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+        </div>
+        <p id="lblMateriSummary" style="line-height: 1.6; font-size: 1.1rem; margin-bottom: 20px;"></p>
         
-        <div class="stats-grid">
-          <div class="stat-box">
-            <div style="font-size:0.8rem; color:var(--text-dim);">TOTAL SKOR</div>
-            <div style="font-size:1.5rem; font-weight:700; color:var(--neon-cyan); margin-top:5px;" id="profXp">0 XP</div>
-          </div>
-          <div class="stat-box">
-            <div style="font-size:0.8rem; color:var(--text-dim);">STREAK BELAJAR</div>
-            <div style="font-size:1.5rem; font-weight:700; color:var(--neon-purple); margin-top:5px;" id="profStreak">1 Hari</div>
-          </div>
+        <div class="action-buttons">
+          <button class="btn btn-quiz" id="btnMulaiKuisSubBab"><i class="fas fa-gamepad"></i> Mulai Kuis Interaktif</button>
+          <button class="btn btn-game" onclick="alert('Mini Game Edukasi sedang disiapkan!')"><i class="fas fa-puzzle-piece"></i> Main Mini Game</button>
         </div>
       </div>
-    </section>
+    </div>
+
+    <div id="pageKuisQuizizz" class="page">
+      <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <div class="quiz-header">
+          <span style="font-weight: 600;" id="lblQuizTracker">Soal 1 dari 10</span>
+          <span style="font-weight: 600; color:#10b981;"><i class="fas fa-check"></i> Benar: <span id="lblCorrectCount">0</span></span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="quiz-progress" id="quizProgressBar"></div>
+        </div>
+        
+        <div class="question-box" id="lblQuestionText">Pertanyaan kuis diletakkan di sini?</div>
+        <div class="options-grid" id="optionsContainer"></div>
+        
+        <div class="quiz-footer" id="quizFooter">
+          <button class="btn-next" onclick="nextQuestion()">Lanjut <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pageProfil" class="page">
+      <div class="card profile-card">
+        <div class="avatar" id="avatarProfil">U</div>
+        <h2 id="lblProfilName" style="margin-bottom: 5px;">Nama Santri</h2>
+        <p id="lblProfilEmail" style="color: var(--text-muted); margin-bottom: 30px;">email@santri.com</p>
+        
+        <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+          <div style="flex: 1; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Pangkat Santri</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--neon-cyan); margin-top: 5px;">Thalibul 'Ilm</div>
+          </div>
+          <div style="flex: 1; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Lencana Diraih</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: #f59e0b; margin-top: 5px;"><i class="fas fa-award"></i> Penuntut Ilmu</div>
+          </div>
+        </div>
+
+        <button class="btn" style="background: #ef4444; color:#fff; max-width: 150px; margin: 0 auto; display: block;" onclick="handleLogout()">Keluar Akun</button>
+      </div>
+    </div>
 
   </div>
 
-  <nav class="bottom-nav">
-    <button class="nav-item active" id="navBeranda" onclick="changeTab('beranda')"><i class="fas fa-home"></i>Beranda</button>
-    <button class="nav-item" id="navMateri" onclick="changeTab('materi')"><i class="fas fa-book-open"></i>Materi</button>
-    <button class="nav-item" id="navProfil" onclick="changeTab('profil')"><i class="fas fa-user"></i>Profil</button>
-  </nav>
+  <div class="bottom-nav">
+    <div class="nav-item active" id="tabBeranda" onclick="switchTab('beranda')"><i class="fas fa-home"></i>Beranda</div>
+    <div class="nav-item" id="tabProfil" onclick="switchTab('profil')"><i class="fas fa-user"></i>Profil</div>
+  </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, updateDoc, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
@@ -163,647 +238,353 @@
     const db = getFirestore(app);
 
     let currentUserData = null;
-    let currentUserUid = null;
+    let currentUserId = null;
+    let selectedLevelId = null;
+    let selectedSubBabIndex = null;
+    let isExamMode = false;
 
-    // DATABASE MATRIKS LEVEL 1 SAMPAI LEVEL 6 SECARA LENGKAP
-    const DATA_MATERI = {
-      level1: {
-        title: "Level 1: Aqidah Islam",
-        desc: "Fondasi keimanan dasar seorang Muslim.",
-        subbab: [
+    let quizQuestions = [];
+    let currentQuestionIdx = 0;
+    let totalCorrectAnswers = 0;
+
+    // DATA RESMI LENGKAP MATERI & KUIS PER SUB-BAB (MASING-MASING 10 SOAL)
+    const DATA_MATERI = [
+      {
+        id: "level1", title: "Aqidah", color: "var(--level-1)", icon: "fa-sun",
+        description: "Fondasi dasar keimanan seorang Muslim meliputi rukun iman dan asmaul husna.",
+        subBabs: [
           {
-            id: "sub1", title: "Rukun Iman (6 Perkara)", videoId: "9gX_Ebe_ZfI", 
-            questions: [
-              { q: "Berapa jumlah Rukun Iman yang wajib diyakini?", a: ["4", "5", "6", "7"], c: 2 },
-              { q: "Iman pertama berpusat kepada siapa?", a: ["Malaikat", "Allah SWT", "Kitab", "Rasul"], c: 1 },
-              { q: "Malaikat Jibril bertugas menyampaikan apa?", a: ["Wahyu", "Rezeki", "Hujan", "Maut"], c: 0 },
-              { q: "Kitab Suci umat Islam adalah...", a: ["Taurat", "Injil", "Zabur", "Al-Qur'an"], c: 3 },
-              { q: "Nabi terakhir yang wajib kita imani adalah...", a: ["Nabi Isa AS", "Nabi Musa AS", "Nabi Muhammad SAW", "Nabi Ibrahim AS"], c: 2 },
-              { q: "Beriman kepada Hari Kiamat termasuk rukun iman ke-berapa?", a: ["Ke-3", "Ke-4", "Ke-5", "Ke-6"], c: 2 },
-              { q: "Takdir baik dan buruk dari Allah disebut juga...", a: ["Qadha & Qadhar", "Sabar", "Ikhtiar", "Tawakal"], c: 0 },
-              { q: "Siapa makhluk ciptaan Allah yang terbuat dari cahaya?", a: ["Manusia", "Jin", "Malaikat", "Hewan"], c: 2 },
-              { q: "Kitab Taurat diturunkan kepada Nabi...", a: ["Musa AS", "Dawood AS", "Isa AS", "Muhammad SAW"], c: 0 },
-              { q: "Malaikat yang bertugas meniup sangkakala adalah...", a: ["Mikail", "Israfil", "Izrail", "Ridwan"], c: 1 }
+            title: "Rukun Iman", videoId: "9gX_Ebe_ZfI", summary: "Mempelajari 6 pilar utama tiang keimanan di dalam hati umat Islam.",
+            quiz: [
+              { q: "Berapa jumlah Rukun Iman di dalam agama Islam?", a: ["4 Perkara", "5 Perkara", "6 Perkara", "7 Perkara"], correct: 2 },
+              { q: "Rukun Iman yang pertama adalah iman kepada...", a: ["Malaikat", "Hari Kiamat", "Rasul", "Allah SWT"], correct: 3 },
+              { q: "Iman kepada Malaikat-Malaikat Allah merupakan Rukun Iman urutan ke...", a: ["Ke-1", "Ke-2", "Ke-3", "Ke-4"], correct: 1 },
+              { q: "Malaikat yang memiliki tugas menyampaikan wahyu kepada para Nabi adalah...", a: ["Malaikat Mikail", "Malaikat Israfil", "Malaikat Jibril", "Malaikat Izrail"], correct: 2 },
+              { q: "Kitab suci terakhir yang diturunkan Allah kepada umat manusia bernama...", a: ["Kitab Taurat", "Kitab Zabur", "Kitab Injil", "Al-Qur'an"], correct: 3 },
+              { q: "Nabi dan Rasul penutup yang menjadi suri teladan kita adalah...", a: ["Nabi Isa AS", "Nabi Musa AS", "Nabi Muhammad SAW", "Nabi Ibrahim AS"], correct: 2 },
+              { q: "Iman kelima mengajarkan umat Islam untuk meyakini adanya...", a: ["Hari Kiamat / Akhir", "Hari Perhitungan", "Malaikat Munkar", "Takdir Baik"], correct: 0 },
+              { q: "Meyakini adanya Qadha dan Qadar (Takdir) diatur di dalam rukun iman ke...", a: ["Ke-3", "Ke-4", "Ke-5", "Ke-6"], correct: 3 },
+              { q: "Malaikat diciptakan oleh Allah SWT dari unsur dasar...", a: ["Api (Nar)", "Tanah", "Cahaya (Nur)", "Air"], correct: 2 },
+              { q: "Kitab Taurat diturunkan Allah secara khusus kepada Nabi...", a: ["Nabi Musa AS", "Nabi Isa AS", "Nabi Daud AS", "Nabi Muhammad SAW"], correct: 0 }
             ]
           },
           {
-            id: "sub2", title: "Asmaul Husna", videoId: "e9V-pYf9c6U",
-            questions: [
-              { q: "Apa arti dari Ar-Rahman?", a: ["Maha Penyayang", "Maha Pengasih", "Maha Merajai", "Maha Suci"], c: 1 },
-              { q: "Berapa jumlah keseluruhan Asmaul Husna?", a: ["25", "99", "100", "66"], c: 1 },
-              { q: "Ar-Rahim artinya Allah Maha...", a: ["Mendengar", "Melihat", "Penyayang", "Perkasa"], c: 2 },
-              { q: "As-Salam artinya Allah Maha memberi...", a: ["Kekayaan", "Kesehatan", "Keselamatan", "Keadilan"], c: 2 },
-              { q: "Al-Malik berarti Allah Maha...", a: ["Merajai / Menguasai", "Menciptakan", "Membagi", "Mengetahui"], c: 0 },
-              { q: "Al-Quddus artinya Allah Yang Maha...", a: ["Bijaksana", "Suci", "Besar", "Mulia"], c: 1 },
-              { q: "Nama Asmaul Husna yang berarti Maha Melihat adalah...", a: ["Al-Bashir", "As-Sami'", "Al-Alim", "Al-Khaliq"], c: 0 },
-              { q: "Nama Asmaul Husna yang berarti Maha Mendengar adalah...", a: ["Al-Bashir", "As-Sami'", "Al-Ghaffar", "Al-Wahhab"], c: 1 },
-              { q: "Al-Khaliq memiliki arti Allah Maha...", a: ["Pemberi Rezeki", "Pencipta", "Pengampun", "Adil"], c: 1 },
-              { q: "Mengetahui Asmaul Husna dapat menambah keimanan kita kepada...", a: ["Makhluk", "Dunia", "Allah SWT", "Malaikat"], c: 2 }
+            title: "Asmaul Husna", videoId: "bOInI2Z8xno", summary: "Mengenal nama-nama indah Allah SWT yang berjumlah 99 nama baik.",
+            quiz: [
+              { q: "Berapa total jumlah nama indah Asmaul Husna bagi Allah?", a: ["25 Nama", "99 Nama", "100 Nama", "114 Nama"], correct: 1 },
+              { q: "Apa makna dari nama Asmaul Husna 'Ar-Rahman'?", a: ["Maha Pengasih", "Maha Penyayang", "Maha Perkasa", "Maha Suci"], correct: 0 },
+              { q: "Apa makna dari nama Asmaul Husna 'Ar-Rahim'?", a: ["Maha Mengetahui", "Maha Penyayang", "Maha Melihat", "Maha Adil"], correct: 1 },
+              { q: "Al-Malik memiliki arti bahwa Allah Maha...", a: ["Mendengar", "Merajai / Menguasai Jagat", "Pencipta", "Pengampun"], correct: 1 },
+              { q: "Asmaul Husna Al-Quddus mengartikan bahwa Allah Maha...", a: ["Suci", "Besar", "Sabar", "Mulia"], correct: 0 },
+              { q: "Nama As-Salam mengartikan bahwa Allah Yang Maha...", a: ["Melihat", "Pemberi Keselamatan", "Agung", "Kekal"], correct: 1 },
+              { q: "Al-Khaliq memiliki arti bahwa Allah adalah Dzat Yang Maha...", a: ["Merajai", "Pencipta", "Memberi Rezeki", "Gagah"], correct: 1 },
+              { q: "Al-Ghaffar mengartikan bahwa Allah adalah Tuhan Yang Maha...", a: ["Pengampun", "Perkasa", "Bijaksana", "Kaya"], correct: 0 },
+              { q: "Ketika sedang berdoa memohon sesuatu, kita disunnahkan mengawalinya dengan melafalkan...", a: ["Nama Teman", "Asmaul Husna", "Puisi", "Nyanyian"], correct: 1 },
+              { q: "Allah Al-Bashir mengartikan bahwa Allah Maha...", a: ["Mendengar", "Melihat segala sesuatu", "Berbicara", "Hidup"], correct: 1 }
             ]
           }
         ],
-        exam: {
-          title: "Ujian Akhir Bab: Aqidah Islam", desc: "Evaluasi menyeluruh 25 soal materi Aqidah. Minimal benar 20 soal untuk lulus!",
-          questions: [
-            { q: "Rukun Iman berjumlah berapa?", a: ["5", "6", "7", "8"], c: 1 },
-            { q: "Malaikat yang bertugas membagikan rezeki dan hujan adalah...", a: ["Jibril", "Mikail", "Israfil", "Izrail"], c: 1 },
-            { q: "Nabi Musa AS menerima kitab suci...", a: ["Zabur", "Taurat", "Injil", "Al-Qur'an"], c: 1 },
-            { q: "Asmaul Husna berjumlah...", a: ["88", "99", "100", "77"], c: 1 },
-            { q: "Ar-Rahman artinya...", a: ["Maha Kuasa", "Maha Pengasih", "Maha Penyayang", "Maha Suci"], c: 1 },
-            { q: "Sifat Wajib Baqa artinya...", a: ["Ada", "Terdahulu", "Kekal", "Esa"], c: 2 },
-            { q: "Wahdaniyah artinya Allah Maha...", a: ["Esa", "Kuasa", "Hidup", "Melihat"], c: 0 },
-            { q: "Malaikat Malik bertugas menjaga...", a: ["Surga", "Neraka", "Pintu langit", "Kubur"], c: 1 },
-            { q: "Kitab Zabur diturunkan kepada Nabi...", a: ["Nabi Daud AS", "Nabi Isa AS", "Nabi Musa AS", "Nabi Ibrahim AS"], c: 0 },
-            { q: "Al-Khaliq artinya...", a: ["Maha Penyayang", "Maha Pencipta", "Maha Adil", "Maha Merajai"], c: 1 },
-            { q: "Sifat Mustahil 'Fana' bagi Allah artinya...", a: ["Tiada", "Rusak / binasa", "Lemah", "Bisu"], c: 1 },
-            { q: "Malaikat yang bertugas mencabut nyawa adalah...", a: ["Munkar", "Nakir", "Izrail", "Mikail"], c: 2 },
-            { q: "Al-Malik artinya...", a: ["Maha Suci", "Maha Merajai", "Maha Pemberi", "Maha Perkasa"], c: 1 },
-            { q: "Iman kepada Qadha dan Qadar adalah rukun iman ke...", a: ["4", "5", "6", "3"], c: 2 },
-            { q: "Sifat wajib Qidam artinya...", a: ["Kekal", "Terdahulu", "Ada", "Berdiri Sendiri"], c: 1 },
-            { q: "Al-Bashir artinya Allah Maha...", a: ["Mendengar", "Melihat", "Mengetahui", "Bijaksana"], c: 1 },
-            { q: "Qudrat artinya Allah Maha...", a: ["Kuasa", "Berkehendak", "Hidup", "Mendengar"], c: 0 },
-            { q: "As-Sami' artinya Allah Maha...", a: ["Melihat", "Mendengar", "Suci", "Menguasai"], c: 1 },
-            { q: "Kitab suci terakhir yang menyempurnakan kitab-kitab sebelumnya adalah...", a: ["Al-Qur'an", "Injil", "Taurat", "Zabur"], c: 0 },
-            { q: "Al-Quddus artinya Allah Maha...", a: ["Mulia", "Suci", "Agung", "Adil"], c: 1 },
-            { q: "Kebalikan dari sifat wajib Wahdaniyah (Esa) adalah Ta'addud yang artinya...", a: ["Lemah", "Banyak / Lebih dari satu", "Mati", "Bisu"], c: 1 },
-            { q: "Malaikat yang menanyakan amal di alam kubur adalah...", a: ["Jibril & Mikail", "Munkar & Nakir", "Raqib & Atid", "Malik & Ridwan"], c: 1 },
-            { q: "As-Salam artinya Allah Maha...", a: ["Memberi Keselamatan", "Menciptakan", "Mengadili", "Mengetahui"], c: 0 },
-            { q: "Sifat Jaiz bagi Allah artinya kebebasan Allah...", a: ["Menciptakan atau tidak menciptakan makhluk", "Berbuat salah", "Tidur", "Lupa"], c: 0 },
-            { q: "Percaya akan adanya hari akhir / kiamat hukumnya...", a: ["Sunnah", "Wajib bagi setiap Muslim", "Mubah", "Makruh"], c: 1 }
-          ]
-        }
-      },
-      level2: {
-        title: "Level 2: Fiqih Ibadah",
-        desc: "Panduan bersuci, shalat, dan ibadah harian sesuai syariat.",
-        subbab: [
-          {
-            id: "sub1", title: "Thaharah (Bersuci)", videoId: "bOInI2Z8xno",
-            questions: [
-              { q: "Apa arti Thaharah menurut bahasa?", a: ["Bersuci", "Berwudhu", "Mandi", "Berdoa"], c: 0 },
-              { q: "Air yang suci dan menyucikan disebut air...", a: ["Mutlak", "Musta'mal", "Mutanajjis", "Musyammas"], c: 0 },
-              { q: "Berikut yang termasuk air mutlak adalah air...", a: ["Kopi", "Hujan", "Teh", "Kelapa"], c: 1 },
-              { q: "Najis yang tergolong ringan disebut najis...", a: ["Mukhaffafah", "Mutawassithah", "Mughalladhah", "Ma'fu"], c: 0 },
-              { q: "Air kencing bayi laki-laki yang belum makan selain ASI termasuk najis...", a: ["Berat", "Sedang", "Ringan", "Suci"], c: 2 },
-              { q: "Najis Mughalladhah adalah najis berat yang berasal dari...", a: ["Darah", "Kotoran ayam", "Anjing dan babi", "Air kencing"], c: 2 },
-              { q: "Cara menyucikan najis mutawassithah adalah...", a: ["Dipercikkan air", "Dibasuh 7 kali dengan tanah", "Dicuci sampai hilang warna, bau, dan rasa", "Dibiarkan kering"], c: 2 },
-              { q: "Alat utama bersuci selain air adalah...", a: ["Kain", "Tanah / Batu kering", "Kertas hvs", "Daun basah"], c: 1 },
-              { q: "Hadas besar dapat disucikan dengan cara...", a: ["Wudhu", "Tayamum", "Mandi Wajib", "Cuci tangan"], c: 2 },
-              { q: "Jika tidak ada air, bersuci untuk shalat diganti dengan...", a: ["Tayamum", "Sabar", "Istinja", "Mandi"], c: 0 }
-            ]
-          },
-          {
-            id: "sub2", title: "Rukun Shalat (13 Perkara)", videoId: "4_9AIsXv0j0",
-            questions: [
-              { q: "Berapa jumlah rukun shalat yang wajib dipenuhi?", a: ["5", "10", "13", "17"], c: 2 },
-              { q: "Rukun shalat yang pertama adalah...", a: ["Niat", "Takbiratul Ihram", "Membaca Al-Fatihah", "Ruku'"], c: 0 },
-              { q: "Membaca Surat Al-Fatihah dalam shalat hukumnya...", a: ["Sunnah", "Wajib / Rukun", "Mubah", "Makruh"], c: 1 },
-              { q: "Posisi membungkuk dengan tangan memegang lutut disebut...", a: ["Sujud", "Ruku'", "I'tidal", "Duduk di antara dua sujud"], c: 1 },
-              { q: "Tenang sejenak di setiap gerakan shalat disebut...", a: ["Tumaninah", "Khusyuk", "Ikhlas", "Takbir"], c: 0 },
-              { q: "Membaca Shalawat Nabi dilakukan pada saat...", a: ["Ruku'", "Sujud", "Tahiyyat Akhir", "Takbiratul ihram"], c: 2 },
-              { q: "Rukun shalat yang terakhir adalah...", a: ["Membaca salam pertama", "Membaca salam kedua", "Tertib", "Sujud sahwi"], c: 2 },
-              { q: "Gerakan bangun dari ruku' disebut...", a: ["I'tidal", "Sujud", "Duduk", "Takbir"], c: 0 },
-              { q: "Shalat fardhu yang berjumlah 3 rakaat adalah...", a: ["Subuh", "Zuhur", "Maghrib", "Isya"], c: 2 },
-              { q: "Shalat menghadap ke arah...", a: ["Kiblat (Ka'bah)", "Timur", "Barat", "Masjid"], c: 0 }
-            ]
-          }
-        ],
-        exam: {
-          title: "Ujian Akhir Bab: Fiqih Ibadah", desc: "Evaluasi 25 soal bersuci dan gerakan shalat. Minimal benar 20 soal untuk lulus!",
-          questions: [
-            { q: "Thaharah artinya...", a: ["Bersuci", "Berdoa", "Zikir", "Shalat"], c: 0 },
-            { q: "Air laut termasuk jenis air...", a: ["Mutlak", "Musta'mal", "Mutanajjis", "Musyammas"], c: 0 },
-            { q: "Najis ringan disebut...", a: ["Mukhaffafah", "Mutawassithah", "Mughalladhah", "Ma'fu"], c: 0 },
-            { q: "Air kencing bayi perempuan termasuk najis...", a: ["Ringan", "Sedang", "Berat", "Suci"], c: 1 },
-            { q: "Najis berat disucikan dengan membasuh sebanyak...", a: ["1 kali", "3 kali", "7 kali (salah satunya dengan tanah)", "9 kali"], c: 2 },
-            { q: "Tayamum menggunakan media...", a: ["Air sedikit", "Batu basah", "Debu/tanah yang suci", "Kain bersih"], c: 2 },
-            { q: "Rukun shalat berjumlah...", a: ["13", "15", "10", "12"], c: 0 },
-            { q: "Membaca Al-Fatihah termasuk rukun shalat...", a: ["Fi'li (gerakan)", "Qauli (ucapan)", "Qalbi (hati)", "Sunnah"], c: 1 },
-            { q: "Tumaninah artinya...", a: ["Cepat-cepat", "Tenang sejenak", "Berdoa panjang", "Menangis"], c: 1 },
-            { q: "Membaca salam yang termasuk rukun adalah salam ke...", a: ["Satu", "Dua", "Dua-duanya", "Tidak ada"], c: 0 },
-            { q: "Tertib dalam shalat artinya...", a: ["Berurutan sesuai aturan", "Boleh acak", "Sambil berdzikir", "Khusyuk"], c: 0 },
-            { q: "Shalat Subuh berjumlah...", a: ["2 rakaat", "3 rakaat", "4 rakaat", "1 rakaat"], c: 0 },
-            { q: "Membaca doa Qunut pada shalat Subuh menurut madzhab Syafi'i hukumnya...", a: ["Wajib", "Sunnah Ab'ad", "Sunnah Haiat", "Mubah"], c: 1 },
-            { q: "Membaca surat pendek setelah Al-Fatihah hukumnya...", a: ["Wajib", "Sunnah", "Mubah", "Makruh"], c: 1 },
-            { q: "Duduk pada rakaat terakhir disebut...", a: ["Tawarruk", "Iftirasy", "Sajdah", "Tumaninah"], c: 0 },
-            { q: "Duduk di antara dua sujud dinamakan posisi duduk...", a: ["Iftirasy", "Tawarruk", "Sila", "Simpuh"], c: 0 },
-            { q: "Pembatal shalat di bawah ini adalah...", a: ["Berbicara dengan sengaja", "Batuk tidak sengaja", "Menangis karena khusyuk", "Melihat sajadah"], c: 0 },
-            { q: "Batas aurat laki-laki dalam shalat adalah...", a: ["Dari pusar sampai lutut", "Seluruh tubuh", "Pundak saja", "Dada saja"], c: 0 },
-            { q: "Aurat wanita dalam shalat adalah seluruh tubuh kecuali...", a: ["Wajah dan telapak tangan", "Rambut", "Kaki", "Tangan sampai siku"], c: 0 },
-            { q: "Shalat lima waktu hukumnya...", a: ["Fardhu 'Ain", "Fardhu Kifayah", "Sunnah Muakkad", "Mubah"], c: 0 },
-            { q: "Jika lupa rakaat shalat, sebelum salam disunnahkan...", a: ["Sujud Sahwi", "Sujud Tilawah", "Sujud Syukur", "Mengulang shalat"], c: 0 },
-            { q: "Niat shalat terletak di dalam...", a: ["Hati, berbarengan dengan Takbiratul Ihram", "Lisan sebelum takbir", "Gerakan ruku'", "Sujud terakhir"], c: 0 },
-            { q: "Air yang telah digunakan untuk berwudhu disebut air...", a: ["Musta'mal", "Mutlak", "Mutanajjis", "Musyammas"], c: 0 },
-            { q: "Berapa kali kita membasuh muka saat wudhu sesuai sunnah?", a: ["1 kali", "2 kali", "3 kali", "5 kali"], c: 2 },
-            { q: "Shalat Zuhur, Ashar, dan Isya masing-masing berjumlah...", a: ["4 rakaat", "3 rakaat", "2 rakaat", "5 rakaat"], c: 0 }
-          ]
-        }
-      },
-      level3: {
-        title: "Level 3: Akhlak & Adab Islam",
-        desc: "Membentuk kepribadian muslim yang berakhlak mulia.",
-        subbab: [
-          {
-            id: "sub1", title: "Adab Kepada Orang Tua (Birrul Walidain)", videoId: "bOInI2Z8xno",
-            questions: [
-              { q: "Hukum berbakti kepada kedua orang tua adalah...", a: ["Wajib", "Sunnah", "Mubah", "Makruh"], c: 0 },
-              { q: "Berkata 'Ah' atau membentak orang tua hukumnya...", a: ["Boleh jika kesal", "Haram / Dosa besar", "Makruh", "Mubah"], c: 1 },
-              { q: "Siapakah manusia yang paling berhak mendapatkan penghormatan utamamu?", a: ["Ayah", "Ibu", "Teman", "Guru"], c: 1 },
-              { q: "Berapa kali Rasulullah menyebut kata 'Ibumu' sebelum 'Ayahmu'?", a: ["1 kali", "2 kali", "3 kali", "4 kali"], c: 2 },
-              { q: "Cara berbakti kepada orang tua yang sudah wafat adalah...", a: ["Menangisinya terus", "Mendoakan ampunan dan menyambung silaturahmi temannya", "Membiarkan rumahnya", "Membeli barang mewah"], c: 1 },
-              { q: "Ridha Allah terletak pada...", a: ["Ridha orang tua", "Banyaknya harta", "Pujian teman", "Nilai sekolah"], c: 0 },
-              { q: "Murka Allah terletak pada...", a: ["Kemarahan guru", "Murka kedua orang tua", "Kesedihan tetangga", "Kekalahan lomba"], c: 1 },
-              { q: "Adab berbicara dengan orang tua yang benar adalah...", a: ["Berteriak keras", "Sopan, lembut, dan tidak memotong pembicaraan", "Menggunakan bahasa gaul kasar", "Sambil bermain HP"], c: 1 },
-              { q: "Jika orang tua menyuruh pada kemaksiatan, sikap kita adalah...", a: ["Mengikuti saja", "Menolak dengan halus dan tetap berlaku baik dalam urusan dunia", "Membentak mereka", "Memusuhi mereka"], c: 1 },
-              { q: "Mendoakan orang tua dilakukan...", a: ["Setiap selesai shalat", "Setahun sekali", "Saat ingat saja", "Saat butuh uang"], c: 0 }
-            ]
-          }
-        ],
-        exam: {
-          title: "Ujian Akhir Bab: Akhlak & Adab", desc: "Evaluasi 25 soal akhlak terpuji kepada sesama makhluk. Minimal benar 20 soal untuk lulus!",
-          questions: [
-            { q: "Birrul Walidain artinya...", a: ["Berbakti kepada orang tua", "Berbakti kepada guru", "Menyantuni anak yatim", "Sabar"], c: 0 },
-            { q: "Sikap terbaik jika dinasehati orang tua adalah...", a: ["Mendengarkan dengan baik dan patuh", "Membantah langsung", "Pura-pura tidur", "Pergi keluar rumah"], c: 0 },
-            { q: "Ibu harus dihormati lebih dulu karena tiga payah, kecuali...", a: ["Mengandung", "Melahirkan", "Menyusui", "Bekerja kantor"], c: 3 },
-            { q: "Kepada guru kita harus bersikap...", a: ["Takut", "Hormat dan takzim", "Biasa saja", "Sama seperti teman"], c: 1 },
-            { q: "Adab makan yang diajarkan Rasulullah adalah...", a: ["Menggunakan tangan kanan dan membaca bismillah", "Menggunakan tangan kiri", "Sambil berdiri dan berbicara", "Meniup makanan panas"], c: 0 },
-            { q: "Ketika masuk rumah, kita disunnahkan untuk...", a: ["Berteriak", "Mengetuk pintu keras-keras", "Mengucapkan salam", "Langsung tidur"], c: 2 },
-            { q: "Sifat jujur disebut juga...", a: ["Siddiq", "Amanah", "Fathanah", "Tabligh"], c: 0 },
-            { q: "Lawan dari sifat jujur adalah Kizib yang artinya...", a: ["Khianat", "Dusta / Bohong", "Sombong", "Iri"], c: 1 },
-            { q: "Sifat merasa diri lebih hebat dari orang lain disebut...", a: ["Riya'", "Takabur / Sombong", "Hasad", "Ujub"], c: 1 },
-            { q: "Hasad artinya...", a: ["Iri dengki atas kenikmatan orang lain", "Pamer amalan", "Rendah hati", "Dermawan"], c: 0 },
-            { q: "Pamer amal ibadah agar dipuji manusia disebut...", a: ["Riya'", "Sabar", "Syukur", "Tawakal"], c: 0 },
-            { q: "Adab bertetangga yang baik adalah...", a: ["Mengganggu dengan musik keras", "Saling berbagi makanan dan tidak menyakiti", "Acuh tak acuh", "Membicarakan keburukannya"], c: 1 },
-            { q: "Apabila mendengar orang bersin mengucapkan 'Alhamdulillah', kita menjawab...", a: ["Yarhamukallah", "Yahdikumullah", "Innalillah", "Subhanallah"], c: 0 },
-            { q: "Adab menguap adalah...", a: ["Membuka mulut lebar-lebar", "Menutup mulut dengan tangan kiri/punggung tangan", "Bersuara keras", "Tertawa"], c: 1 },
-            { q: "Sifat rendah hati dalam Islam disebut...", a: ["Tadarus", "Tawadhu'", "Tawakal", "Ta'aruf"], c: 1 },
-            { q: "Tawakal artinya...", a: ["Pasrah tanpa berusaha", "Berserah diri kepada Allah setelah berusaha maksimal", "Putus asa", "Bekerja terus tanpa doa"], c: 1 },
-            { q: "Sabar terbagi menjadi tiga jenis, kecuali...", a: ["Sabar dalam ketaatan", "Sabar dalam menjauhi maksiat", "Sabar menghadapi musibah", "Sabar dalam kemiskinan tanpa usaha"], c: 3 },
-            { q: "Apabila tertimpa musibah, seorang muslim mengucapkan kalimat istirja' yaitu...", a: ["Innalillahi wa inna ilaihi raji'un", "Alhamdulillah", "Astaghfirullah", "Allahu Akbar"], c: 0 },
-            { q: "Menjaga rahasia dan titipan orang lain dengan penuh tanggung jawab disebut sifat...", a: ["Amanah", "Tabligh", "Fathanah", "Siddiq"], c: 0 },
-            { q: "Adab menjenguk orang sakit adalah...", a: ["Berlama-lama mengobrol", "Mendoakan kesembuhan dan memberi semangat", "Membawa makanan pembawa penyakit", "Mengajaknya bercanda berlebihan"], c: 1 },
-            { q: "Kebersihan adalah sebagian dari...", a: ["Iman", "Islam", "Ihsan", "Taqwa"], c: 0 },
-            { q: "Menyingkirkan duri atau gangguan di jalan termasuk cabang dari...", a: ["Iman", "Sadaqah", "Adab", "Semua benar"], c: 3 },
-            { q: "Adab menuntut ilmu adalah...", a: ["Bercanda saat guru menjelaskan", "Ikhlas, fokus, dan mencatat materi", "Datang terlambat", "Tidur di kelas"], c: 1 },
-            { q: "Memutus tali silaturahmi hukumnya...", a: ["Haram", "Sunnah", "Mubah", "Makruh"], c: 0 },
-            { q: "Tanda-tanda orang munafik ada...", a: ["2", "3 (berbicara bohong, ingkar janji, khianat)", "4", "5"], c: 1 }
-          ]
-        }
-      },
-      level4: {
-        title: "Level 4: Sejarah Nabi & Rasul",
-        desc: "Meneladani kisah perjuangan para utusan Allah.",
-        subbab: [
-          {
-            id: "sub1", title: "Kisah Nabi Muhammad SAW", videoId: "bOInI2Z8xno",
-            questions: [
-              { q: "Di kota manakah Nabi Muhammad SAW dilahirkan?", a: ["Madinah", "Makkah", "Yerussalem", "Thaif"], c: 1 },
-              { q: "Nabi Muhammad SAW lahir pada tanggal...", a: ["12 Rabiul Awal", "1 Ramadhan", "1 Syawal", "10 Muharram"], c: 0 },
-              { q: "Siapa nama ayah kandung Nabi Muhammad SAW?", a: ["Abu Thalib", "Abdul Mutthalib", "Abdullah", "Abu Lahab"], c: 2 },
-              { q: "Nama ibu kandung Nabi Muhammad SAW adalah...", a: ["Khadijah", "Aisyah", "Aminah", "Fathimah"], c: 2 },
-              { q: "Tahun kelahiran Nabi Muhammad disebut juga Tahun...", a: ["Gajah", "Unta", "Banjir", "Kesedihan"], c: 0 },
-              { q: "Nabi Muhammad menerima wahyu pertama di...", a: ["Gua Tsur", "Gua Hira", "Masjidil Haram", "Bukit Shafa"], c: 1 },
-              { q: "Wahyu pertama yang turun kepada Nabi adalah surat...", a: ["Al-Fatihah", "Al-Baqarah", "Al-'Alaq ayat 1-5", "Al-Ikhlas"], c: 2 },
-              { q: "Gelar 'Al-Amin' yang disandang Nabi Muhammad memiliki arti...", a: ["Maha Perkasa", "Dapat Dipercaya", "Paling Cerdas", "Suka Berbagi"], c: 1 },
-              { q: "Istri pertama Nabi Muhammad SAW yang sangat mendukung dakwah beliau adalah...", a: ["Aisyah", "Hafsah", "Khadijah", "Zainab"], c: 2 },
-              { q: "Peristiwa perjalanan malam Nabi dari Makkah ke Baitul Maqdis lalu ke Sidratul Muntaha disebut...", a: ["Hijrah", "Fathul Makkah", "Isra' Mi'raj", "Perang Badar"], c: 2 }
-            ]
-          }
-        ],
-        exam: {
-          title: "Ujian Akhir Bab: Sejarah Ulul Azmi", desc: "Evaluasi 25 soal sejarah para Nabi pilihan Allah. Minimal benar 20 soal untuk lulus!",
-          questions: [
-            { q: "Berapa jumlah Nabi & Rasul yang wajib diketahui?", a: ["10", "25", "50", "114"], c: 1 },
-            { q: "Gelar Ulul Azmi diberikan kepada nabi yang memiliki...", a: ["Ketabahan dan kesabaran luar biasa", "Harta paling banyak", "Kerajaan terluas", "Usia paling panjang"], c: 0 },
-            { q: "Berikut ini yang termasuk Nabi Ulul Azmi adalah...", a: ["Nabi Adam AS", "Nabi Yusuf AS", "Nabi Ibrahim AS", "Nabi Yunus AS"], c: 2 },
-            { q: "Nabi yang selamat dari kobaran api raja Namrud adalah Nabi...", a: ["Nabi Musa AS", "Nabi Ibrahim AS", "Nabi Isa AS", "Nabi Nuh AS"], c: 1 },
-            { q: "Mukjizat Nabi Nuh AS adalah...", a: ["Membelah laut", "Membuat perahu besar (Bahtera) di atas bukit", "Berbicara saat bayi", "Mengubah tongkat jadi ular"], c: 1 },
-            { q: "Nabi yang memiliki mukjizat bisa membelah Laut Merah dengan tongkatnya adalah...", a: ["Nabi Ibrahim AS", "Nabi Musa AS", "Nabi Isa AS", "Nabi Muhammad SAW"], c: 1 },
-            { q: "Nabi Isa AS dilahirkan oleh seorang wanita suci bernama...", a: ["Aminah", "Asiyah", "Maryam", "Khadijah"], c: 2 },
-            { q: "Mukjizat terbesar Nabi Muhammad SAW adalah...", a: ["Membelah bulan", "Mengeluarkan air dari jemari", "Al-Qur'an", "Makanan yang tidak habis"], c: 2 },
-            { q: "Raja kejam yang dilawan oleh Nabi Musa AS adalah...", a: ["Namrud", "Firaun", "Abrahah", "Jalut"], c: 1 },
-            { q: "Nabi yang ditelan oleh ikan paus raksasa adalah Nabi...", a: ["Yunus AS", "Yusuf AS", "Ayub AS", "Idris AS"], c: 0 },
-            { q: "Nabi Yusuf AS dikaruniai ketampanan dan mukjizat berupa...", a: ["Menafsirkan mimpi", "Kebal api", "Membuat baju besi", "Mengendalikan angin"], c: 0 },
-            { q: "Nabi yang memahami bahasa hewan dan menguasai bangsa jin adalah...", a: ["Nabi Daud AS", "Nabi Sulaiman AS", "Nabi Adam AS", "Nabi Zakaria AS"], c: 1 },
-            { q: "Nabi Daud AS dikaruniai suara merdu dan kitab suci...", a: ["Taurat", "Zabur", "Injil", "Suhuf"], c: 1 },
-            { q: "Nabi pertama yang diciptakan oleh Allah SWT adalah...", a: ["Nabi Idris AS", "Nabi Adam AS", "Nabi Nuh AS", "Nabi Ibrahim AS"], c: 1 },
-            { q: "Ayah dari Nabi Ismail AS dan Nabi Ishaq AS adalah...", a: ["Nabi Ibrahim AS", "Nabi Luth AS", "Nabi Ya'qub AS", "Nabi Yusuf AS"], c: 0 },
-            { q: "Suku penentang dakwah Nabi Muhammad di Makkah adalah...", a: ["Quraisy", "Aus", "Khazraj", "Tsamud"], c: 0 },
-            { q: "Peristiwa berpindahnya kaum muslimin dari Makkah ke Madinah disebut...", a: ["Hijrah", "Haji", "Umrah", "Mubahalah"], c: 0 },
-            { q: "Penduduk asli Madinah yang menerima kaum muhajirin disebut kaum...", a: ["Muhajirin", "Anshar", "Quraisy", "Hawariyyun"], c: 1 },
-            { q: "Perang besar pertama kali dalam sejarah Islam adalah Perang...", a: ["Uhud", "Khandak", "Badar", "Khaibar"], c: 2 },
-            { q: "Paman Nabi yang gugur syahid pada Perang Uhud adalah...", a: ["Hamzah bin Abdul Mutthalib", "Abu Thalib", "Abbas", "Abu Lahab"], c: 0 },
-            { q: "Peristiwa pembebasan Kota Makkah secara damai disebut...", a: ["Isra Mi'raj", "Fathul Makkah", "Haji Wada'", "Perang Tabuk"], c: 1 },
-            { q: "Nabi Muhammad wafat pada usia...", a: ["40 tahun", "50 tahun", "60 tahun", "63 tahun"], c: 3 },
-            { q: "Sahabat Nabi yang memeluk Islam pertama kali dari golongan pria dewasa adalah...", a: ["Ali bin Abi Thalib", "Abu Bakar As-Siddiq", "Umar bin Khattab", "Zaid bin Haritsah"], c: 1 },
-            { q: "Nabi yang terkenal dengan kesabaran luar biasa saat diuji penyakit kulit dan kehilangan hartanya adalah...", a: ["Nabi Ayub AS", "Nabi Yahya AS", "Nabi Ismail AS", "Nabi Syuaib AS"], c: 0 },
-            { q: "Nabi Ismail AS rela disembelih oleh ayahnya karena patuh pada perintah Allah. Peristiwa ini melahirkan syariat...", a: ["Zakat", "Puasa Ramadan", "Ibadah Qurban", "Shalat Tarawih"], c: 2 }
-          ]
-        }
-      },
-      level5: {
-        title: "Level 5: Al-Qur'an & Hadits",
-        desc: "Memahami pedoman hidup pokok umat Islam.",
-        subbab: [
-          {
-            id: "sub1", title: "Pengenalan Al-Qur'an", videoId: "bOInI2Z8xno",
-            questions: [
-              { q: "Berapa jumlah Juz di dalam Al-Qur'an?", a: ["15 Juz", "30 Juz", "114 Juz", "666 Juz"], c: 1 },
-              { q: "Berapa jumlah Surat yang terkandung di dalam Al-Qur'an?", a: ["30", "60", "114", "313"], c: 2 },
-              { q: "Surat pembuka di dalam Al-Qur'an dinamakan surat...", a: ["Al-Baqarah", "Al-Fatihah", "Al-Ikhlas", "An-Nas"], c: 1 },
-              { q: "Surat terpanjang di dalam Al-Qur'an adalah...", a: ["Ali 'Imran", "Al-Baqarah", "Al-Ma'idah", "Yasin"], c: 1 },
-              { q: "Surat yang menceritakan keesaan Allah secara mutlak adalah...", a: ["Al-Falaq", "An-Nas", "Al-Ikhlas", "Al-Kafirun"], c: 2 },
-              { q: "Surat yang turun sebelum Nabi hijrah ke Madinah disebut surat...", a: ["Makkiyah", "Madaniyah", "Pendek", "Panjang"], c: 0 },
-              { q: "Surat yang turun setelah Nabi hijrah ke Madinah disebut surat...", a: ["Makkiyah", "Madaniyah", "Kuno", "Modern"], c: 1 },
-              { q: "Malam diturunkannya Al-Qur'an disebut malam...", a: ["Lailatul Qadar", "Nuzulul Qur'an", "Isra Mi'raj", "Tahun Baru Islam"], c: 1 },
-              { q: "Membaca satu huruf Al-Qur'an akan mendapatkan kebaikan sebanyak...", a: ["1", "5", "10", "700"], c: 2 },
-              { q: "Surat terakhir urutan ke-114 di dalam Al-Qur'an adalah...", a: ["Al-Falaq", "An-Nas", "Al-Ikhlas", "Al-Lahab"], c: 1 }
-            ]
-          }
-        ],
-        exam: {
-          title: "Ujian Akhir Bab: Al-Qur'an Hadits", desc: "Evaluasi 25 soal kaidah Al-Qur'an dan terminologi hadits. Minimal benar 20 soal untuk lulus!",
-          questions: [
-            { q: "Al-Qur'an secara bahasa berarti...", a: ["Bacaan", "Tulisan", "Pedoman", "Hukum"], c: 0 },
-            { q: "Hadits secara istilah artinya segala perkataan, perbuatan, dan ketetapan dari...", a: ["Sahabat", "Ulama", "Nabi Muhammad SAW", "Malaikat"], c: 2 },
-            { q: "Hadits yang sanadnya bersambung dan diriwayatkan oleh orang terpercaya serta tidak cacat dinamakan hadits...", a: ["Shahih", "Hasan", "Dhaif", "Maudhu (Palsu)"], c: 0 },
-            { q: "Hadits lemah yang tidak memenuhi syarat dinamakan hadits...", a: ["Shahih", "Hasan", "Dhaif", "Mutawatir"], c: 2 },
-            { q: "Dua kitab hadits paling shahih yang menjadi rujukan utama adalah...", a: ["Shahih Bukhari & Muslim", "Sunan Abu Dawud & Tirmidzi", "Musnad Ahmad", "Muwattha Malik"], c: 0 },
-            { q: "Ayat Al-Qur'an yang memerintahkan tentang kewajiban berpuasa ramadhan terdapat pada surat...", a: ["Al-Baqarah ayat 183", "Al-Baqarah ayat 285", "Ali Imran ayat 102", "Al-Maidah ayat 3"], c: 0 },
-            { q: "Surat Al-Kautsar menceritakan tentang nikmat yang...", a: ["Sedikit", "Banyak", "Hilang", "Tertunda"], c: 1 },
-            { q: "Nama lain Al-Qur'an yang berarti Pembeda antara benar dan salah adalah...", a: ["Al-Kitab", "Al-Huda", "Al-Furqan", "Asy-Syifa"], c: 2 },
-            { q: "Asy-Syifa artinya Al-Qur'an sebagai...", a: ["Pemberi kabar", "Obat / Penyembuh", "Pemberi cahaya", "Peringatan"], c: 1 },
-            { q: "Surat Al-Ashr menjelaskan tentang pentingnya menjaga...", a: ["Harta", "Waktu", "Kesehatan", "Keluarga"], c: 1 },
-            { q: "Membaca Al-Qur'an harus menggunakan hukum tajwid. Arti Tajwid adalah...", a: ["Memperindah/membaca dengan benar", "Melagukan", "Menghafalkan cepat", "Menulis indah"], c: 0 },
-            { q: "Hukum membaca nun mati atau tanwin bertemu huruf ba' dinamakan...", a: ["Ikhfa", "Iqlab", "Idgham", "Izhar"], c: 1 },
-            { q: "Huruf Izhar Halqi berjumlah...", a: ["4", "5", "6 (Alif, Ha, Kha, 'Ain, Ghain, Ha)", "15"], c: 2 },
-            { q: "Idgham Bigunnah artinya memasukkan suara dengan cara...", a: ["Samar", "Jelas", "Berdengung", "Tegas"], c: 2 },
-            { q: "Huruf Qalqalah (memantul) dikumpulkan dalam lafadz...", a: ["Yarmalun", "Baju di toko (Ba, Jim, Dal, Tha, Qaf)", "Idhar", "Ikhfa"], c: 1 },
-            { q: "Ayat kursi terdapat dalam surat...", a: ["Al-Baqarah ayat 255", "Al-Fatihah ayat 1", "Yasin ayat 1", "Al-Ikhlas ayat 2"], c: 0 },
-            { q: "Surat Al-Fil menceritakan tentang pasukan...", a: ["Berkuda", "Gajah", "Burung", "Unta"], c: 1 },
-            { q: "Pemimpin pasukan gajah yang ingin menghancurkan Ka'bah adalah...", a: ["Raja Namrud", "Raja Abrahah", "Raja Firaun", "Abu Jahal"], c: 1 },
-            { q: "Burung yang menghancurkan pasukan gajah dengan batu neraka bernama burung...", a: ["Ababil", "Pipit", "Elang", "Garuda"], c: 0 },
-            { q: "Hadits terpopuler berbunyi 'Innamal a'malu bin niyyat' memiliki arti...", a: ["Sesungguhnya amal itu tergantung niatnya", "Kebersihan sebagian dari iman", "Shalat adalah tiang agama", "Menuntut ilmu itu wajib"], c: 0 },
-            { q: "Hadits 'Mencari ilmu wajib bagi setiap muslim' berlaku untuk...", a: ["Laki-laki saja", "Perempuan saja", "Setiap muslim laki-laki dan perempuan", "Anak kecil saja"], c: 2 },
-            { q: "Gelar penghafal Al-Qur'an secara keseluruhan dinamakan...", a: ["Hafiz / Hafizah", "Qari / Qari'ah", "Mufassir", "Muhaddits"], c: 0 },
-            { q: "Orang yang ahli dalam menafsirkan ayat-ayat Al-Qur'an disebut...", a: ["Muhaddits", "Mufassir", "Faqih", "Sufi"], c: 1 },
-            { q: "Orang yang ahli dalam bidang ilmu hadits disebut...", a: ["Mufassir", "Muhaddits", "Ustadz", "Kiai"], c: 1 },
-            { q: "Sura-surat pendek di dalam Al-Qur'an mayoritas berkumpul pada juz ke-...", a: ["1", "10", "20", "30 (Juz Amma)"], c: 3 }
-          ]
-        }
-      },
-      level6: {
-        title: "Level 6: Kebudayaan & Tokoh Islam",
-        desc: "Mengenal khazanah peradaban dan cendekiawan besar Islam.",
-        subbab: [
-          {
-            id: "sub1", title: "Khulafaur Rasyidin", videoId: "bOInI2Z8xno",
-            questions: [
-              { q: "Siapakah khalifah pertama pengganti kepemimpinan Rasulullah?", a: ["Umar bin Khattab", "Abu Bakar As-Siddiq", "Utsman bin Affan", "Ali bin Abi Thalib"], c: 1 },
-              { q: "Khalifah kedua yang mendapat julukan 'Al-Faruq' (Pembeda haq dan bathil) adalah...", a: ["Abu Bakar", "Umar bin Khattab", "Utsman", "Ali"], c: 1 },
-              { q: "Khalifah ketiga yang terkenal dermawan dan mengumpulkan mushaf Al-Qur'an adalah...", a: ["Abu Bakar", "Umar", "Utsman bin Affan", "Ali"], c: 2 },
-              { q: "Khalifah keempat yang merupakan sepupu sekaligus menantu Rasulullah adalah...", a: ["Abu Bakar", "Umar", "Utsman", "Ali bin Abi Thalib"], c: 3 },
-              { q: "Arti dari gelar 'Khulafaur Rasyidin' adalah...", a: ["Para pengganti yang mendapat petunjuk", "Para raja yang perkasa", "Pemimpin yang kaya raya", "Prajurit perang"], c: 0 },
-              { q: "Abu Bakar As-Siddiq mendapat gelar As-Siddiq karena...", a: ["Membenarkan peristiwa Isra Mi'raj dengan seketika", "Memiliki harta melimpah", "Menang perang", "Pandai berdagang"], c: 0 },
-              { q: "Di masa khalifah siapa wilayah Islam meluas hingga ke Persia dan Romawi?", a: ["Abu Bakar", "Umar bin Khattab", "Utsman", "Ali"], c: 1 },
-              { q: "Utsman bin Affan mendapat julukan Dzun Nurain yang artinya...", a: ["Pemilik dua cahaya (menikahi dua putri Rasulullah)", "Pemilik pedang sakti", "Ahli surga", "Singa padang pasir"], c: 0 },
-              { q: "Pusat pemerintahan Islam pada masa Khalifah Ali bin Abi Thalib dipindahkan ke...", a: ["Madinah", "Makkah", "Kufah", "Damaskus"], c: 2 },
-              { q: "Berapa total masa keseluruhan kepemimpinan Khulafaur Rasyidin?", a: ["5 tahun", "10 tahun", "30 tahun", "100 tahun"], c: 2 }
-            ]
-          }
-        ],
-        exam: {
-          title: "Ujian Akhir Bab: Peradaban Islam", desc: "Evaluasi akbar 25 soal sejarah daulah dan cendekiawan muslim dunia. Minimal benar 20 soal untuk lulus!",
-          questions: [
-            { q: "Kota yang menjadi pusat kejayaan peradaban Islam pada masa Dinasti Abbasiyah adalah...", a: ["Kairo", "Baghdad", "Cordoba", "Damaskus"], c: 1 },
-            { q: "Cendekiawan muslim penemu konsep Aljabar dan angka Nol (0) adalah...", a: ["Ibnu Sina", "Al-Khwarizmi", "Al-Biruni", "Ibnu Khaldun"], c: 1 },
-            { q: "Tokoh muslim yang dijuluki 'Bapak Kedokteran Modern' dan menulis kitab Al-Qanun fi Thib adalah...", a: ["Ibnu Sina (Avicenna)", "Al-Razi", "Ibnu Rusyd", "Al-Farabi"], c: 0 },
-            { q: "Ilmuwan muslim penemu teori optik dan kamera obscura pertama adalah...", a: ["Ibnu Haitham", "Al-Khwarizmi", "Ibnu Battutah", "Jabir bin Hayyan"], c: 0 },
-            { q: "Tokoh sosiolog dan sejarawan muslim terkenal penulis kitab Muqaddimah adalah...", a: ["Ibnu Khaldun", "Al-Ghazali", "Ibnu Rusyd", "Al-Kindi"], c: 0 },
-            { q: "Bapak Kimia Islam yang menemukan teknik penyulingan zat adalah...", a: ["Jabir bin Hayyan", "Al-Khwarizmi", "Ibnu Sina", "Al-Farabi"], c: 0 },
-            { q: "Penjelajah muslim terbesar yang mengelilingi dunia sejauh 120.000 km adalah...", a: ["Ibnu Battutah", "Cheng Ho", "Al-Idrisi", "Ibnu Khaldun"], c: 0 },
-            { q: "Perpustakaan raksasa pusat ilmu pengetahuan di Baghdad masa Abbasiyah bernama...", a: ["Baitul Hikmah", "Darul Ulum", "Nizamiyah", "Al-Azhar"], c: 0 },
-            { q: "Pusat perkembangan peradaban Islam di benua Eropa (Spanyol) terletak di kota...", a: ["Cordoba", "Roma", "Paris", "London"], c: 0 },
-            { q: "Universitas tertua di dunia yang didirikan oleh Fatimah al-Fihri di Maroko bernama...", a: ["Al-Qarawiyyin", "Al-Azhar", "Nizamiyah", "Oxford"], c: 0 },
-            { q: "Ulama besar penyusun kitab Ihya Ulumuddin yang dijuluki Hujjatul Islam adalah...", a: ["Imam Al-Ghazali", "Imam Syafi'i", "Imam Malik", "Imam Ahmad"], c: 0 },
-            { q: "Mazhab fiqih mayoritas yang dianut oleh umat Islam di Indonesia adalah Mazhab...", a: ["Hanafi", "Maliki", "Syafi'i", "Hambali"], c: 2 },
-            { q: "Imam Syafi'i memiliki nama asli yaitu...", a: ["Muhammad bin Idris", "Malik bin Anas", "Ahmad bin Hanbal", "Nu'man bin Tsabit"], c: 0 },
-            { q: "Tokoh penyebar Islam di tanah Jawa dikenal dengan sebutan Walisongo. Songo artinya...", a: ["Lima", "Tujuh", "Sembilan", "Sebelas"], c: 2 },
-            { q: "Walisongo yang pertama kali menyebarkan Islam di tanah Jawa adalah...", a: ["Sunan Kalijaga", "Sunan Ampel", "Maulana Malik Ibrahim (Sunan Gresik)", "Sunan Bonang"], c: 2 },
-            { q: "Sunan Kalijaga menggunakan media dakwah yang sangat populer berupa...", a: ["Wayang Kulit dan Gamelan", "Seni lukis modern", "Perdagangan senjata", "Sastra Arab murni"], c: 0 },
-            { q: "Kerajaan Islam pertama yang berdiri di pulau Jawa adalah Kerajaan...", a: ["Demak", "Pajang", "Mataram Islam", "Banten"], c: 0 },
-            { q: "Raja pertama dari Kesultanan Demak adalah...", a: ["Raden Patah", "Sultan Trenggono", "Pati Unus", "Sultan Agung"], c: 0 },
-            { q: "Kerajaan Islam pertama di Indonesia yang terletak di ujung utara pulau Sumatera adalah...", a: ["Samudera Pasai", "Aceh Darussalam", "Malaka", "Perlak"], c: 0 },
-            { q: "Masjid bersejarah peninggalan Walisongo yang memiliki atap tumpang tiga di Jawa Tengah adalah...", a: ["Masjid Agung Demak", "Masjid Menara Kudus", "Masjid Istiqlal", "Masjid Ampel"], c: 0 },
-            { q: "Salah satu peninggalan arsitektur Islam di Yogyakarta yang menjadi pusat kesultanan bernama...", a: ["Kraton Yogyakarta", "Candi Prambanan", "Benteng Vredeburg", "Taman Sari"], c: 0 },
-            { q: "Penulis kitab tafsir fenomenal Jalalain dikerjakan oleh dua ulama bernama...", a: ["Jalaluddin Al-Mahalli & Jalaluddin As-Suyuthi", "Ibnu Katsir & Thabari", "Kurtubi & Bukhari", "Ghazali & Syafi'i"], c: 0 },
-            { q: "Kota suci ketiga umat Islam tempat berdirinya Masjidil Aqsa adalah...", a: ["Makkah", "Madinah", "Yerusalem (Al-Quds)", "Kairo"], c: 2 },
-            { q: "Panglima perang Islam yang berhasil membebaskan Yerusalem pada Perang Salib adalah...", a: ["Salahuddin Al-Ayyubi", "Tariq bin Ziyad", "Khalid bin Walid", "Muhammad Al-Fatih"], c: 0 },
-            { q: "Sultan muda Turki Utsmani yang berhasil menaklukkan kota Konstantinopel pada tahun 1453 adalah...", a: ["Muhammad Al-Fatih", "Suleiman Al-Qanuni", "Selim I", "Ertugrul Ghazi"], c: 0 }
-          ]
-        }
+        // POOL 25 SOAL UNTUK UJIAN AKHIR BAB 1
+        examQuiz: [
+          { q: "Berapa jumlah Rukun Iman?", a: ["4", "5", "6", "7"], correct: 2 },
+          { q: "Iman pertama adalah iman kepada siapa?", a: ["Malaikat", "Kitab", "Rasul", "Allah"], correct: 3 },
+          { q: "Iman kepada Malaikat urutan ke berapa?", a: ["1", "2", "3", "4"], correct: 1 },
+          { q: "Siapakah Malaikat yang bertugas menyampaikan wahyu?", a: ["Mikail", "Israfil", "Jibril", "Izrail"], correct: 2 },
+          { q: "Kitab Suci umat Islam bernama apa?", a: ["Taurat", "Zabur", "Injil", "Al-Qur'an"], correct: 3 },
+          { q: "Siapakah Nabi dan Rasul terakhir kita?", a: ["Nabi Isa", "Nabi Musa", "Nabi Muhammad", "Nabi Ibrahim"], correct: 2 },
+          { q: "Iman ke-5 adalah iman kepada hari apa?", a: ["Kiamat/Akhir", "Senin", "Raya", "Perhitungan"], correct: 0 },
+          { q: "Takdir baik dan buruk diatur di dalam rukun iman ke berapakah?", a: ["3", "4", "5", "6"], correct: 3 },
+          { q: "Malaikat diciptakan oleh Allah SWT dari unsur apa?", a: ["Api", "Tanah", "Cahaya (Nur)", "Air"], correct: 2 },
+          { q: "Kitab Taurat diturunkan kepada Nabi siapa?", a: ["Nabi Musa", "Nabi Isa", "Nabi Daud", "Nabi Muhammad"], correct: 0 },
+          { q: "Berapa jumlah Asmaul Husna?", a: ["25", "99", "100", "114"], correct: 1 },
+          { q: "Arti dari nama Ar-Rahman adalah?", a: ["Maha Pengasih", "Maha Penyayang", "Maha Perkasa", "Maha Suci"], correct: 0 },
+          { q: "Arti dari nama Ar-Rahim adalah?", a: ["Maha Mengetahui", "Maha Penyayang", "Maha Melihat", "Maha Adil"], correct: 1 },
+          { q: "Al-Malik memiliki arti Maha apa?", a: ["Mendengar", "Merajai / Penguasa", "Pencipta", "Pengampun"], correct: 1 },
+          { q: "Asmaul Husna Al-Quddus artinya Allah Maha?", a: ["Suci", "Besar", "Sabar", "Mulya"], correct: 0 },
+          { q: "Nama As-Salam artinya Allah Yang Maha?", a: ["Melihat", "Sejahtera", "Agung", "Kekal"], correct: 1 },
+          { q: "Al-Khaliq memiliki arti Yang Maha?", a: ["Merajai", "Pencipta", "Memberi Rezeki", "Gagah"], correct: 1 },
+          { q: "Al-Ghaffar artinya Allah Maha?", a: ["Pengampun", "Perkasa", "Bijaksana", "Kaya"], correct: 0 },
+          { q: "Malaikat yang meniup sangkakala hari kiamat?", a: ["Jibril", "Mikail", "Israfil", "Izrail"], correct: 2 },
+          { q: "Allah Al-Bashir artinya Allah Maha?", a: ["Mendengar", "Melihat", "Berbicara", "Hidup"], correct: 1 },
+          { q: "Kitab Injil diturunkan kepada Nabi?", a: ["Nabi Musa", "Nabi Isa", "Nabi Daud", "Nabi Ibrahim"], correct: 1 },
+          { q: "Asmaul Husna Al-Alim berarti Allah Maha?", a: ["Mengetahui", "Kuasa", "Melihat", "Mendengar"], correct: 0 },
+          { q: "Malaikat pencatat amal buruk bernama?", a: ["Atid", "Raqib", "Malik", "Ridwan"], correct: 0 },
+          { q: "Malaikat pencatat amal baik bernama?", a: ["Atid", "Raqib", "Malik", "Ridwan"], correct: 1 },
+          { q: "Qadha dan Qadar artinya kehendak dan ketetapan milik?", a: ["Manusia", "Malaikat", "Nabi", "Allah SWT"], correct: 3 }
+        ]
       }
-    };
+    ];
 
-    // AUTH MONITOR
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = 'auth.html';
       } else {
-        currentUserUid = user.uid;
-        await loadSantriData();
+        currentUserId = user.uid;
+        await muatDataSantri();
+        muatPapanPeringkat();
       }
     });
 
-    // LOAD DATA DARI CLOUD FIRESTORE
-    async function loadSantriData() {
-      const docRef = doc(db, 'users', currentUserUid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        currentUserData = docSnap.data();
-        
-        // Proteksi jika field progress bawaan akun baru belum komplit
-        if (!currentUserData.progress) currentUserData.progress = {};
-        if (!currentUserData.progress.level1) currentUserData.progress.level1 = { percent: 0, unlocked: true };
-        
-        updateUI();
+    async function muatDataSantri() {
+      const userDoc = await getDoc(doc(db, "users", currentUserId));
+      if (userDoc.exists()) {
+        currentUserData = userDoc.data();
+        document.getElementById('lblTopXp').innerText = currentUserData.xp || 0;
+        document.getElementById('lblTopStreak').innerText = currentUserData.streak || 1;
+        document.getElementById('lblProfilName').innerText = currentUserData.name || "Santri";
+        document.getElementById('lblProfilEmail').innerText = currentUserData.email || "";
+        document.getElementById('avatarProfil').innerText = (currentUserData.name || "U")[0].toUpperCase();
+        renderKurikulumBeranda();
       }
     }
 
-    // UPDATE ANTARMUKA UTAMA
-    function updateUI() {
-      document.getElementById('txtGreeting').innerText = `Assalamu'alaikum, ${currentUserData.name || 'Santri'}!`;
-      document.getElementById('profName').innerText = currentUserData.name || 'Santri';
-      document.getElementById('profEmail').innerText = currentUserData.email || '-';
-      document.getElementById('profXp').innerText = `${currentUserData.xp || 0} XP`;
-      document.getElementById('profStreak').innerText = `${currentUserData.streak || 1} Hari`;
-      document.getElementById('profInitial').innerText = (currentUserData.name || 'S').charAt(0).toUpperCase();
+    function renderKurikulumBeranda() {
+      const container = document.getElementById('levelContainer');
+      container.innerHTML = "";
 
-      renderBerandaProgress();
-      renderMateriMenu();
-    }
+      DATA_MATERI.forEach((lvl) => {
+        const userProgress = currentUserData.progress?.[lvl.id] || { percent: 0, unlocked: false };
+        const isLocked = lvl.id !== "level1" && !userProgress.unlocked;
 
-    // TAMPILKAN PERSENTASE PROGRES PADA TAB BERANDA
-    function renderBerandaProgress() {
-      const container = document.getElementById('berandaProgressContainer');
-      container.innerHTML = '';
-
-      Object.keys(DATA_MATERI).forEach(lvlKey => {
-        const lvlData = DATA_MATERI[lvlKey];
-        const userProg = currentUserData.progress?.[lvlKey] || { percent: 0, unlocked: false };
-        
         const card = document.createElement('div');
-        card.className = "progress-card";
+        card.className = `level-card ${isLocked ? 'locked' : ''}`;
+        card.onclick = () => {
+          if (isLocked) {
+            alert("🔒 Level ini masih terkunci! Selesaikan ujian bab sebelumnya.");
+            return;
+          }
+          bukaDetailBab(lvl.id);
+        };
+
         card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; font-weight:600; opacity: ${userProg.unlocked ? '1' : '0.5'}">
-            <span>${lvlData.title} ${userProg.unlocked ? '' : '🔒'}</span>
-            <span style="color:var(--neon-cyan);">${userProg.percent}%</span>
+          <div class="level-info">
+            <h3 style="color:${lvl.color}"><i class="fas ${lvl.icon}"></i> ${lvl.title}</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted);">${lvl.description}</p>
+            <div style="margin-top:10px; background:rgba(255,255,255,0.1); width:100%; max-width:200px; height:6px; border-radius:3px; overflow:hidden;">
+              <div style="background:${lvl.color}; width:${userProgress.percent || 0}%; height:100%;"></div>
+            </div>
           </div>
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" style="width: ${userProg.percent}%;"></div>
+          <div>
+            ${isLocked ? '<i class="fas fa-lock" style="font-size:1.5rem; color:var(--text-muted);"></i>' : `<span style="font-weight:700; color:${lvl.color}">${userProgress.percent || 0}%</span>`}
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    // TAMPILKAN LIST BAB DAN SUB-BAB MATERI
-    function renderMateriMenu() {
-      const container = document.getElementById('materiLevelsContainer');
-      container.innerHTML = '';
-
-      Object.keys(DATA_MATERI).forEach((lvlKey, lvlIdx) => {
-        const lvlData = DATA_MATERI[lvlKey];
-        const userProg = currentUserData.progress?.[lvlKey] || { percent: 0, unlocked: false };
-
-        const block = document.createElement('div');
-        block.className = "level-block";
-        
-        let subbabHtml = '';
-        
-        // Logika Penguncian Sub-Bab berantai
-        lvlData.subbab.forEach((sub, index) => {
-          let isSubLocked = !userProg.unlocked;
-          if (index > 0) {
-            const prevSubId = lvlData.subbab[index-1].id;
-            if (!currentUserData.progress?.[lvlKey]?.[prevSubId]) {
-              isSubLocked = true;
-            }
-          }
-
-          const isCleared = currentUserData.progress?.[lvlKey]?.[sub.id] === true;
-
-          subbabHtml += `
-            <div class="subbab-item ${isSubLocked ? 'locked' : ''}">
-              <div>
-                <h4 style="color:#fff;">${sub.title}</h4>
-                <p style="font-size:0.8rem; color:var(--text-dim);">10 Pertanyaan Kuis Evaluasi</p>
-              </div>
-              <button class="btn-study" ${isSubLocked ? 'disabled' : ''} onclick="startArena('${lvlKey}', '${sub.id}', false)">
-                ${isCleared ? '<i class="fas fa-check-circle" style="color:var(--success-green)"></i> Lulus' : 'Mulai Belajar'}
-              </button>
-            </div>
-          `;
-        });
-
-        // Logika Penguncian Ujian Akhir Bab
-        let isExamLocked = true;
-        const allSubFinished = lvlData.subbab.every(sub => currentUserData.progress?.[lvlKey]?.[sub.id] === true);
-        if (userProg.unlocked && allSubFinished) {
-          isExamLocked = false;
-        }
-
-        const isLevelCleared = userProg.percent === 100;
-
-        subbabHtml += `
-          <div class="subbab-item ${isExamLocked ? 'locked' : ''}" style="border: 1px dashed var(--neon-cyan); margin-top:15px; background:rgba(0,229,255,0.02)">
-            <div>
-              <h4 style="color:var(--neon-cyan);"><i class="fas fa-trophy"></i> ${lvlData.exam.title}</h4>
-              <p style="font-size:0.8rem; color:var(--text-dim);">25 Soal Evaluasi Komprehensif (Syarat Naik Level)</p>
-            </div>
-            <button class="btn-study" style="background:var(--neon-cyan); color:#000;" ${isExamLocked ? 'disabled' : ''} onclick="startArena('${lvlKey}', 'exam', true)">
-              ${isLevelCleared ? 'Selesai 🎉' : 'Ikuti Ujian'}
-            </button>
-          </div>
-        `;
-
-        block.innerHTML = `
-          <div class="level-header">
-            <h3>${lvlData.title}</h3>
-            <span style="font-size:0.85rem; padding:4px 10px; background:rgba(255,255,255,0.05); border-radius:20px; color:${userProg.unlocked ? 'var(--neon-cyan)' : '#666'}">
-              ${userProg.unlocked ? 'Terbuka' : 'Terkunci 🔒'}
-            </span>
-          </div>
-          <p style="color:var(--text-dim); font-size:0.9rem;">${lvlData.desc}</p>
-          <div class="subbab-list">${subbabHtml}</div>
-        `;
-
-        container.appendChild(block);
-      });
-    }
-
-    // LOGIKA PENGERJAAN KUIS
-    let activeQuizQuestions = [];
-    let currentQuestionIndex = 0;
-    let scoreCorrectAnswers = 0;
-    let currentLvlKey = '';
-    let currentSubId = '';
-    let isExamMode = false;
-
-    window.startArena = function(lvlKey, subId, isExam) {
-      currentLvlKey = lvlKey;
-      currentSubId = subId;
-      isExamMode = isExam;
-      currentQuestionIndex = 0;
-      scoreCorrectAnswers = 0;
-
-      const lvlData = DATA_MATERI[lvlKey];
-      
-      if (isExam) {
-        document.getElementById('arenaTitle').innerText = lvlData.exam.title;
-        document.getElementById('arenaSubtitle').innerText = lvlData.exam.desc;
-        document.getElementById('arenaVideoBox').style.display = 'none'; // Sembunyikan video saat ujian akhir bab
-        activeQuizQuestions = shuffleArray([...lvlData.exam.questions]); // Acak soal ujian akhir
-      } else {
-        const subData = lvlData.subbab.find(s => s.id === subId);
-        document.getElementById('arenaTitle').innerText = subData.title;
-        document.getElementById('arenaSubtitle').innerText = "Simak video ringkasan materi Islami di bawah ini dengan takzim sebelum menjawab kuis.";
-        document.getElementById('arenaVideoBox').style.display = 'block';
-        document.getElementById('arenaVideoBox').innerHTML = `<iframe src="https://www.youtube.com/embed/${subData.videoId}" frameborder="0" allowfullscreen></iframe>`;
-        activeQuizQuestions = [...subData.questions];
-      }
-
-      changeTab('arena');
-      showQuestion();
-    }
-
-    function showQuestion() {
-      document.getElementById('btnNextQuestion').style.display = 'none';
-      const qData = activeQuizQuestions[currentQuestionIndex];
-
-      document.getElementById('quizQuestion').innerText = `Pertanyaan ${currentQuestionIndex + 1} dari ${activeQuizQuestions.length}: ${qData.q}`;
-      
-      const optionsContainer = document.getElementById('quizOptions');
-      optionsContainer.innerHTML = '';
-
-      qData.a.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = "option-btn";
-        btn.innerText = opt;
-        btn.onclick = () => verifyAnswer(idx, qData.c, btn);
-        optionsContainer.appendChild(btn);
-      });
-    }
-
-    function verifyAnswer(selectedIdx, correctIdx, selectedBtn) {
-      const allBtns = document.querySelectorAll('.option-btn');
-      allBtns.forEach(b => b.disabled = true);
-
-      if (selectedIdx === correctIdx) {
-        selectedBtn.classList.add('correct');
-        scoreCorrectAnswers++;
-      } else {
-        selectedBtn.classList.add('wrong');
-        allBtns[correctIdx].classList.add('correct');
-      }
-
-      document.getElementById('btnNextQuestion').style.display = 'block';
-    }
-
-    window.nextQuestion = function() {
-      currentQuestionIndex++;
-      if (currentQuestionIndex < activeQuizQuestions.length) {
-        showQuestion();
-      } else {
-        finishArenaEvaluation();
-      }
-    }
-
-    // LOGIKA PENILAIAN & SYARAT KELULUSAN KUIS
-    async function finishArenaEvaluation() {
-      const totalSoal = activeQuizQuestions.length;
-      const minimalLulus = isExamMode ? 20 : 7;
-      const isLulus = scoreCorrectAnswers >= minimalLulus;
-
-      if (isLulus) {
-        alert(`Alhamdulillah, Kamu LULUS! 🎉\nJawaban benar: ${scoreCorrectAnswers} dari ${totalSoal} soal.\nKamu mendapatkan tambahan +100 XP.`);
-        
-        const newXp = (currentUserData.xp || 0) + 100;
-        let updateFields = { xp: newXp };
-
-        if (isExamMode) {
-          // Ujian Akhir Bab lulus -> Progres 100% penuh
-          updateFields[`progress.${currentLvlKey}.percent`] = 100;
-          
-          // Buka gerbang level selanjutnya secara otomatis
-          const levelNumbers = ["level1", "level2", "level3", "level4", "level5", "level6"];
-          const currentIdx = levelNumbers.indexOf(currentLvlKey);
-          if (currentIdx !== -1 && currentIdx < levelNumbers.length - 1) {
-            const nextLvlKey = levelNumbers[currentIdx + 1];
-            updateFields[`progress.${nextLvlKey}`] = { percent: 0, unlocked: true };
-          }
-        } else {
-          // Kuis sub-bab lulus
-          updateFields[`progress.${currentLvlKey}.${currentSubId}`] = true;
-          
-          const totalSubInLevel = DATA_MATERI[currentLvlKey].subbab.length;
-          const currentPercent = currentUserData.progress?.[currentLvlKey]?.percent || 0;
-          
-          // Setiap subbab menaikkan progress berimbang maksimal hingga 90% (10% sisa milik ujian)
-          const perSubWeight = Math.floor(90 / totalSubInLevel);
-          const newPercent = Math.min(90, currentPercent + perSubWeight);
-          
-          updateFields[`progress.${currentLvlKey}.percent`] = newPercent;
-        }
-
-        const userDocRef = doc(db, 'users', currentUserUid);
-        await updateDoc(userDocRef, updateFields);
-        
-        await loadSantriData();
-        changeTab('materi');
-
-      } else {
-        alert(`Afwan, kamu belum mencapai batas minimal kelulusan.\nBenar: ${scoreCorrectAnswers} dari ${totalSoal} soal.\n(Syarat minimal lulus: Benar ${minimalLulus} soal).\n\nJangan berkecil hati, mari kita ulangi lagi! 💪`);
-        currentQuestionIndex = 0;
-        scoreCorrectAnswers = 0;
-        showQuestion();
-      }
-    }
-
-    // NAVIGASI TAB MENU INTERFACE
-    window.changeTab = function(tabName) {
+    window.switchTab = function(tab) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-      if (tabName === 'beranda') {
+      if (tab === 'beranda') {
         document.getElementById('pageBeranda').classList.add('active');
-        document.getElementById('navBeranda').classList.add('active');
-      } else if (tabName === 'materi') {
-        document.getElementById('pageMateri').classList.add('active');
-        document.getElementById('navMateri').classList.add('active');
-      } else if (tabName === 'profil') {
+        document.getElementById('tabBeranda').classList.add('active');
+        renderKurikulumBeranda();
+      } else if (tab === 'profil') {
         document.getElementById('pageProfil').classList.add('active');
-        document.getElementById('navProfil').classList.add('active');
-      } else if (tabName === 'arena') {
-        document.getElementById('pageArena').classList.add('active');
+        document.getElementById('tabProfil').classList.add('active');
+      }
+    };
+
+    function bukaDetailBab(levelId) {
+      selectedLevelId = levelId;
+      const dataBab = DATA_MATERI.find(l => l.id === levelId);
+      
+      document.getElementById('pageBeranda').classList.remove('active');
+      document.getElementById('pageDetailBab').classList.add('active');
+      
+      document.getElementById('lblDetailTitle').innerText = dataBab.title;
+      document.getElementById('lblDetailDesc').innerText = dataBab.description;
+
+      const subContainer = document.getElementById('subbabContainer');
+      subContainer.innerHTML = "";
+
+      dataBab.subBabs.forEach((sub, index) => {
+        const item = document.createElement('div');
+        item.className = "subbab-item";
+        item.onclick = () => bukaRuangBelajarSubBab(index);
+        item.innerHTML = `
+          <span><i class="fas fa-book-open" style="color:var(--neon-cyan); margin-right:10px;"></i> Sub-bab ${index + 1}: ${sub.title}</span>
+          <i class="fas fa-chevron-right" style="color:var(--text-muted)"></i>
+        `;
+        subContainer.appendChild(item);
+      });
+
+      // SYARAT TOMBOL UJIAN AKHIR BAB MUNCUL (PERSENAN PROGRESS BAB SUDAH 100%)
+      const currentPercent = currentUserData.progress?.[levelId]?.percent || 0;
+      const examBox = document.getElementById('examContainer');
+      if (currentPercent >= 100 && dataBab.examQuiz) {
+        examBox.style.display = 'block';
+        document.getElementById('btnMulaiUjianAkhir').onclick = () => siapkanKuisQuizizz(dataBab.examQuiz, true);
+      } else {
+        examBox.style.display = 'none';
       }
     }
 
-    // UTALITAS: PENGACAK URUTAN SOAL UJIAN
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
+    function bukaRuangBelajarSubBab(subIndex) {
+      selectedSubBabIndex = subIndex;
+      const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
+      const sub = bab.subBabs[subIndex];
+
+      document.getElementById('pageDetailBab').classList.remove('active');
+      document.getElementById('pageRuangBelajar').classList.add('active');
+
+      document.getElementById('lblMateriTitle').innerText = `Sub-Bab: ${sub.title}`;
+      document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${sub.videoId}`;
+      document.getElementById('lblMateriSummary').innerText = sub.summary;
+
+      document.getElementById('btnMulaiKuisSubBab').onclick = () => siapkanKuisQuizizz(sub.quiz, false);
     }
 
-    // KELUAR AKUN
-    window.logoutAccount = async function() {
-      if (confirm("Apakah Anda yakin ingin keluar dari akun?")) {
-        await signOut(auth);
+    window.kembaliKeDetailBab = function() {
+      document.getElementById('videoPlayer').src = "";
+      document.getElementById('pageRuangBelajar').classList.remove('active');
+      document.getElementById('pageDetailBab').classList.add('active');
+    };
+
+    function siapkanKuisQuizizz(daftarSoal, isExam) {
+      quizQuestions = daftarSoal;
+      currentQuestionIdx = 0;
+      totalCorrectAnswers = 0;
+      isExamMode = isExam;
+
+      document.getElementById('pageRuangBelajar').classList.remove('active');
+      document.getElementById('pageDetailBab').classList.remove('active');
+      document.getElementById('pageKuisQuizizz').classList.add('active');
+      
+      tampilkanSoalQuizizz();
+    }
+
+    function tampilkanSoalQuizizz() {
+      document.getElementById('quizFooter').style.display = 'none';
+      const soalAktif = quizQuestions[currentQuestionIdx];
+
+      document.getElementById('lblQuizTracker').innerText = `Soal ${currentQuestionIdx + 1} dari ${quizQuestions.length}`;
+      document.getElementById('lblCorrectCount').innerText = totalCorrectAnswers;
+      
+      const percentProgress = (currentQuestionIdx / quizQuestions.length) * 100;
+      document.getElementById('quizProgressBar').style.width = `${percentProgress}%`;
+      document.getElementById('lblQuestionText').innerText = soalAktif.q;
+
+      const optionsBox = document.getElementById('optionsContainer');
+      optionsBox.innerHTML = "";
+
+      soalAktif.a.forEach((opsi, index) => {
+        const btn = document.createElement('button');
+        btn.className = "option-btn";
+        btn.innerText = opsi;
+        btn.onclick = () => cekJawabanQuizizz(index, btn);
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    function cekJawabanQuizizz(indexTerpilih, tombolKlik) {
+      const soalAktif = quizQuestions[currentQuestionIdx];
+      const semuaTombol = document.querySelectorAll('.option-btn');
+
+      semuaTombol.forEach(btn => btn.disabled = true);
+
+      if (indexTerpilih === soalAktif.correct) {
+        tombolKlik.classList.add('correct');
+        totalCorrectAnswers++;
+      } else {
+        tombolKlik.classList.add('wrong');
+        semuaTombol[soalAktif.correct].classList.add('correct');
+      }
+
+      document.getElementById('lblCorrectCount').innerText = totalCorrectAnswers;
+      document.getElementById('quizFooter').style.display = 'block';
+    }
+
+    window.nextQuestion = function() {
+      currentQuestionIdx++;
+
+      if (currentQuestionIdx >= quizQuestions.length) {
+        if (!isExamMode) {
+          // EVALUASI KUIS SUB-BAB (MINIMAL BENAR 7 DARI 10 SOAL)
+          if (totalCorrectAnswers >= 7) {
+            alert(`🎉 Alhamdulillah LULUS! Kamu menjawab ${totalCorrectAnswers} soal benar. Mendapat +100 XP!`);
+            prosesPenyelesaianKuis(true);
+          } else {
+            alert(`😢 BELUM LULUS. Kamu baru benar ${totalCorrectAnswers} soal. (Minimal butuh 7 benar untuk lanjut). Ayo tonton materi lagi!`);
+            prosesPenyelesaianKuis(false);
+          }
+        } else {
+          // EVALUASI UJIAN AKHIR BAB (MINIMAL BENAR 18 DARI 25 SOAL)
+          if (totalCorrectAnswers >= 18) {
+            alert(`🏆 LUAR BIASA! Lulus Ujian Akhir Bab dengan ${totalCorrectAnswers} jawaban benar! Bab Selanjutnya Terbuka.`);
+            prosesPenyelesaianUjianAkhir(true);
+          } else {
+            alert(`❌ BELUM LULUS UJIAN. Jawaban benar: ${totalCorrectAnswers} dari 25 soal (Minimal butuh 18 benar). Silakan coba lagi!`);
+            prosesPenyelesaianUjianAkhir(false);
+          }
+        }
+      } else {
+        tampilkanSoalQuizizz();
+      }
+    };
+
+    async function prosesPenyelesaianKuis(isLulus) {
+      document.getElementById('pageKuisQuizizz').classList.remove('active');
+      
+      if (isLulus) {
+        const totalXpBaru = (currentUserData.xp || 0) + 100;
+        const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
+        const bobotPerSub = 100 / bab.subBabs.length;
+        
+        let persenLama = currentUserData.progress?.[selectedLevelId]?.percent || 0;
+        let persenBaru = Math.min(persenLama + bobotPerSub, 100);
+
+        await updateDoc(doc(db, "users", currentUserId), {
+          xp: totalXpBaru,
+          [`progress.${selectedLevelId}.percent`]: persenBaru
+        });
+        await muatDataSantri();
+        bukaDetailBab(selectedLevelId);
+      } else {
+        switchTab('beranda');
       }
     }
+
+    async function prosesPenyelesaianUjianAkhir(isLulus) {
+      document.getElementById('pageKuisQuizizz').classList.remove('active');
+      
+      if (isLulus) {
+        const totalXpBaru = (currentUserData.xp || 0) + 500;
+        let updateData = { xp: totalXpBaru };
+        
+        // Contoh: Jika lulus Bab 1, otomatis buka gembok Bab 2 di database
+        if (selectedLevelId === "level1") {
+          updateData["progress.level2.unlocked"] = true;
+        }
+
+        await updateDoc(doc(db, "users", currentUserId), updateData);
+        await muatDataSantri();
+      }
+      switchTab('beranda');
+    }
+
+    async function muatPapanPeringkat() {
+      const q = query(collection(db, "users"), orderBy("xp", "desc"), limit(5));
+      const querySnapshot = await getDocs(q);
+      const box = document.getElementById('leaderboardList');
+      box.innerHTML = "";
+
+      let rank = 1;
+      querySnapshot.forEach((doc) => {
+        const u = doc.data();
+        const item = document.createElement('div');
+        item.style = "display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05);";
+        item.innerHTML = `<span>#${rank} ${u.name}</span> <span style="color:var(--neon-cyan)">${u.xp || 0} XP</span>`;
+        box.appendChild(item);
+        rank++;
+      });
+    }
+
+    window.handleLogout = async function() {
+      await signOut(auth);
+      window.location.href = 'auth.html';
+    };
   </script>
 </body>
 </html>
