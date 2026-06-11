@@ -209,8 +209,7 @@
     </div>
 
     <div class="section-title"><i class="fas fa-layer-group"></i> Modul Pembelajaran Islam</div>
-    <div class="levels-grid" id="levelsContainer">
-      </div>
+    <div class="levels-grid" id="levelsContainer"></div>
   </div>
 
   <div class="sidebar-panel">
@@ -299,7 +298,8 @@ function renderLevelsGrid(progress) {
   let html = '';
 
   staticLevels.forEach((lvl) => {
-    const currentData = progress[lvl.key] || { percent: 0, stars: 0, unlocked: (lvl.id === 1) };
+    // PROTEKSI AMAN: Memberikan nilai fallback jika progress bertingkat belum terdefinisi
+    const currentData = progress && progress[lvl.key] ? progress[lvl.key] : { percent: 0, stars: 0, unlocked: (lvl.id === 1) };
     
     const isUnlocked  = currentData.unlocked || (lvl.id === 1); 
     const percent     = currentData.percent || 0;
@@ -364,11 +364,12 @@ function initLeaderboardRealtime(currentUid) {
       else if(xp >= 1000) titleTag = 'Mutaqaddim';
       else if(xp >= 500) titleTag = 'Mutawassit';
 
+      // PERBAIKAN UTAMA: Mengganti u.nama menjadi u.name agar terbaca dari database
       html += `
         <div class="lb-row" ${isMe ? 'style="background:rgba(176,38,255,0.1); border:1px solid rgba(176,38,255,0.3);"' : ''}>
           <div class="lb-rank ${rankCls}">${rankDisplay}</div>
           <div class="lb-user-info">
-            <div class="lb-name">${u.nama || "Santri"} ${isMe ? '<span style="color:var(--neon-purple); font-size:0.75rem;">(Kamu)</span>' : ''}</div>
+            <div class="lb-name">${u.name || "Santri"} ${isMe ? '<span style="color:var(--neon-purple); font-size:0.75rem;">(Kamu)</span>' : ''}</div>
             <div class="lb-title-tag">${titleTag}</div>
           </div>
           <div class="lb-xp">${xp.toLocaleString()} XP</div>
