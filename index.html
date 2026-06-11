@@ -3,121 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nurani — Dashboard Belajar Santri</title>
+  <title>AzZahra Academy — Dashboard Belajar Santri</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* ==========================================================================
+       AZZAHRA ACADEMY GLOBAL STYLING (THEME: DEEP SPACE CYBER-DARK)
+       ========================================================================== */
     :root {
-      --bg-dark: #07070c; --card-dark: #0f0f1e; --text-main: #e2d9f3;
-      --text-muted: #84799f; --neon-purple: #b026ff; --neon-cyan: #00e5ff;
-      --level-1: #10b981; --level-2: #3b82f6; --level-3: #8b5cf6;
-      --level-4: #ec4899; --level-5: #f59e0b; --level-6: #ef4444;
+      --neon-gold: #ffb703;
+      --neon-emerald: #00f5d4;
+      --neon-cyan: #4cc9f0;
+      --neon-violet: #b5179e;
+      --dark-bg: #020206;
+      --dark-card: #090915;
+      --dark-card2: #12122c;
+      --text-light: #e6e6f2;
+      --text-dim: #74749a;
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      background: var(--bg-dark); color: var(--text-main);
-      font-family: 'Exo 2', sans-serif; padding-bottom: 90px;
+      background-color: var(--dark-bg); color: var(--text-light);
+      font-family: 'Exo 2', sans-serif; line-height: 1.6;
+      padding-bottom: 90px; overflow-x: hidden;
     }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    
-    /* NAV BAR ATAS */
+
+    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* DESAIN TOP BAR */
     nav {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 15px 20px; background: var(--card-dark);
-      border-bottom: 1px solid rgba(176,38,255,0.1); margin-bottom: 25px;
+      padding: 15px 20px; background: var(--dark-card);
+      border-bottom: 1px solid rgba(255, 183, 3, 0.15); margin-bottom: 25px;
     }
-    .brand { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; font-weight:700; color:#fff; }
+    .brand { font-family: 'Cinzel Decorative', serif; font-size: 1.6rem; font-weight:700; color:#ffffff; text-shadow: 0 0 10px rgba(255, 183, 3, 0.2); }
     .nav-stats { display: flex; gap: 15px; align-items: center; }
-    .stat-badge { background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; font-weight: 600; }
-    
-    /* NAVIGASI TOMBOL BAWAH */
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 70px;
-      background: var(--card-dark); border-top: 1px solid rgba(255,255,255,0.05);
-      display: flex; justify-content: space-around; align-items: center; z-index: 1000;
-    }
-    .nav-item { color: var(--text-muted); text-align: center; cursor: pointer; text-decoration: none; font-size: 0.85rem; flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.2s; }
-    .nav-item i { font-size: 1.4rem; margin-bottom: 4px; }
-    .nav-item.active { color: var(--neon-cyan); background: rgba(0, 229, 255, 0.02); }
+    .stat-badge { background: rgba(255,255,255,0.04); padding: 8px 15px; border-radius: 20px; font-weight: 600; border: 1px solid rgba(255,255,255,0.05); }
 
-    /* LAYOUT HALAMAN */
+    /* DESAIN BOTTOM NAV BAR (PERSIS NURANI) */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 75px;
+      background: var(--dark-card); border-top: 1px solid rgba(255,183,3,0.15);
+      display: flex; justify-content: space-around; align-items: center; z-index: 1000;
+      box-shadow: 0 -5px 25px rgba(0,0,0,0.6);
+    }
+    .nav-item { color: var(--text-dim); text-align: center; cursor: pointer; text-decoration: none; font-size: 0.85rem; flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: var(--transition-smooth); }
+    .nav-item i { font-size: 1.4rem; margin-bottom: 4px; }
+    .nav-item.active { color: var(--neon-gold); background: rgba(255, 183, 3, 0.03); font-weight: 700; }
+
+    /* LAYOUT UTAMA */
     .page { display: none; }
     .page.active { display: block; }
-
-    /* BERANDA / KURIKULUM */
-    .grid-dashboard { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+    .grid-dashboard { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
     @media (max-width: 768px) { .grid-dashboard { grid-template-columns: 1fr; } }
-    .card { background: var(--card-dark); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.03); margin-bottom: 20px; }
-    
-    /* DAFTAR LEVEL & PERSENAN PROGRES (KAYAK NURANI ASLI) */
+
+    /* LEVEL HEADER & BADGE */
+    .level-header {
+      background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+      border: 1px solid rgba(255, 183, 3, 0.25); border-radius: 24px;
+      padding: 30px; margin-bottom: 30px; position: relative;
+      box-shadow: 0 10px 30px rgba(255, 183, 3, 0.08);
+    }
+    .level-title { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; color: #ffffff; margin-bottom: 10px; }
+    .level-badge { display: inline-block; background: rgba(255, 183, 3, 0.12); border: 1px solid var(--neon-gold); color: #ffffff; padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* TATA LETAK KOTAK LEVEL BERJEJER KE BAWAH (100% PLEK GAMBAR KAMU) */
     .level-card {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px; border-radius: 14px; margin-bottom: 15px; cursor: pointer; transition: 0.3s;
-      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+      background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 18px; padding: 22px; margin-bottom: 18px; 
+      display: flex; justify-content: space-between; align-items: center; 
+      cursor: pointer; transition: var(--transition-smooth);
     }
-    .level-card:hover { transform: scale(1.01); background: rgba(255,255,255,0.04); }
+    .level-card:hover { 
+      background: rgba(18, 18, 44, 0.6); transform: translateY(-3px);
+      border-color: var(--neon-gold); box-shadow: 0 8px 20px rgba(255,183,3,0.1);
+    }
     .level-card.locked { opacity: 0.3; cursor: not-allowed; }
-    .level-info h3 { font-size: 1.3rem; margin-bottom: 5px; }
+    .level-card.locked:hover { transform: none; border-color: rgba(255,255,255,0.05); box-shadow: none; }
+    
+    .level-left { display: flex; align-items: center; gap: 20px; flex: 1; }
+    .level-icon-box { font-size: 1.8rem; width: 50px; height: 50px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+    .level-text-box h3 { font-size: 1.3rem; font-weight: 700; margin: 0 0 5px 0; border-left: none; padding-left: 0; color: #fff; }
+    .level-text-box p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 8px; text-align: left; }
+    
+    .level-progress-bar-bg { background: rgba(255,255,255,0.08); width: 100%; max-width: 200px; height: 5px; border-radius: 3px; overflow: hidden; }
+    .level-progress-fill { height: 100%; transition: width 0.4s ease; }
+    .level-right { font-size: 1.4rem; font-weight: 800; padding-left: 15px; }
 
-    /* DETAIL SUB-BAB */
-    .subbab-list { display: grid; gap: 10px; margin-top: 15px; }
+    /* MATERI & SUB BAB CARD */
+    .materi-card { background: var(--dark-card); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 24px; padding: 35px; margin-bottom: 35px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); }
+    .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.25rem; color: var(--neon-cyan); margin-top: 20px; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid rgba(76, 201, 240, 0.2); display: flex; align-items: center; gap: 12px; }
+    .dalil-box { background: rgba(255, 255, 255, 0.015); border-left: 4px solid var(--neon-gold); padding: 20px; border-radius: 0 16px 16px 0; margin: 25px 0; font-style: italic; color: #e2e8f0; }
+    
+    .subbab-list { display: grid; gap: 12px; }
     .subbab-item {
-      background: rgba(255,255,255,0.02); padding: 15px; border-radius: 10px;
+      background: rgba(255,255,255,0.02); padding: 18px; border-radius: 14px;
       cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.05); transition: var(--transition-smooth);
     }
-    .subbab-item:hover { background: rgba(255,255,255,0.05); border-color: var(--neon-cyan); }
-    
-    /* PEMUTAR VIDEO YOUTUBE MATERI */
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 20px 0; }
-    .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
-    
-    .action-buttons { display: flex; gap: 15px; margin-top: 15px; }
-    .btn {
-      flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700;
-      font-family: inherit; cursor: pointer; text-align: center; transition: 0.2s;
-    }
-    .btn-quiz { background: var(--level-1); color: #fff; }
-    .btn-game { background: var(--level-3); color: #fff; }
-    .btn-back { background: rgba(255,255,255,0.1); color: #fff; margin-bottom: 15px; width: fit-content; padding: 8px 15px; }
-    
-    .btn-exam {
-      background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff;
-      padding: 16px; font-size: 1.1rem; border-radius: 12px; font-weight: 700;
-      width: 100%; border: none; cursor: pointer; margin-top: 25px; box-shadow: 0 0 15px rgba(239,68,68,0.2);
-    }
+    .subbab-item:hover { background: rgba(255,255,255,0.04); border-color: var(--neon-cyan); transform: translateX(3px); }
 
-    /* KUIS INTERAKTIF MODEL QUIZIZZ */
+    /* VIDEO PLAYER CONTAINER */
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(76, 201, 240, 0.15); margin: 25px 0; }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* KUIS INTERAKTIF (.quiz-section) */
+    .quiz-section { background: linear-gradient(135deg, rgba(9, 9, 21, 0.98), rgba(18, 18, 44, 0.98)); border: 2px solid var(--neon-gold); border-radius: 24px; padding: 35px; box-shadow: 0 0 35px rgba(255, 183, 3, 0.12); }
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .progress-bar-container { background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; width: 100%; margin-bottom: 25px; overflow: hidden; }
-    .quiz-progress { background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan)); height: 100%; width: 0%; transition: 0.3s; }
-    .question-box { font-size: 1.4rem; font-weight: 600; margin-bottom: 25px; text-align: center; line-height: 1.5; }
-    .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .option-btn {
-      background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.08);
-      padding: 16px; border-radius: 12px; text-align: left; color: #fff;
-      font-family: inherit; font-size: 1.05rem; cursor: pointer; transition: 0.2s;
+    .progress-bar-container { background: rgba(255,255,255,0.08); height: 8px; border-radius: 4px; width: 100%; margin-bottom: 25px; overflow: hidden; }
+    .quiz-progress { background: linear-gradient(90deg, var(--neon-gold), var(--neon-cyan)); height: 100%; width: 0%; transition: 0.3s; }
+    .question-box { margin-bottom: 25px; background: rgba(255, 255, 255, 0.015); padding: 22px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.03); }
+    .question-text { font-size: 1.2rem; font-weight: 600; color: #ffffff; text-align: center; }
+    .options-list { display: flex; flex-direction: column; gap: 12px; }
+    
+    .option-item {
+      display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06); padding: 16px; border-radius: 14px;
+      cursor: pointer; transition: var(--transition-smooth); font-size: 1rem; color: #fff; width: 100%; text-align: left;
     }
-    .option-btn:hover:not([disabled]) { border-color: var(--neon-purple); background: rgba(176,38,255,0.05); }
-    .option-btn.correct { background: #10b981 !important; border-color: #047857 !important; }
-    .option-btn.wrong { background: #ef4444 !important; border-color: #b91c1c !important; }
-    
-    .quiz-footer { margin-top: 30px; text-align: right; display: none; }
-    .btn-next { background: var(--neon-cyan); color: #000; padding: 12px 30px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; }
-    
+    .option-item:hover:not([disabled]) { background: rgba(255, 183, 3, 0.06); border-color: var(--neon-gold); }
+    .option-item.correct { background: rgba(0, 245, 212, 0.15) !important; border-color: var(--neon-emerald) !important; }
+    .option-item.wrong { background: rgba(181, 23, 158, 0.15) !important; border-color: var(--neon-violet) !important; }
+
+    /* TOMBOL UTAMA */
+    .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet)); color: #ffffff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255, 183, 3, 0.2); transition: var(--transition-smooth); }
+    .submit-quiz-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--neon-gold); text-decoration: none; font-size: 0.95rem; font-weight: 600; margin-bottom: 20px; background: none; border: none; cursor: pointer; transition: var(--transition-smooth); }
+    .back-btn:hover { color: #ffffff; transform: translateX(-3px); }
+
     /* HALAMAN PROFIL */
-    .profile-card { text-align: center; max-width: 500px; margin: 0 auto; padding: 40px 20px; }
-    .avatar { width: 90px; height: 90px; background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan)); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: white; box-shadow: 0 0 20px rgba(0,229,255,0.2); }
+    .profile-card { text-align: center; max-width: 500px; margin: 40px auto; padding: 40px 30px; background: var(--dark-card); border-radius: 24px; border: 1px solid rgba(255,255,255,0.03); }
+    .avatar { width: 100px; height: 100px; background: linear-gradient(135deg, var(--neon-gold), var(--neon-violet)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; font-weight: bold; color: white; box-shadow: 0 0 25px rgba(255,183,3,0.25); }
+    
+    h3 { color: #ffffff; margin-top: 20px; margin-bottom: 12px; font-weight: 700; font-size: 1.15rem; border-left: 3px solid var(--neon-gold); padding-left: 12px; }
+    p { color: #cbd5e1; font-size: 0.98rem; }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="brand"><i class="fas fa-heart" style="color:var(--neon-purple)"></i> Nurani</div>
+    <div class="brand"><i class="fas fa-graduation-cap" style="color:var(--neon-gold)"></i> AZZAHRA ACADEMY</div>
     <div class="nav-stats">
-      <div class="stat-badge" style="color: #f59e0b;"><i class="fas fa-star"></i> <span id="lblTopXp">0</span> XP</div>
-      <div class="stat-badge" style="color: #ef4444;"><i class="fas fa-fire"></i> <span id="lblTopStreak">1</span> Hari</div>
+      <div class="stat-badge" style="color: var(--neon-gold);"><i class="fas fa-star"></i> <span id="lblTopXp">0</span> XP</div>
+      <div class="stat-badge" style="color: var(--neon-cyan);"><i class="fas fa-fire"></i> <span id="lblTopStreak">1</span> Hari</div>
     </div>
   </nav>
 
@@ -126,89 +159,90 @@
     <div id="pageBeranda" class="page active">
       <div class="grid-dashboard">
         <div>
-          <div class="card">
-            <h2>Progres Kurikulum Santri</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Selesaikan kuis di setiap sub-bab untuk meningkatkan progres belajarmu.</p>
-            <div id="levelContainer"></div>
+          <div class="level-header">
+            <h2 class="level-title">Kurikulum Santri</h2>
+            <div class="level-badge">Papan Belajar Utama</div>
           </div>
+          <div id="levelContainer"></div>
         </div>
         <div>
-          <div class="card">
-            <h3>Papan Peringkat</h3>
-            <div id="leaderboardList" style="margin-top:15px;">Pemuatan rangking...</div>
+          <div class="materi-card" style="padding: 25px;">
+            <h3 style="margin-top:0; border-left-color: var(--neon-cyan);">Papan Peringkat</h3>
+            <div id="leaderboardList" style="margin-top:15px; color: var(--text-dim);">Memuat peringkat terbaik...</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="pageDetailBab" class="page">
-      <button class="btn btn-back" onclick="switchTab('beranda')"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</button>
-      <div class="card">
-        <h2 id="lblDetailTitle">Nama Bab</h2>
-        <p id="lblDetailDesc" style="color: var(--text-muted); margin-bottom: 20px;"></p>
-        <h3>Daftar Sub-Bab Materi:</h3>
+    <div id="pageMateri" class="page">
+      <button class="back-btn" onclick="switchTab('beranda')"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</button>
+      <div class="materi-card">
+        <h2 id="lblDetailTitle" style="font-family: 'Cinzel Decorative', serif; color: #fff; margin-bottom: 10px; font-size: 1.8rem;">Pilih Level Dahulu</h2>
+        <p id="lblDetailDesc" style="color: var(--text-dim); margin-bottom: 25px;"></p>
         
+        <div class="sub-bab-title"><i class="fas fa-book-bookmark"></i> Daftar Sub-Bab Pelajaran</div>
         <div id="subbabContainer" class="subbab-list"></div>
-
-        <div id="examContainer" style="display: none;">
-          <button class="btn btn-exam" id="btnMulaiUjianAkhir"><i class="fas fa-trophy"></i> Ikuti Ujian Akhir Bab (25 Soal)</button>
-        </div>
       </div>
     </div>
 
     <div id="pageRuangBelajar" class="page">
-      <button class="btn btn-back" onclick="kembaliKeDetailBab()"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Sub-bab</button>
-      <div class="card">
-        <h2 id="lblMateriTitle">Judul Sub-Bab</h2>
+      <button class="back-btn" onclick="kembaliKeDetailBab()"><i class="fas fa-arrow-left"></i> Kembali ke Daftar Sub-bab</button>
+      <div class="materi-card">
+        <h2 id="lblMateriTitle" style="font-family: 'Cinzel Decorative', serif; color: var(--neon-cyan); margin-bottom: 15px;">Judul Sub-Bab</h2>
+        
         <div class="video-container">
           <iframe id="videoPlayer" src="" allowfullscreen></iframe>
         </div>
-        <p id="lblMateriSummary" style="line-height: 1.6; font-size: 1.1rem; margin-bottom: 20px;"></p>
-        
-        <div class="action-buttons">
-          <button class="btn btn-quiz" id="btnMulaiKuisSubBab"><i class="fas fa-gamepad"></i> Mulai Kuis Interaktif</button>
-          <button class="btn btn-game" onclick="alert('Mini Game Edukasi sedang disiapkan!')"><i class="fas fa-puzzle-piece"></i> Main Mini Game</button>
+
+        <div class="dalil-box">
+          <strong>Ringkasan Inti:</strong>
+          <p id="lblMateriSummary" style="margin-top: 8px; font-style: normal; text-align: left;"></p>
         </div>
+        
+        <button class="submit-quiz-btn" id="btnMulaiKuisSubBab"><i class="fas fa-gamepad"></i> Buka Kuis Interaktif</button>
       </div>
     </div>
 
     <div id="pageKuisQuizizz" class="page">
-      <div class="card" style="max-width: 600px; margin: 0 auto;">
+      <div class="quiz-section" style="max-width: 650px; margin: 0 auto;">
         <div class="quiz-header">
-          <span style="font-weight: 600;" id="lblQuizTracker">Soal 1 dari 10</span>
-          <span style="font-weight: 600; color:#10b981;"><i class="fas fa-check"></i> Benar: <span id="lblCorrectCount">0</span></span>
+          <span style="font-weight: 600; color: var(--text-dim);" id="lblQuizTracker">Soal 1 dari 10</span>
+          <span style="font-weight: 600; color: var(--neon-emerald);"><i class="fas fa-check"></i> Skor Benar: <span id="lblCorrectCount">0</span></span>
         </div>
         <div class="progress-bar-container">
           <div class="quiz-progress" id="quizProgressBar"></div>
         </div>
         
-        <div class="question-box" id="lblQuestionText">Pertanyaan kuis diletakkan di sini?</div>
-        <div class="options-grid" id="optionsContainer"></div>
+        <div class="question-box">
+          <div class="question-text" id="lblQuestionText">Pertanyaan kuis sedang dimuat...</div>
+        </div>
+
+        <div class="options-list" id="optionsContainer"></div>
         
-        <div class="quiz-footer" id="quizFooter">
-          <button class="btn-next" onclick="nextQuestion()">Lanjut <i class="fas fa-arrow-right"></i></button>
+        <div id="quizFooter" style="margin-top: 25px; text-align: right; display: none;">
+          <button class="submit-quiz-btn" style="width: auto; padding: 12px 35px; margin-top: 0;" onclick="nextQuestion()">Pertanyaan Berikutnya <i class="fas fa-chevron-right"></i></button>
         </div>
       </div>
     </div>
 
     <div id="pageProfil" class="page">
-      <div class="card profile-card">
-        <div class="avatar" id="avatarProfil">U</div>
-        <h2 id="lblProfilName" style="margin-bottom: 5px;">Nama Santri</h2>
-        <p id="lblProfilEmail" style="color: var(--text-muted); margin-bottom: 30px;">email@santri.com</p>
+      <div class="profile-card">
+        <div class="avatar" id="avatarProfil">A</div>
+        <h2 id="lblProfilName" style="color: #fff; font-family: 'Cinzel Decorative', serif; margin-bottom: 5px;">Nama Santri</h2>
+        <p id="lblProfilEmail" style="color: var(--text-dim); margin-bottom: 30px;">email@santri.com</p>
         
-        <div style="display: flex; gap: 15px; margin-bottom: 30px;">
-          <div style="flex: 1; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Pangkat Santri</div>
+        <div style="display: flex; gap: 15px; margin-bottom: 35px;">
+          <div style="flex: 1; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size: 0.85rem; color: var(--text-dim);">Pangkat Akun</div>
             <div style="font-weight: 700; font-size: 1.1rem; color: var(--neon-cyan); margin-top: 5px;">Thalibul 'Ilm</div>
           </div>
-          <div style="flex: 1; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-            <div style="font-size: 0.85rem; color: var(--text-muted);">Lencana Diraih</div>
-            <div style="font-weight: 700; font-size: 1.1rem; color: #f59e0b; margin-top: 5px;"><i class="fas fa-award"></i> Penuntut Ilmu</div>
+          <div style="flex: 1; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size: 0.85rem; color: var(--text-dim);">Lencana Prestasi</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: var(--neon-gold); margin-top: 5px;"><i class="fas fa-award"></i> Santri Aktif</div>
           </div>
         </div>
 
-        <button class="btn" style="background: #ef4444; color:#fff; max-width: 150px; margin: 0 auto; display: block;" onclick="handleLogout()">Keluar Akun</button>
+        <button class="submit-quiz-btn" style="background: var(--neon-violet); max-width: 180px; margin: 0 auto; display: block;" onclick="handleLogout()">Keluar Akun</button>
       </div>
     </div>
 
@@ -216,6 +250,7 @@
 
   <div class="bottom-nav">
     <div class="nav-item active" id="tabBeranda" onclick="switchTab('beranda')"><i class="fas fa-home"></i>Beranda</div>
+    <div class="nav-item" id="tabMateri" onclick="switchTab('materi')"><i class="fas fa-book"></i>Materi</div>
     <div class="nav-item" id="tabProfil" onclick="switchTab('profil')"><i class="fas fa-user"></i>Profil</div>
   </div>
 
@@ -239,18 +274,16 @@
 
     let currentUserData = null;
     let currentUserId = null;
-    let selectedLevelId = null;
+    let selectedLevelId = "level1"; 
     let selectedSubBabIndex = null;
-    let isExamMode = false;
 
     let quizQuestions = [];
     let currentQuestionIdx = 0;
     let totalCorrectAnswers = 0;
 
-    // DATA RESMI LENGKAP LEVEL 1 SAMPAI LEVEL 6 SEPERTI DI DATABASE FIRESTORE KAMU
     const DATA_MATERI = [
       {
-        id: "level1", title: "Aqidah", color: "var(--level-1)", icon: "fa-sun",
+        id: "level1", title: "Aqidah", color: "var(--neon-emerald)", icon: "fa-sun",
         description: "Fondasi dasar keimanan seorang Muslim meliputi rukun iman dan asmaul husna.",
         subBabs: [
           {
@@ -258,90 +291,41 @@
             quiz: [
               { q: "Berapa jumlah Rukun Iman di dalam agama Islam?", a: ["4 Perkara", "5 Perkara", "6 Perkara", "7 Perkara"], correct: 2 },
               { q: "Rukun Iman yang pertama adalah iman kepada...", a: ["Malaikat", "Hari Kiamat", "Rasul", "Allah SWT"], correct: 3 },
-              { q: "Iman kepada Malaikat-Malaikat Allah merupakan Rukun Iman urutan ke...", a: ["Ke-1", "Ke-2", "Ke-3", "Ke-4"], correct: 1 },
-              { q: "Malaikat yang memiliki tugas menyampaikan wahyu kepada para Nabi adalah...", a: ["Malaikat Mikail", "Malaikat Israfil", "Malaikat Jibril", "Malaikat Izrail"], correct: 2 },
-              { q: "Kitab suci terakhir yang diturunkan Allah kepada umat manusia bernama...", a: ["Kitab Taurat", "Kitab Zabur", "Kitab Injil", "Al-Qur'an"], correct: 3 },
-              { q: "Nabi dan Rasul penutup yang menjadi suri teladan kita adalah...", a: ["Nabi Isa AS", "Nabi Musa AS", "Nabi Muhammad SAW", "Nabi Ibrahim AS"], correct: 2 },
-              { q: "Iman kelima mengajarkan umat Islam untuk meyakini adanya...", a: ["Hari Kiamat / Akhir", "Hari Perhitungan", "Malaikat Munkar", "Takdir Baik"], correct: 0 },
-              { q: "Meyakini adanya Qadha dan Qadar (Takdir) diatur di dalam rukun iman ke...", a: ["Ke-3", "Ke-4", "Ke-5", "Ke-6"], correct: 3 },
-              { q: "Malaikat diciptakan oleh Allah SWT dari unsur dasar...", a: ["Api (Nar)", "Tanah", "Cahaya (Nur)", "Air"], correct: 2 },
-              { q: "Kitab Taurat diturunkan Allah secara khusus kepada Nabi...", a: ["Nabi Musa AS", "Nabi Isa AS", "Nabi Daud AS", "Nabi Muhammad SAW"], correct: 0 }
-            ]
-          },
-          {
-            title: "Asmaul Husna", videoId: "bOInI2Z8xno", summary: "Mengenal nama-nama indah Allah SWT yang berjumlah 99 nama baik.",
-            quiz: [
-              { q: "Berapa total jumlah nama indah Asmaul Husna bagi Allah?", a: ["25 Nama", "99 Nama", "100 Nama", "114 Nama"], correct: 1 },
-              { q: "Apa makna dari nama Asmaul Husna 'Ar-Rahman'?", a: ["Maha Pengasih", "Maha Penyayang", "Maha Perkasa", "Maha Suci"], correct: 0 },
-              { q: "Apa makna dari nama Asmaul Husna 'Ar-Rahim'?", a: ["Maha Mengetahui", "Maha Penyayang", "Maha Melihat", "Maha Adil"], correct: 1 },
-              { q: "Al-Malik memiliki arti bahwa Allah Maha...", a: ["Mendengar", "Merajai / Menguasai Jagat", "Pencipta", "Pengampun"], correct: 1 },
-              { q: "Asmaul Husna Al-Quddus mengartikan bahwa Allah Maha...", a: ["Suci", "Besar", "Sabar", "Mulia"], correct: 0 },
-              { q: "Nama As-Salam mengartikan bahwa Allah Yang Maha...", a: ["Melihat", "Pemberi Keselamatan", "Agung", "Kekal"], correct: 1 },
-              { q: "Al-Khaliq memiliki arti bahwa Allah adalah Dzat Yang Maha...", a: ["Merajai", "Pencipta", "Memberi Rezeki", "Gagah"], correct: 1 },
-              { q: "Al-Ghaffar mengartikan bahwa Allah adalah Tuhan Yang Maha...", a: ["Pengampun", "Perkasa", "Bijaksana", "Kaya"], correct: 0 },
-              { q: "Ketika sedang berdoa memohon sesuatu, kita disunnahkan mengawalinya dengan melafalkan...", a: ["Nama Teman", "Asmaul Husna", "Puisi", "Nyanyian"], correct: 1 },
-              { q: "Allah Al-Bashir mengartikan bahwa Allah Maha...", a: ["Mendengar", "Melihat segala sesuatu", "Berbicara", "Hidup"], correct: 1 }
+              { q: "Iman kepada Malaikat-Malaikat Allah merupakan Rukun Iman urutan ke...", a: ["Ke-1", "Ke-2", "Ke-3", "Ke-4"], correct: 1 }
             ]
           }
-        ],
-        examQuiz: [
-          { q: "Berapa jumlah Rukun Iman?", a: ["4", "5", "6", "7"], correct: 2 },
-          { q: "Iman pertama adalah iman kepada siapa?", a: ["Malaikat", "Kitab", "Rasul", "Allah"], correct: 3 },
-          { q: "Iman kepada Malaikat urutan ke berapa?", a: ["1", "2", "3", "4"], correct: 1 },
-          { q: "Siapakah Malaikat yang bertugas menyampaikan wahyu?", a: ["Mikail", "Israfil", "Jibril", "Izrail"], correct: 2 },
-          { q: "Kitab Suci umat Islam bernama apa?", a: ["Taurat", "Zabur", "Injil", "Al-Qur'an"], correct: 3 },
-          { q: "Siapakah Nabi dan Rasul terakhir kita?", a: ["Nabi Isa", "Nabi Musa", "Nabi Muhammad", "Nabi Ibrahim"], correct: 2 },
-          { q: "Iman ke-5 adalah iman kepada hari apa?", a: ["Kiamat/Akhir", "Senin", "Raya", "Perhitungan"], correct: 0 },
-          { q: "Takdir baik dan buruk diatur di dalam rukun iman ke berapakah?", a: ["3", "4", "5", "6"], correct: 3 },
-          { q: "Malaikat diciptakan oleh Allah SWT dari unsur apa?", a: ["Api", "Tanah", "Cahaya (Nur)", "Air"], correct: 2 },
-          { q: "Kitab Taurat diturunkan kepada Nabi siapa?", a: ["Nabi Musa", "Nabi Isa", "Nabi Daud", "Nabi Muhammad"], correct: 0 },
-          { q: "Berapa jumlah Asmaul Husna?", a: ["25", "99", "100", "114"], correct: 1 },
-          { q: "Arti dari nama Ar-Rahman adalah?", a: ["Maha Pengasih", "Maha Penyayang", "Maha Perkasa", "Maha Suci"], correct: 0 },
-          { q: "Arti dari nama Ar-Rahim adalah?", a: ["Maha Mengetahui", "Maha Penyayang", "Maha Melihat", "Maha Adil"], correct: 1 },
-          { q: "Al-Malik memiliki arti Maha apa?", a: ["Mendengar", "Merajai / Penguasa", "Pencipta", "Pengampun"], correct: 1 },
-          { q: "Asmaul Husna Al-Quddus artinya Allah Maha?", a: ["Suci", "Besar", "Sabar", "Mulya"], correct: 0 },
-          { q: "Nama As-Salam artinya Allah Yang Maha?", a: ["Melihat", "Sejahtera", "Agung", "Kekal"], correct: 1 },
-          { q: "Al-Khaliq memiliki arti Yang Maha?", a: ["Merajai", "Pencipta", "Memberi Rezeki", "Gagah"], correct: 1 },
-          { q: "Al-Ghaffar artinya Allah Maha?", a: ["Pengampun", "Perkasa", "Bijaksana", "Kaya"], correct: 0 },
-          { q: "Malaikat yang meniup sangkakala hari kiamat?", a: ["Jibril", "Mikail", "Israfil", "Izrail"], correct: 2 },
-          { q: "Allah Al-Bashir artinya Allah Maha?", a: ["Mendengar", "Melihat", "Berbicara", "Hidup"], correct: 1 },
-          { q: "Kitab Injil diturunkan kepada Nabi?", a: ["Nabi Musa", "Nabi Isa", "Nabi Daud", "Nabi Ibrahim"], correct: 1 },
-          { q: "Asmaul Husna Al-Alim berarti Allah Maha?", a: ["Mengetahui", "Kuasa", "Melihat", "Mendengar"], correct: 0 },
-          { q: "Malaikat pencatat amal buruk bernama?", a: ["Atid", "Raqib", "Malik", "Ridwan"], correct: 0 },
-          { q: "Malaikat pencatat amal baik bernama?", a: ["Atid", "Raqib", "Malik", "Ridwan"], correct: 1 },
-          { q: "Qadha dan Qadar artinya kehendak dan ketetapan milik?", a: ["Manusia", "Malaikat", "Nabi", "Allah SWT"], correct: 3 }
         ]
       },
       {
-        id: "level2", title: "Fikih Ibadah", color: "var(--level-2)", icon: "fa-water",
+        id: "level2", title: "Fikih Ibadah", color: "var(--neon-cyan)", icon: "fa-water",
         description: "Panduan tata cara bersuci (Thaharah), berwudhu, serta kesempurnaan salat fardhu.",
         subBabs: [
           { title: "Thaharah (Bersuci)", videoId: "bOInI2Z8xno", summary: "Mengenal jenis najis dan cara membersihkannya agar sah beribadah.", quiz: [{q:"Contoh air suci mensucikan adalah air...", a:["Kopi","Teh","Hujan","Susu"], correct:2}] }
         ]
       },
       {
-        id: "level3", title: "Akhlak Mulia", color: "var(--level-3)", icon: "fa-hands-holding-child",
+        id: "level3", title: "Akhlak Mulia", color: "var(--neon-violet)", icon: "fa-hands-holding-child",
         description: "Membentuk pribadi luhur melalui adab kepada orang tua, guru, dan teman.",
         subBabs: [
           { title: "Adab Orang Tua", videoId: "bOInI2Z8xno", summary: "Berbakti kepada bapak ibu (Birrul Walidain) tanpa berkata kasar.", quiz: [{q:"Berkata kasar 'Ah' kepada orang tua hukumnya...", a:["Boleh","Dosa besar","Makruh","Sunnah"], correct:1}] }
         ]
       },
       {
-        id: "level4", title: "Tarikh Islam", color: "var(--level-4)", icon: "fa-landmark",
+        id: "level4", title: "Tarikh Islam", color: "var(--neon-gold)", icon: "fa-landmark",
         description: "Meneladani kisah perjuangan dakwah Nabi Muhammad SAW dan Khulafaur Rasyidin.",
         subBabs: [
           { title: "Kelahiran Nabi", videoId: "bOInI2Z8xno", summary: "Sejarah Kota Makkah pada Tahun Gajah saat Rasulullah dilahirkan.", quiz: [{q:"Nabi Muhammad SAW lahir pada tahun...", a:["Gajah","Unta","Kuda","Hijriah"], correct:0}] }
         ]
       },
       {
-        id: "level5", title: "Al-Qur'an Tajwid", color: "var(--level-5)", icon: "fa-book-quran",
+        id: "level5", title: "Al-Qur'an Tajwid", color: "var(--neon-cyan)", icon: "fa-book-quran",
         description: "Praktik membaca Al-Qur'an secara tartil menggunakan kaidah tajwid dasar.",
         subBabs: [
           { title: "Hukum Nun Mati", videoId: "bOInI2Z8xno", summary: "Memahami cara membaca Izhar, Idgham, Iqlab, dan Ikhfa.", quiz: [{q:"Bila Nun mati bertemu huruf Alif dibaca...", a:["Samar","Mendengkur","Jelas/Izhar","Membalik"], correct:2}] }
         ]
       },
       {
-        id: "level6", title: "Doa & Dzikir", color: "var(--level-6)", icon: "fa-hands-praying",
+        id: "level6", title: "Doa & Dzikir", color: "var(--neon-gold)", icon: "fa-hands-praying",
         description: "Kumpulan hafalan doa harian penting dan dzikir setelah salat fardhu.",
         subBabs: [
           { title: "Doa Orang Tua", videoId: "bOInI2Z8xno", summary: "Lafadz doa harian memohon ampunan untuk ayah dan ibu.", quiz: [{q:"Robbighfirlii waliwaalidayya adalah awal doa...", a:["Makan","Tidur","Kedua Orang Tua","Belajar"], correct:2}] }
@@ -367,7 +351,7 @@
         document.getElementById('lblTopStreak').innerText = currentUserData.streak || 1;
         document.getElementById('lblProfilName').innerText = currentUserData.name || "Santri";
         document.getElementById('lblProfilEmail').innerText = currentUserData.email || "";
-        document.getElementById('avatarProfil').innerText = (currentUserData.name || "U")[0].toUpperCase();
+        document.getElementById('avatarProfil').innerText = (currentUserData.name || "A")[0].toUpperCase();
         renderKurikulumBeranda();
       }
     }
@@ -384,22 +368,28 @@
         card.className = `level-card ${isLocked ? 'locked' : ''}`;
         card.onclick = () => {
           if (isLocked) {
-            alert("🔒 Level ini masih terkunci! Selesaikan ujian bab sebelumnya.");
+            alert("🔒 Level ini masih terkunci! Selesaikan materi bab sebelumnya.");
             return;
           }
-          bukaDetailBab(lvl.id);
+          selectedLevelId = lvl.id;
+          switchTab('materi');
         };
 
         card.innerHTML = `
-          <div class="level-info">
-            <h3 style="color:${lvl.color}"><i class="fas ${lvl.icon}"></i> ${lvl.title}</h3>
-            <p style="font-size:0.9rem; color:var(--text-muted);">${lvl.description}</p>
-            <div style="margin-top:10px; background:rgba(255,255,255,0.1); width:100%; max-width:200px; height:6px; border-radius:3px; overflow:hidden;">
-              <div style="background:${lvl.color}; width:${userProgress.percent || 0}%; height:100%;"></div>
+          <div class="level-left">
+            <div class="level-icon-box" style="color: ${lvl.color};">
+              <i class="fas ${lvl.icon}"></i>
+            </div>
+            <div class="level-text-box">
+              <h3 style="color: ${lvl.color};">${lvl.title}</h3>
+              <p>${lvl.description}</p>
+              <div class="level-progress-bar-bg">
+                <div class="level-progress-fill" style="background: ${lvl.color}; width: ${userProgress.percent || 0}%;"></div>
+              </div>
             </div>
           </div>
-          <div>
-            ${isLocked ? '<i class="fas fa-lock" style="font-size:1.5rem; color:var(--text-muted);"></i>' : `<span style="font-weight:700; color:${lvl.color}">${userProgress.percent || 0}%</span>`}
+          <div class="level-right" style="color: ${lvl.color};">
+            ${isLocked ? '<i class="fas fa-lock" style="color:var(--text-dim);"></i>' : `${userProgress.percent || 0}%`}
           </div>
         `;
         container.appendChild(card);
@@ -414,19 +404,18 @@
         document.getElementById('pageBeranda').classList.add('active');
         document.getElementById('tabBeranda').classList.add('active');
         renderKurikulumBeranda();
+      } else if (tab === 'materi') {
+        document.getElementById('pageMateri').classList.add('active');
+        document.getElementById('tabMateri').classList.add('active');
+        bukaDetailBabSistem();
       } else if (tab === 'profil') {
         document.getElementById('pageProfil').classList.add('active');
         document.getElementById('tabProfil').classList.add('active');
       }
     };
 
-    function bukaDetailBab(levelId) {
-      selectedLevelId = levelId;
-      const dataBab = DATA_MATERI.find(l => l.id === levelId);
-      
-      document.getElementById('pageBeranda').classList.remove('active');
-      document.getElementById('pageDetailBab').classList.add('active');
-      
+    function bukaDetailBabSistem() {
+      const dataBab = DATA_MATERI.find(l => l.id === selectedLevelId);
       document.getElementById('lblDetailTitle').innerText = dataBab.title;
       document.getElementById('lblDetailDesc').innerText = dataBab.description;
 
@@ -438,20 +427,11 @@
         item.className = "subbab-item";
         item.onclick = () => bukaRuangBelajarSubBab(index);
         item.innerHTML = `
-          <span><i class="fas fa-book-open" style="color:var(--neon-cyan); margin-right:10px;"></i> Sub-bab ${index + 1}: ${sub.title}</span>
-          <i class="fas fa-chevron-right" style="color:var(--text-muted)"></i>
+          <span><i class="fas fa-book-open" style="color:var(--neon-cyan); margin-right:12px;"></i> Sub-bab ${index + 1}: ${sub.title}</span>
+          <i class="fas fa-chevron-right" style="color:var(--text-dim)"></i>
         `;
         subContainer.appendChild(item);
       });
-
-      const currentPercent = currentUserData.progress?.[levelId]?.percent || 0;
-      const examBox = document.getElementById('examContainer');
-      if (currentPercent >= 100 && dataBab.examQuiz) {
-        examBox.style.display = 'block';
-        document.getElementById('btnMulaiUjianAkhir').onclick = () => siapkanKuisQuizizz(dataBab.examQuiz, true);
-      } else {
-        examBox.style.display = 'none';
-      }
     }
 
     function bukaRuangBelajarSubBab(subIndex) {
@@ -459,30 +439,28 @@
       const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
       const sub = bab.subBabs[subIndex];
 
-      document.getElementById('pageDetailBab').classList.remove('active');
+      document.getElementById('pageMateri').classList.remove('active');
       document.getElementById('pageRuangBelajar').classList.add('active');
 
-      document.getElementById('lblMateriTitle').innerText = `Sub-Bab: ${sub.title}`;
+      document.getElementById('lblMateriTitle').innerText = sub.title;
       document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${sub.videoId}`;
       document.getElementById('lblMateriSummary').innerText = sub.summary;
 
-      document.getElementById('btnMulaiKuisSubBab').onclick = () => siapkanKuisQuizizz(sub.quiz, false);
+      document.getElementById('btnMulaiKuisSubBab').onclick = () => siapkanKuisQuizizz(sub.quiz);
     }
 
     window.kembaliKeDetailBab = function() {
       document.getElementById('videoPlayer').src = "";
       document.getElementById('pageRuangBelajar').classList.remove('active');
-      document.getElementById('pageDetailBab').classList.add('active');
+      document.getElementById('pageMateri').classList.add('active');
     };
 
-    function siapkanKuisQuizizz(daftarSoal, isExam) {
+    function siapkanKuisQuizizz(daftarSoal) {
       quizQuestions = daftarSoal;
       currentQuestionIdx = 0;
       totalCorrectAnswers = 0;
-      isExamMode = isExam;
 
       document.getElementById('pageRuangBelajar').classList.remove('active');
-      document.getElementById('pageDetailBab').classList.remove('active');
       document.getElementById('pageKuisQuizizz').classList.add('active');
       
       tampilkanSoalQuizizz();
@@ -504,7 +482,7 @@
 
       soalAktif.a.forEach((opsi, index) => {
         const btn = document.createElement('button');
-        btn.className = "option-btn";
+        btn.className = "option-item";
         btn.innerText = opsi;
         btn.onclick = () => cekJawabanQuizizz(index, btn);
         optionsBox.appendChild(btn);
@@ -513,7 +491,7 @@
 
     function cekJawabanQuizizz(indexTerpilih, tombolKlik) {
       const soalAktif = quizQuestions[currentQuestionIdx];
-      const semuaTombol = document.querySelectorAll('.option-btn');
+      const semuaTombol = document.querySelectorAll('.option-item');
 
       semuaTombol.forEach(btn => btn.disabled = true);
 
@@ -533,80 +511,40 @@
       currentQuestionIdx++;
 
       if (currentQuestionIdx >= quizQuestions.length) {
-        if (!isExamMode) {
-          if (totalCorrectAnswers >= 7) {
-            alert(`🎉 Alhamdulillah LULUS! Kamu menjawab ${totalCorrectAnswers} soal benar. Mendapat +100 XP!`);
-            prosesPenyelesaianKuis(true);
-          } else {
-            alert(`😢 BELUM LULUS. Kamu baru benar ${totalCorrectAnswers} soal. (Minimal butuh 7 benar untuk lanjut). Ayo tonton materi lagi!`);
-            prosesPenyelesaianKuis(false);
-          }
-        } else {
-          if (totalCorrectAnswers >= 18) {
-            alert(`🏆 LUAR BIASA! Lulus Ujian Akhir Bab dengan ${totalCorrectAnswers} jawaban benar! Bab Selanjutnya Terbuka.`);
-            prosesPenyelesaianUjianAkhir(true);
-          } else {
-            alert(`❌ BELUM LULUS UJIAN. Jawaban benar: ${totalCorrectAnswers} dari 25 soal (Minimal butuh 18 benar). Silakan coba lagi!`);
-            prosesPenyelesaianUjianAkhir(false);
-          }
-        }
+        alert(`🎉 Luar Biasa! Kuis selesai, kamu menjawab ${totalCorrectAnswers} soal dengan benar.`);
+        prosesPenyelesaianKuis();
       } else {
         tampilkanSoalQuizizz();
       }
     };
 
-    async function prosesPenyelesaianKuis(isLulus) {
+    async function prosesPenyelesaianKuis() {
       document.getElementById('pageKuisQuizizz').classList.remove('active');
       
-      if (isLulus) {
-        const totalXpBaru = (currentUserData.xp || 0) + 100;
-        const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
-        const bobotPerSub = 100 / bab.subBabs.length;
-        
-        let persenLama = currentUserData.progress?.[selectedLevelId]?.percent || 0;
-        let persenBaru = Math.min(persenLama + bobotPerSub, 100);
-
-        // Jika subbab selesai dan progres bab menyentuh 100%, gembok level berikutnya langsung otomatis terbuka
-        let dataUpdate = {
-          xp: totalXpBaru,
-          [`progress.${selectedLevelId}.percent`]: persenBaru
-        };
-
-        if (persenBaru >= 100) {
-          const urutanLevel = ["level1", "level2", "level3", "level4", "level5", "level6"];
-          const indexSekarang = urutanLevel.indexOf(selectedLevelId);
-          if (indexSekarang !== -1 && indexSekarang < urutanLevel.length - 1) {
-            const levelBerikutnya = urutanLevel[indexSekarang + 1];
-            dataUpdate[`progress.${levelBerikutnya}.unlocked`] = true;
-          }
-        }
-
-        await updateDoc(doc(db, "users", currentUserId), dataUpdate);
-        await muatDataSantri();
-        bukaDetailBab(selectedLevelId);
-      } else {
-        switchTab('beranda');
-      }
-    }
-
-    async function prosesPenyelesaianUjianAkhir(isLulus) {
-      document.getElementById('pageKuisQuizizz').classList.remove('active');
+      const totalXpBaru = (currentUserData.xp || 0) + 100;
+      const bab = DATA_MATERI.find(l => l.id === selectedLevelId);
+      const bobotPerSub = 100 / bab.subBabs.length;
       
-      if (isLulus) {
-        const totalXpBaru = (currentUserData.xp || 0) + 500;
-        let updateData = { xp: totalXpBaru };
-        
+      let persenLama = currentUserData.progress?.[selectedLevelId]?.percent || 0;
+      let persenBaru = Math.min(persenLama + bobotPerSub, 100);
+
+      let dataUpdate = {
+        xp: totalXpBaru,
+        [`progress.${selectedLevelId}.percent`]: persenBaru
+      };
+
+      if (persenBaru >= 100) {
         const urutanLevel = ["level1", "level2", "level3", "level4", "level5", "level6"];
         const indexSekarang = urutanLevel.indexOf(selectedLevelId);
         if (indexSekarang !== -1 && indexSekarang < urutanLevel.length - 1) {
           const levelBerikutnya = urutanLevel[indexSekarang + 1];
-          updateData[`progress.${levelBerikutnya}.unlocked`] = true;
+          dataUpdate[`progress.${levelBerikutnya}.unlocked`] = true;
         }
-
-        await updateDoc(doc(db, "users", currentUserId), updateData);
-        await muatDataSantri();
       }
-      switchTab('beranda');
+
+      await updateDoc(doc(db, "users", currentUserId), dataUpdate);
+      await muatDataSantri();
+      switchTab('materi');
     }
 
     async function muatPapanPeringkat() {
@@ -620,7 +558,7 @@
         const u = doc.data();
         const item = document.createElement('div');
         item.style = "display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05);";
-        item.innerHTML = `<span>#${rank} ${u.name}</span> <span style="color:var(--neon-cyan)">${u.xp || 0} XP</span>`;
+        item.innerHTML = `<span>#${rank} ${u.name}</span> <span style="color:var(--neon-gold)">${u.xp || 0} XP</span>`;
         box.appendChild(item);
         rank++;
       });
