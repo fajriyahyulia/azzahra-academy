@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 3: Fiqih Ibadah — AzZahra Academy</title>
+<link rel="stylesheet" href="style-shared.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --neon-purple:#b026ff;--neon-violet:#7c3aed;--neon-pink:#e040fb;--neon-cyan:#00e5ff;--neon-gold:#ffd700;--dark-bg:#050508;--dark-card:#0d0d1a;--dark-card2:#12122a;--text-light:#e8e0ff;--text-dim:#8878aa;
+  --lvl-color:#00c896;--lvl-grad:linear-gradient(135deg,#00966e,#00c896);
+}
+
+/* TOP BAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,200,150,0.2);display:flex;align-items:center;padding:0 24px;gap:16px;}
+.back-btn{background:#1a1a2e;border:1px solid rgba(0,200,150,0.3);color:var(--text-dim);width:36px;height:36px;border-radius:10px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.back-btn:hover{border-color:var(--lvl-color);color:#fff;transform:translateX(-2px);}
+.topbar-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:700;flex:1;color:#fff;}
+.topbar-title span{color:var(--lvl-color);}
+.topbar-right{display:flex;align-items:center;gap:14px;}
+.xp-counter{background:#1a1a2e;border:1px solid #ffd70044;border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:700;color:var(--neon-gold);display:flex;align-items:center;gap:6px;}
+
+/* LAYOUT CONTAINER */
+.layout{display:flex;margin-top:58px;min-height:calc(100vh - 58px);position:relative;}
+
+/* SIDEBAR MAP */
+.sidebar{width:280px;background:#090912;border-right:1px solid rgba(0,200,150,0.1);padding:20px;overflow-y:auto;flex-shrink:0;}
+.sb-title{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700;}
+.sb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.sb-item{background:var(--dark-card);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;position:relative;}
+.sb-item:hover{border-color:rgba(0,200,150,0.4);background:#0d1f1a;}
+.sb-item.active{border-color:var(--lvl-color);background:linear-gradient(90deg,#071b15,transparent);box-shadow:inset 3px 0 0 var(--lvl-color);}
+.sb-item.locked{opacity:0.4;cursor:not-allowed;}
+.sb-item.locked:hover{background:var(--dark-card);border-color:rgba(255,255,255,0.03);}
+.sb-idx{width:22px;height:22px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
+.sb-item.active .sb-idx{background:var(--lvl-color);color:#050508;border-color:var(--lvl-color);}
+.sb-info{flex:1;min-width:0;}
+.sb-name{font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-status{font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:4px;}
+.sb-status.done{color:#33ff97;}
+.sb-status.current{color:var(--lvl-color);}
+
+/* MAIN CONTENT WORKSPACE */
+.workspace{flex:1;padding:40px;background:var(--dark-bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
+.content-card{width:100%;max-width:760px;background:var(--dark-card);border:1px solid rgba(0,200,150,0.1);border-radius:24px;padding:36px;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;animation:fadeIn 0.4s ease forwards;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* CONTENT DETAILS */
+.mat-header{margin-bottom:24px;border-bottom:1px solid rgba(0,200,150,0.1);padding-bottom:16px;}
+.mat-tag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--lvl-color);font-weight:700;margin-bottom:6px;display:block;}
+.mat-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;}
+.mat-body{font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:30px;}
+.mat-body p{margin-bottom:16px;}
+.mat-body strong{color:var(--lvl-color);}
+.arabic-quote{font-family:'Amiri',serif;font-size:1.6rem;color:var(--neon-gold);background:#050508;padding:14px;border-radius:12px;text-align:center;margin:16px 0;border:1px solid rgba(0,200,150,0.15);}
+
+/* INTERACTIVE COMPONENT - DRAG & DROP PRO */
+.dd-container{background:var(--dark-card2);border:1px solid rgba(0,200,150,0.15);border-radius:16px;padding:24px;margin-top:24px;}
+.dd-instruction{font-size:0.82rem;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.dd-instruction i { color: var(--lvl-color); }
+.dd-options{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.dd-word{background:#1a1a2e;border:1px solid rgba(0,200,150,0.3);padding:10px 18px;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:grab;transition:all 0.2s;}
+.dd-word:hover{border-color:var(--lvl-color);box-shadow:0 0 10px rgba(0,200,150,0.2);color:#fff;}
+.dd-word.placed{opacity:0.3;cursor:not-allowed;pointer-events:none;}
+.dd-target-box{background:#050508;border:2px dashed rgba(0,200,150,0.3);border-radius:12px;padding:6px 16px;min-height:42px;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:all 0.3s;vertical-align:middle;margin:0 4px;}
+.dd-target-box.hover{border-color:var(--lvl-color);background:rgba(0,200,150,0.05);}
+.dd-placed{background:var(--lvl-grad);color:#fff;padding:4px 12px;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 10px rgba(0,150,110,0.3);display:flex;align-items:center;gap:6px;}
+
+/* FOOTER NAV ACTIONS */
+.content-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;margin-top:20px;width:100%;max-width:760px;}
+.footer-left, .footer-right { display:flex; gap:12px; }
+.btn-nav{background:#1a1a2e;border:1px solid rgba(0,200,150,0.3);color:var(--text-light);padding:10px 20px;border-radius:30px;font-family:'Exo 2',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
+.btn-nav:hover:not(:disabled){border-color:var(--lvl-color);box-shadow:0 0 15px rgba(0,200,150,0.2);color:#fff;}
+.btn-nav:disabled{opacity:0.25;cursor:not-allowed;}
+.btn-quiz{background:var(--lvl-grad);border:none;box-shadow:0 0 15px rgba(0,200,150,0.3);color:#fff;font-weight:700;}
+.btn-quiz:hover{box-shadow:0 0 25px rgba(0,200,150,0.5);transform:translateY(-1px);}
+
+/* TOAST NOTIF */
+.toast {
+  position: fixed; bottom: 30px; right: 30px; background: var(--dark-card);
+  border: 1px solid var(--lvl-color); border-radius: 12px; padding: 14px 24px;
+  display: flex; align-items: center; gap: 10px; z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(100px); opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast i { font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="back-btn" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
+  <div class="topbar-title">Level 03: <span>Fiqih Ibadah</span></div>
+  <div class="topbar-right">
+    <div class="xp-counter"><i class="fas fa-star"></i> <span id="xpCount">0</span> XP</div>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-title">Materi Fiqih</div>
+    <ul class="sb-list" id="sidebarList"></ul>
+  </aside>
+
+  <main class="workspace">
+    <div class="content-card" id="workspaceCard">
+      </div>
+
+    <div class="content-footer">
+      <div class="footer-left">
+        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)"><i class="fas fa-chevron-left"></i> Kembali</button>
+      </div>
+      <div class="footer-right">
+        <button class="btn-nav btn-quiz" id="btnAction" onclick="handleActionClick()">Lanjut Quiz <i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toastEl">
+  <span id="toastIcon"></span><span id="toastMsg"></span>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCsX-3QTSbmRKEZiNsjM6jWAZ6l2hTqC38",
+  authDomain: "azzahra-web.firebaseapp.com",
+  projectId: "azzahra-web",
+  storageBucket: "azzahra-web.firebasestorage.app",
+  messagingSenderId: "716860109019",
+  appId: "1:716860109019:web:433065a2294026ae665cfe",
+  measurementId: "G-G7X3S5QRHP"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+let userXP = 0;
+let userProgress = {};
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = 'auth.html';
+    return;
+  }
+  currentUser = user;
+
+  const userDocRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userDocRef);
+
+  if (userSnap.exists()) {
+    const data = userSnap.data();
+    userXP = data.xp || 0;
+    userProgress = data.progress || {};
+
+    document.getElementById('xpCount').textContent = userXP.toLocaleString();
+
+    // Sinkronisasi data progres level 3 dari Firestore
+    if (userProgress.level3) {
+      const savedSubs = userProgress.level3.subProgress || [];
+      savedSubs.forEach((saved, index) => {
+        if (subbabs[index]) {
+          subbabs[index].unlocked = saved.unlocked;
+          subbabs[index].completed = saved.completed;
+        }
+      });
+    }
+  }
+
+  renderSidebar();
+  renderMateri(currentSub);
+});
+
+window.saveProgressToFirebase = async function(xpBonus, nextSubIdx) {
+  if (!currentUser) return;
+
+  userXP += xpBonus;
+  document.getElementById('xpCount').textContent = userXP.toLocaleString();
+
+  const subProgressArray = subbabs.map(s => ({
+    unlocked: s.unlocked,
+    completed: s.completed
+  }));
+
+  const completedCount = subbabs.filter(s => s.completed).length;
+  const percentTotal = Math.round((completedCount / subbabs.length) * 100);
+  const totalStars = percentTotal === 100 ? 3 : percentTotal >= 50 ? 2 : percentTotal >= 25 ? 1 : 0;
+
+  const userDocRef = doc(db, "users", currentUser.uid);
+  
+  userProgress["level3"] = {
+    percent: percentTotal,
+    stars: totalStars,
+    unlocked: true,
+    subProgress: subProgressArray
+  };
+
+  // Jika level 3 beres total, otomatis buka gembok level 4
+  if (percentTotal === 100) {
+    if (!userProgress["level4"]) {
+      userProgress["level4"] = { percent: 0, stars: 0, unlocked: true, subProgress: [] };
+    } else {
+      userProgress["level4"].unlocked = true;
+    }
+  }
+
+  try {
+    await updateDoc(userDocRef, {
+      xp: userXP,
+      progress: userProgress
+    });
+  } catch (error) {
+    console.error("Gagal sinkronisasi data ke Firestore:", error);
+  }
+};
+</script>
+
+<script>
+// Data Pembelajaran Lokal Level 3
+const subbabs = [
+  { id: 1, title: "Thaharah (Bersuci)", unlocked: true, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 01 — Bersuci</span><h2 class='mat-title'>Konsep Thaharah dalam Islam</h2></div><div class='mat-body'><p>Secara bahasa, <strong>Thaharah</strong> bermakna membersihkan diri dari kotoran. Sedangkan menurut istilah syariat, Thaharah adalah mengangkat hadats atau menghilangkan najis dengan cara yang telah ditentukan oleh agama Islam agar sah melaksanakan ibadah sholat.</p><p>Thaharah terbagi menjadi dua: Bersuci dari <strong>Hadats</strong> (seperti berwudhu atau mandi wajib) dan bersuci dari <strong>Najis</strong> (membersihkan pakaian, badan, atau tempat dari benda-benda kotor seperti air kencing atau darah).</p></div>", type: "dragdrop", answer: ["Hadats", "Najis"], options: ["Hadats", "Najis", "Kotoran", "Hati"] },
+  { id: 2, title: "Rukun & Pembatal Wudhu", unlocked: false, completed: false, text: "<div class='mat-header'><span class='mat-tag'>Materi 02 — Wudhu</span><h2 class='mat-title'>Syarat Sah & Rukun Wudhu</h2></div><div class='mat-body'><p>Wudhu memiliki <strong>Enam Rukun</strong> wajib yang tidak boleh ditinggalkan. Jika salah satu rukun ini terlewat, maka wudhu dianggap tidak sah. Rukun tersebut meliputi: Niat, Membasuh wajah, Membasuh kedua tangan sampai siku, Mengusap sebagian kepala, Membasuh kedua kaki sampai mata kaki, dan dilakukan secara <strong>Tertib</strong> (berurutan).</p><p>Sesuatu yang membatalkan wudhu di antaranya: keluarnya sesuatu dari kubul/dubur, hilang akal (tidur lelap), atau menyentuh kemaluan tanpa pembatas.</p></div>", type: "dragdrop", answer: ["Enam Rukun", "Tertib"], options: ["Enam Rukun", "Tertib", "Sunnah", "Lima Rukun"] }
+];
+
+let currentSub = 0;
+let quizMode = false;
+
+function renderSidebar() {
+  const list = document.getElementById('sidebarList');
+  if(!list) return;
+  list.innerHTML = subbabs.map((s, idx) => {
+    let statusClass = 'locked';
+    let statusTxt = '<i class="fas fa-lock"></i> Terkunci';
+    
+    if (s.completed) { statusClass = 'done'; statusTxt = '<i class="fas fa-check-circle"></i> Selesai'; }
+    else if (s.unlocked) { statusClass = 'current'; statusTxt = '<i class="fas fa-book-open"></i> Terbuka'; }
+    
+    return `
+      <li class="sb-item ${idx === currentSub ? 'active' : ''} ${!s.unlocked ? 'locked' : ''}" 
+          onclick="${s.unlocked ? `goToSub(${idx})` : `toast('🔒 Selesaikan materi sebelumnya terlebih dahulu!','warn')`}">
+        <div class="sb-idx">${s.id}</div>
+        <div class="sb-info">
+          <div class="sb-name">${s.title}</div>
+          <div class="sb-status ${statusClass}">${statusTxt}</div>
+        </div>
+      </li>`;
+  }).join('');
+}
+
+function renderMateri(idx) {
+  const card = document.getElementById('workspaceCard');
+  const current = subbabs[idx];
+  
+  if(!quizMode) {
+    card.innerHTML = current.text;
+    document.getElementById('btnAction').innerHTML = `Mulai Quiz <i class="fas fa-gamepad"></i>`;
+  } else {
+    let processedText = current.text;
+    current.answer.forEach((ans, i) => {
+      processedText = processedText.replace(ans, `<span class="dd-target-box" data-index="${i}" data-correct="${ans}"></span>`);
+    });
+
+    card.innerHTML = `
+      ${processedText}
+      <div class="dd-container">
+        <div class="dd-instruction"><i class="fas fa-info-circle"></i> Seret kata yang tepat ke dalam kotak bergaris putus-putus:</div>
+        <div class="dd-options">
+          ${current.options.map(opt => `<div class="dd-word" draggable="true" id="word-${opt}" data-word="${opt}">${opt}</div>`).join('')}
+        </div>
+      </div>
+    `;
+    initDragDrop();
+    document.getElementById('btnAction').innerHTML = `Periksa Jawaban <i class="fas fa-check-double"></i>`;
+  }
+  document.getElementById('btnPrev').disabled = (idx === 0 && !quizMode);
+}
+
+function initDragDrop() {
+  const words = document.querySelectorAll('.dd-word');
+  const targets = document.querySelectorAll('.dd-target-box');
+  let dragged = null;
+
+  words.forEach(w => {
+    w.addEventListener('dragstart', () => { dragged = w; });
+  });
+
+  targets.forEach(t => {
+    t.addEventListener('dragover', e => e.preventDefault());
+    t.addEventListener('dragenter', () => t.classList.add('hover'));
+    t.addEventListener('dragleave', () => t.classList.remove('hover'));
+    
+    t.addEventListener('drop', () => {
+      t.classList.remove('hover');
+      if(!dragged) return;
+
+      const existing = t.querySelector('.dd-placed');
+      if(existing) {
+        const oldWord = document.getElementById('word-' + existing.dataset.word);
+        if(oldWord) { oldWord.classList.remove('placed'); oldWord.style.display = ''; }
+        existing.remove();
+      }
+
+      dragged.classList.add('placed');
+      const placed = document.createElement('div');
+      placed.className = 'dd-placed';
+      placed.textContent = dragged.dataset.word;
+      placed.dataset.word = dragged.dataset.word;
+      
+      placed.addEventListener('click', () => {
+        const src = document.getElementById('word-' + placed.dataset.word);
+        if (src) { src.classList.remove('placed'); src.style.display = ''; }
+        placed.remove();
+      });
+      
+      t.appendChild(placed);
+      dragged = null;
+    });
+  });
+}
+
+function handleActionClick() {
+  if(!quizMode) {
+    quizMode = true;
+    renderMateri(currentSub);
+  } else {
+    const targets = document.querySelectorAll('.dd-target-box');
+    let allCorrect = true;
+    let unfilled = false;
+
+    targets.forEach(t => {
+      const placed = t.querySelector('.dd-placed');
+      if(!placed) { unfilled = true; }
+      else if(placed.dataset.word !== t.dataset.correct) { allCorrect = false; }
+    });
+
+    if(unfilled) {
+      toast('⚠️ Mohon lengkapi seluruh jawaban yang kosong!', 'warn');
+      return;
+    }
+
+    if(allCorrect) {
+      const current = subbabs[currentSub];
+      current.completed = true;
+      
+      if (currentSub + 1 < subbabs.length) {
+        subbabs[currentSub + 1].unlocked = true;
+      }
+
+      toast('🏆 Sempurna! +150 XP berhasil didapatkan.', 'gold');
+      
+      if(window.saveProgressToFirebase) {
+        window.saveProgressToFirebase(150, currentSub + 1);
+      }
+
+      setTimeout(() => {
+        if(currentSub + 1 < subbabs.length) {
+          currentSub++;
+          quizMode = false;
+          renderSidebar();
+          renderMateri(currentSub);
+        } else {
+          toast('🎉 Selamat! Seluruh materi Level 3 Fiqih Ibadah selesai!', 'success');
+          setTimeout(() => window.location.href = 'index.html', 2000);
+        }
+      }, 1500);
+    } else {
+      toast('❌ Susunan jawaban masih keliru, silakan koreksi kembali!', 'warn');
+    }
+  }
+}
+
+function goToSub(idx) {
+  currentSub = idx;
+  quizMode = false;
+  renderMateri(idx);
+  renderSidebar();
+}
+
+function navigate(dir) {
+  if(quizMode && dir === -1) {
+    quizMode = false;
+    renderMateri(currentSub);
+    return;
+  }
+  const next = currentSub + dir;
+  if (next < 0 || next >= subbabs.length) return;
+  goToSub(next);
+}
+
+function toast(msg, type='info') {
+  const icons={success:'fa-check-circle',warn:'fa-exclamation-triangle',info:'fa-info-circle',gold:'fa-trophy'};
+  const colors={success:'#00e676',warn:'#ff9800',info:'#00e5ff',gold:'#ffd700'};
+  const el=document.getElementById('toastEl');
+  document.getElementById('toastMsg').textContent=msg;
+  document.getElementById('toastIcon').className='fas ' + (icons[type]||'fa-star');
+  el.style.borderColor=colors[type]||'#00c896';
+  el.style.color=colors[type]||'#fff';
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>

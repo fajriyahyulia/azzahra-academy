@@ -1,0 +1,160 @@
+/* ==========================================================================
+   AzZahra Academy — Shared Core CSS Framework (Futuristic Cyber-Islamic)
+   ========================================================================== */
+
+/* 1. Global Reset & Core Variable System */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Color Palette */
+  --neon-purple: #b026ff;
+  --neon-violet: #7c3aed;
+  --neon-pink: #e040fb;
+  --neon-cyan: #00e5ff;
+  --neon-gold: #ffd700;
+  --dark-bg: #050508;
+  --dark-card: #0d0d1a;
+  --dark-card2: #12122a;
+  --text-light: #e8e0ff;
+  --text-dim: #8878aa;
+  
+  /* Defaults Layout */
+  --font-main: 'Exo 2', sans-serif;
+  --font-display: 'Cinzel Decorative', serif;
+  --font-arabic: 'Amiri', serif;
+}
+
+/* 2. Base Document Styling */
+html, body {
+  background-color: var(--dark-bg);
+  color: var(--text-light);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Premium */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-purple);
+}
+
+/* 3. Global Reusable Typography & Animation Components */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+}
+
+.arabic-text {
+  font-family: var(--font-arabic);
+  direction: rtl;
+  font-size: 1.8rem;
+  line-height: 2.5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 4. Global Input, Form & Card Standards */
+input, button, select, textarea {
+  font-family: var(--font-main);
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 5. Utility Layout (Responsive Fixes untuk Workspace, Sidebar, & Profil) */
+@media (max-width: 992px) {
+  .layout {
+    flex-direction: column !important;
+  }
+  
+  .sidebar {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    max-height: 180px;
+  }
+  
+  .workspace {
+    padding: 24px 16px !important;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  .user-hero-card {
+    flex-direction: column !important;
+    text-align: center;
+    padding: 24px !important;
+  }
+  
+  .user-email {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .topbar {
+    padding: 0 16px !important;
+  }
+  
+  .topbar-title {
+    font-size: 0.85rem !important;
+  }
+  
+  .content-card {
+    padding: 20px !important;
+    border-radius: 16px !important;
+  }
+  
+  .content-footer {
+    flex-direction: column-reverse !important;
+    gap: 12px;
+  }
+  
+  .footer-left, .footer-right {
+    width: 100%;
+  }
+  
+  .btn-nav {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .toast {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    justify-content: center;
+  }
+}
