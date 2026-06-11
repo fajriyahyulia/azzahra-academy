@@ -4,387 +4,358 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Level 4: Akhlak & Adab — AzZahra Academy</title>
-<link rel="stylesheet" href="style-shared.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{
-  --neon-purple:#b026ff;--neon-violet:#7c3aed;--neon-pink:#e040fb;--neon-cyan:#00e5ff;--neon-gold:#ffd700;--dark-bg:#050508;--dark-card:#0d0d1a;--dark-card2:#12122a;--text-light:#e8e0ff;--text-dim:#8878aa;
-  --lvl-color:#ff8c00;--lvl-grad:linear-gradient(135deg,#ff8c00,#e63900);
-}
+  :root {
+    --neon-pink: #ff2a85; --neon-cyan: #00f0ff; --neon-purple: #9d4edd;
+    --neon-gold: #ffb703; --dark-bg: #030307; --dark-card: #0b0b16;
+    --dark-card2: #101026; --text-light: #e2dafa; --text-dim: #7a6f9b;
+  }
 
-/* TOP BAR */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;background:rgba(5,5,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,140,0,0.2);display:flex;align-items:center;padding:0 24px;gap:16px;}
-.back-btn{background:#1a1a2e;border:1px solid rgba(255,140,0,0.3);color:var(--text-dim);width:36px;height:36px;border-radius:10px;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
-.back-btn:hover{border-color:var(--lvl-color);color:#fff;transform:translateX(-2px);}
-.topbar-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:700;flex:1;color:#fff;}
-.topbar-title span{color:var(--lvl-color);}
-.topbar-right{display:flex;align-items:center;gap:14px;}
-.xp-counter{background:#1a1a2e;border:1px solid #ffd70044;border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:700;color:var(--neon-gold);display:flex;align-items:center;gap:6px;}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
 
-/* LAYOUT CONTAINER */
-.layout{display:flex;margin-top:58px;min-height:calc(100vh - 58px);position:relative;}
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* HEADER LEVEL */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(255, 42, 133, 0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(255, 42, 133, 0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-pink);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(255, 42, 133, 0.15); border: 1px solid var(--neon-pink); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 
-/* SIDEBAR MAP */
-.sidebar{width:280px;background:#090912;border-right:1px solid rgba(255,140,0,0.1);padding:20px;overflow-y:auto;flex-shrink:0;}
-.sb-title{font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;font-weight:700;}
-.sb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.sb-item{background:var(--dark-card);border:1px solid rgba(255,255,255,0.03);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;position:relative;}
-.sb-item:hover{border-color:rgba(255,140,0,0.4);background:#22150a;}
-.sb-item.active{border-color:var(--lvl-color);background:linear-gradient(90deg,#221100,transparent);box-shadow:inset 3px 0 0 var(--lvl-color);}
-.sb-item.locked{opacity:0.4;cursor:not-allowed;}
-.sb-item.locked:hover{background:var(--dark-card);border-color:rgba(255,255,255,0.03);}
-.sb-idx{width:22px;height:22px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.sb-item.active .sb-idx{background:var(--lvl-color);color:#050508;border-color:var(--lvl-color);}
-.sb-info{flex:1;min-width:0;}
-.sb-name{font-size:0.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sb-status{font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;gap:4px;}
-.sb-status.done{color:#33ff97;}
-.sb-status.current{color:var(--lvl-color);}
+  /* MATERI KONTEN */
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-cyan); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(0,240,255,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-pink); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-gold); }
+  p { margin-bottom: 15px; color: #cbd5e1; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #cbd5e1; }
+  li { margin-bottom: 6px; }
 
-/* MAIN CONTENT WORKSPACE */
-.workspace{flex:1;padding:40px;background:var(--dark-bg);overflow-y:auto;display:flex;flex-direction:column;align-items:center;}
-.content-card{width:100%;max-width:760px;background:var(--dark-card);border:1px solid rgba(255,140,0,0.1);border-radius:24px;padding:36px;box-shadow:0 15px 40px rgba(0,0,0,0.4);position:relative;animation:fadeIn 0.4s ease forwards;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-purple); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; color: #e2e8f0; }
 
-/* CONTENT DETAILS */
-.mat-header{margin-bottom:24px;border-bottom:1px solid rgba(255,140,0,0.1);padding-bottom:16px;}
-.mat-tag{font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--lvl-color);font-weight:700;margin-bottom:6px;display:block;}
-.mat-title{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:700;}
-.mat-body{font-size:0.95rem;color:var(--text-light);line-height:1.8;margin-bottom:20px;}
-.mat-body p{margin-bottom:16px;}
-.mat-body strong{color:var(--lvl-color);}
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255, 42, 133, 0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(255, 42, 133, 0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-/* INTERACTIVE COMPONENT - MULTIPLE CHOICE PRO */
-.quiz-box{margin-top:24px;background:var(--dark-card2);padding:24px;border-radius:16px;border:1px solid rgba(255,140,0,0.15);}
-.quiz-q{font-size:1rem;font-weight:600;margin-bottom:18px;color:#fff;display:flex;align-items:start;gap:10px;}
-.quiz-q i { color: var(--lvl-color); margin-top: 4px; }
-.quiz-options{display:flex;flex-direction:column;gap:12px;}
-.opt-card{background:#050508;border:1px solid rgba(255,255,255,0.06);padding:14px 20px;border-radius:12px;cursor:pointer;font-size:0.9rem;transition:all 0.25s;display:flex;align-items:center;gap:12px;}
-.opt-card:hover{border-color:rgba(255,140,0,0.4);background:#14100d;transform:translateX(3px);}
-.opt-card.selected{border-color:var(--lvl-color);background:linear-gradient(90deg,rgba(255,140,0,0.15),transparent);box-shadow:0 0 15px rgba(255,140,0,0.1);}
-.opt-idx{width:24px;height:24px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--text-dim);border:1px solid rgba(255,255,255,0.1);}
-.opt-card.selected .opt-idx{background:var(--lvl-color);color:#050508;border-color:var(--lvl-color);}
+  /* TABEL RESPONSIVE STYLING */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); min-width: 600px; }
+  th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+  th { background-color: rgba(255, 42, 133, 0.15); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(255, 42, 133, 0.04); }
+  .td-highlight { color: var(--neon-pink); font-weight: 600; }
+  .td-cyan { color: var(--neon-cyan); font-weight: 600; }
 
-/* FOOTER NAV ACTIONS */
-.content-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);padding-top:24px;margin-top:20px;width:100%;max-width:760px;}
-.footer-left, .footer-right { display:flex; gap:12px; }
-.btn-nav{background:#1a1a2e;border:1px solid rgba(255,140,0,0.3);color:var(--text-light);padding:10px 20px;border-radius:30px;font-family:'Exo 2',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
-.btn-nav:hover:not(:disabled){border-color:var(--lvl-color);box-shadow:0 0 15px rgba(255,140,0,0.2);color:#fff;}
-.btn-nav:disabled{opacity:0.25;cursor:not-allowed;}
-.btn-quiz{background:var(--lvl-grad);border:none;box-shadow:0 0 15px rgba(255,140,0,0.3);color:#fff;font-weight:700;}
-.btn-quiz:hover{box-shadow:0 0 25px rgba(255,140,0,0.5);transform:translateY(-1px);}
+  /* EVALUASI KUIS */
+  .quiz-section { background: linear-gradient(135deg, rgba(11,11,22,0.95), rgba(16,16,38,0.95)); border: 2px solid var(--neon-pink); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(255,42,133,0.15); }
+  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+  .quiz-title i { color: var(--neon-cyan); }
+  
+  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+  
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
+  .option-item:hover { background: rgba(255,42,133,0.08); border-color: var(--neon-pink); }
+  .option-item input { accent-color: var(--neon-pink); cursor: pointer; width: 18px; height: 18px; }
 
-/* TOAST NOTIF */
-.toast {
-  position: fixed; bottom: 30px; right: 30px; background: var(--dark-card);
-  border: 1px solid var(--lvl-color); border-radius: 12px; padding: 14px 24px;
-  display: flex; align-items: center; gap: 10px; z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(100px); opacity: 0;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast i { font-size: 1.1rem; }
+  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple)); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255,42,133,0.3); transition: 0.3s; }
+  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
+
+  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(255,42,133,0.05); border: 1px solid var(--neon-pink); }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <button class="back-btn" onclick="window.location.href='index.html'"><i class="fas fa-arrow-left"></i></button>
-  <div class="topbar-title">Level 04: <span>Akhlak & Adab</span></div>
-  <div class="topbar-right">
-    <div class="xp-counter"><i class="fas fa-star"></i> <span id="xpCount">0</span> XP</div>
+<div class="container">
+  
+  <div class="level-header">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+    <h1 class="level-title">Level 4: Akhlak & Adab</h1>
+    <span class="level-badge">Sopan Santun Harian, Birrul Walidain & Ekologi Islam</span>
   </div>
-</div>
 
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sb-title">Materi Akhlak</div>
-    <ul class="sb-list" id="sidebarList"></ul>
-  </aside>
-
-  <main class="workspace">
-    <div class="content-card" id="workspaceCard">
-      </div>
-
-    <div class="content-footer">
-      <div class="footer-left">
-        <button class="btn-nav" id="btnPrev" onclick="navigate(-1)"><i class="fas fa-chevron-left"></i> Kembali</button>
-      </div>
-      <div class="footer-right">
-        <button class="btn-nav btn-quiz" id="btnAction" onclick="handleActionClick()">Mulai Kuis <i class="fas fa-chevron-right"></i></button>
-      </div>
+  <div class="materi-card">
+    
+    <div class="sub-bab-title"><i class="fas fa-user-shield"></i> Sub-Bab 1: Adab Sehari-Hari</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/1Xo2VmETAF4" allowfullscreen></iframe>
     </div>
-  </main>
-</div>
+    
+    <h3>Pengertian Adab dan Akhlak</h3>
+    <p>Akhlak secara bahasa berasal dari kata <em>khuluq</em> yang berarti budi pekerti, tabiat, atau watak. Secara istilah, akhlak adalah sifat yang tertanam kuat dalam jiwa yang melahirkan berbagai perbuatan secara spontan tanpa memerlukan pertimbangan pikiran yang panjang. Adab adalah manifestasi operasionalnya, berupa tata cara, sopan santun, dan etika dalam melakukan suatu aktivitas sesuai tuntunan syariat Islam.</p>
+    
+    <div class="dalil-box">
+      <strong>HR. Ahmad & Tirmidzi</strong><br>
+      "Sesungguhnya aku diutus untuk menyempurnakan akhlak yang mulia."<br>
+      "Orang mukmin yang paling sempurna imannya adalah yang paling baik akhlaknya."
+    </div>
 
-<div class="toast" id="toastEl">
-  <span id="toastIcon"></span><span id="toastMsg"></span>
+    <h4>Panduan Praktis Adab Harian Sesuai Sunnah</h4>
+    <ul>
+      <li><strong>Bangun Tidur:</strong> Menyebut nama Allah, mengusap bekas tidur di wajah dengan tangan, bersiwak/menggosok gigi, dan membaca doa: <em>"Alhamdulillaahilladzii ahyaanaa ba'da maa amaatanaa wa ilaihin nusyuur"</em>.</li>
+      <li><strong>Kamar Mandi:</strong> Masuk mendahulukan kaki kiri sembari membaca doa perlindungan dari setan jantan dan betina <em>(Minal khubutsi wal khaba-its)</em>. Keluar mendahulukan kaki kanan lalu membaca doa <em>"Ghufraanaka..."</em>. Dilarang membawa tulisan asma Allah serta dilarang berbicara di dalam.</li>
+      <li><strong>Makan & Minum:</strong> Wajib membaca Bismillah di awal, menggunakan tangan kanan, mengambil makanan dari pinggir piring, duduk dengan tenang, serta dilarang meniup makanan/minuman yang masih panas. Selesai makan, diakhiri dengan Hamdalah.</li>
+      <li><strong>Berpakaian:</strong> Memulai sisi kanan saat memakai, dan mendahulukan sisi kiri saat melepas. Pakaian tidak boleh menonjolkan aurat, tidak menyerupai lawan jenis, dan bagi laki-laki dihindari sifat <em>isbal</em> (menjulurkan pakaian di bawah mata kaki) karena kesombongan.</li>
+      <li><strong>Tidur Sesuai Sunnah:</strong> Menjaga wudhu sebelum tidur, merebahkan tubuh miring ke sisi kanan, membaca Ayat Kursi serta 3 Qul (Al-Ikhlas, Al-Falaq, An-Nas) yang ditiupkan ke telapak tangan lalu diusap ke badan. Dilarang keras tidur dengan posisi tengkurap.</li>
+    </ul>
+
+    <div class="sub-bab-title"><i class="fas fa-heart"></i> Sub-Bab 2: Akhlak Terhadap Orang Tua</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/kWdrFs_-GAw" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Kedudukan Utama Birrul Walidain</h3>
+    <p>Berbakti kepada orang tua (<em>Birrul Walidain</em>) menduduki peringkat kewajiban tertinggi setelah perintah bertauhid kepada Allah SWT. Di dalam Al-Qur'an, perintah berbuat baik kepada bapak-ibu ditempelkan langsung setelah larangan menyekutukan Allah.</p>
+    
+    <div class="dalil-box">
+      <strong>QS. Al-Isra: 23</strong><br>
+      "Maka jangan sekali-kali kamu mengatakan kepada keduanya perkataan 'ah' dan janganlah kamu membentak mereka dan ucapkanlah kepada mereka perkataan yang mulia."
+    </div>
+
+    <h4>Bentuk Implemetasi Berbakti</h4>
+    <ol>
+      <li><strong>Menaati Perintah:</strong> Wajib mentaati perintah orang tua selama dalam batas kebaikan (ma'ruf). Jika diperintahkan berbuat maksiat/syirik, anak wajib menolak dengan halus, namun tetap merawat dan memperlakukan mereka di dunia dengan penuh kesopanan (QS. Luqman: 15).</li>
+      <li><strong>Bertutur Kata Lembut:</strong> Menurunkan nada suara (tone) saat berbicara dengan mereka, tidak membentak, dan menjauhi keluhan kata "ah/uff".</li>
+      <li><strong>Mendoakan Setiap Saat:</strong> Senantiasa memohonkan ampunan bagi mereka lewat doa: <em>"Rabbighfirli waliwalidayya warhamhuma kamaa rabbayaani shaghira"</em>.</li>
+      <li><strong>Bakti Pasca Orang Tua Wafat:</strong> Bakti tidak terputus setelah mereka meninggal; dilakukan dengan menyambung jalinan silaturahim dengan sahabat-sahabat karib orang tua semasa hidup, menunaikan janji/wasiat syar'i mereka, serta rutin bersedekah atas nama mereka.</li>
+    </ol>
+
+    <div class="sub-bab-title"><i class="fas fa-users"></i> Sub-Bab 3: Akhlak Terhadap Sesama Muslim</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/274eZfmWrq4" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Konsep Ukhuwah Islamiyah</h3>
+    <p>Persaudaraan sesama muslim diikat oleh kesamaan fondasi keimanan kepada Allah dan Rasul-Nya. Rasulullah SAW menganalogikan hubungan ini laksana **satu kesatuan tubuh fisik**; jika ada satu organ yang merasa sakit, maka seluruh bagian tubuh lainnya akan ikut merasakan demam dan tidak bisa tidur.</p>
+
+    <h3>Tabel Hak Interaksi Antar Muslim (HR. Bukhari Muslim)</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Hak Muslim</th><th>Status Hukum</th><th>Ketentuan Operasional</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-highlight">1. Menjawab Salam</td><td>Fardhu Kifayah / Ain</td><td>Memulai salam adalah sunnah, menjawabnya adalah kewajiban minimal <em>"Wa'alaikumussalam"</em></td></tr>
+          <tr><td class="td-highlight">2. Menjenguk yang Sakit</td><td>Sunnah Muakkad</td><td>Mengunjungi saudara yang sakit mendatangkan doa dari malaikat dan jaminan taman surga</td></tr>
+          <tr><td class="td-highlight">3. Mengantarkan Jenazah</td><td>Fardhu Kifayah</td><td>Ikut menyolatkan dan mengantar hingga kubur selesai dikuburkan berhadiah pahala 2 Qirath</td></tr>
+          <tr><td class="td-highlight">4. Memenuhi Undangan</td><td>Wajib (Khusus Walimah)</td><td>Wajib dihadiri selama tidak ada uzur syar'i (seperti adanya maksiat/minuman keras di acara)</td></tr>
+          <tr><td class="td-highlight">5. Mendoakan yang Bersin</td><td>Wajib Kifayah / Ain</td><td>Jika ia mengucap <em>Alhamdulillah</em>, kita wajib menjawab <em>Yarhamukallah</em> (Semoga Allah merahmatimu)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Penyakit Hati yang Merusak Hubungan Sosial</h3>
+    <ul>
+      <li><strong>Ghibah:</strong> Membicarakan aib atau keburukan saudara muslim di belakangnya, yang jika ia mendengarnya pasti tidak menyukainya. Al-Qur'an mengibaratkannya seperti memakan bangkai daging saudara sendiri.</li>
+      <li><strong>Namimah:</strong> Perilaku mengadu domba atau memprovokasi perkataan antarpihak demi merusak benih perdamaian. Pelakunya diancam tidak masuk surga.</li>
+      <li><strong>Hasad:</strong> Perasaan dengki yang menginginkan hilangnya nikmat Allah dari diri orang lain. Sifat ini mengikis habis pahala kebaikan bagaikan api melahap kayu bakar.</li>
+      <li><strong>Tajassus:</strong> Tindakan memata-matai, mencari-cari kesalahan, atau mengorek rahasia pribadi orang lain untuk disebarluaskan.</li>
+    </ul>
+
+    <div class="sub-bab-title"><i class="fas fa-seedling"></i> Sub-Bab 4: Akhlak Terhadap Lingkungan</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/-oWJKCmIANs" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Manusia Sebagai Khalifah Fil Ardh</h3>
+    <p>Sesuai penegasan QS. Al-Baqarah ayat 30, manusia diangkat sebagai *khalifah* (pengelola/penanggung jawab) di muka bumi. Amanah kepemimpinan ini bukan bermakna hak mutlak untuk mengeksploitasi alam secara serakah, melainkan mandat suci untuk merawat, menjaga keseimbangan ekosistem, dan memakmurkan bumi.</p>
+
+    <h4>Etika Ekologis dan Kesejahteraan Satwa dalam Islam</h4>
+    <ul>
+      <li><strong>Menanam Pohon adalah Sedekah:</strong> Setiap tanaman atau pohon yang ditanam seorang muslim, lalu buah atau daunnya dimakan oleh burung, manusia, maupun hewan liar, dicatat di sisi Allah sebagai pahala sedekah jariyah.</li>
+      <li><strong>Larangan Destruksi Alam:</strong> Islam melarang keras melakukan perusakan alam (QS. Al-A'raf: 56). Bahkan di situasi peperangan sekalipun, pasukan muslim dilarang menebang pohon berbuah secara acak dan dilarang membakar ladang musuh.</li>
+      <li><strong>Konservasi Air:</strong> Dilarang boros menggunakan air. Rasulullah SAW menegaskan agar kita tidak berlebih-lebihan mengalirkan air saat berwudhu walau kita sedang berada di tepi sungai yang mengalir deras.</li>
+      <li><strong>Kesejahteraan Hewan (Animal Welfare):</strong> Dilarang menyiksa satwa, mengurung tanpa diberi makan (pelaku diancam neraka), serta dilarang mengadakan tradisi sabung/adu hewan. Ketika menyembelih hewan ternak untuk konsumsi, pisau wajib diasah setajam mungkin demi meminimalisir rasa sakit pada hewan.</li>
+      <li><strong>Menjaga Fasilitas Umum:</strong> Menyingkirkan penghalang berbahaya seperti duri, paku, batu, atau ranting pohon dari tengah jalan umum dikategorikan sebagai cabang keimanan yang bernilai sedekah.</li>
+    </ul>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-award"></i> Uji Kompetensi Akhlak & Adab</div>
+    <form id="quizForm">
+      
+      <div class="question-box">
+        <div class="question-text">1. Berdasarkan istilah syariat, sifat dasar yang tertanam kuat di dalam jiwa yang memicu perbuatan spontan tanpa butuh proses pemikiran lama disebut...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> Adab</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> Akhlak</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> Muamalah</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">2. Manakah di antara hal berikut yang merupakan salah satu sunnah Nabi SAW yang dipraktikkan saat minum?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> Meniup permukaan minuman yang panas agar cepat dingin</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> Meminum langsung dalam sekali teguk dalam jumlah banyak</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> Duduk dengan tenang dan membaginya ke dalam 3 kali tegukan</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">3. Mengapa posisi tidur dengan cara telungkup/tengkurap dilarang keras dalam adab Islam?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Karena posisi tersebut dibenci oleh Allah dan merupakan cara tidur setan/penghuni neraka</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Karena bisa merusak pakaian tidur</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Karena mengurangi waktu tidur nyenyak</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">4. Di dalam QS. Al-Isra ayat 23, perkataan paling ringan apa yang sudah diharamkan untuk diucapkan kepada orang tua?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Mengucapkan keluhan kata "ah" atau "uff"</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Menyuruh mereka menunggu</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Berbicara dengan nada santai</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">5. Bagaimanakah sikap seorang anak jika orang tuanya memaksa atau memerintahkan untuk berbuat syirik kepada Allah?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> Wajib menuruti perintahnya demi menjaga status berbakti</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> Boleh memusuhi dan memutuskan hubungan tali silaturahim dengan mereka</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> Menolak mentaati perintah syirik tersebut, namun wajib tetap memperlakukan mereka dengan sopan dan baik di dunia</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">6. Perilaku menyebarkan rahasia atau membicarakan aib buruk seorang saudara muslim di belakangnya yang tidak ia sukai diistilahkan dengan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> Ghibah</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> Namimah</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> Hasad</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">7. Berdasarkan hadis riwayat Bukhari-Muslim, hukum awal memberikan salam adalah sunnah, sedangkan hukum bagi yang mendengar untuk menjawabnya adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> Sunnah Muakkad</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> Mubah (Boleh dilewati)</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> Wajib (Fardhu)</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">8. Apa ganjaran pahala yang dijanjikan Nabi SAW bagi seorang muslim yang menanam pohon atau mengolah pertanian lalu hasilnya dikonsumsi makhluk hidup lain?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Nilainya dikonversi setara dengan berpuasa setahun</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Dinilai sebagai investasi pahala sedekah jariyah di sisi Allah</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Mendapat dispensasi dari kewajiban berzakat</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">9. Larangan boros dalam pemanfaatan air ditunjukkan Nabi SAW dengan melarang berlebih-lebihan mengalirkan air bahkan saat berwudhu di...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Kamar mandi umum</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Air sumur tadahan hujan</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Tepi sungai yang mengalir deras</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">10. Aktivitas menyingkirkan benda-benda berbahaya (paku, batu, duri) yang merintangi jalan umum tergolong ke dalam...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> Cabang keimanan yang bernilai sedekah</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> Kewajiban formal pemerintahan kota</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> Sunnah khusus bagi musafir saja</label>
+        </div>
+      </div>
+
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Tetap Semangat!</p>
+    </div>
+  </div>
+
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCsX-3QTSbmRKEZiNsjM6jWAZ6l2hTqC38",
-  authDomain: "azzahra-web.firebaseapp.com",
-  projectId: "azzahra-web",
-  storageBucket: "azzahra-web.firebasestorage.app",
-  messagingSenderId: "716860109019",
-  appId: "1:716860109019:web:433065a2294026ae665cfe",
-  measurementId: "G-G7X3S5QRHP"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-let userXP = 0;
-let userProgress = {};
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'auth.html';
-    return;
-  }
-  currentUser = user;
-
-  const userDocRef = doc(db, "users", user.uid);
-  const userSnap = await getDoc(userDocRef);
-
-  if (userSnap.exists()) {
-    const data = userSnap.data();
-    userXP = data.xp || 0;
-    userProgress = data.progress || {};
-
-    document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-    // Sinkronisasi status submateri dari cloud database
-    if (userProgress.level4) {
-      const savedSubs = userProgress.level4.subProgress || [];
-      savedSubs.forEach((saved, index) => {
-        if (subbabs[index]) {
-          subbabs[index].unlocked = saved.unlocked;
-          subbabs[index].completed = saved.completed;
-        }
-      });
-    }
-  }
-
-  renderSidebar();
-  renderMateri(currentSub);
-});
-
-window.saveProgressToFirebase = async function(xpBonus, nextSubIdx) {
-  if (!currentUser) return;
-
-  userXP += xpBonus;
-  document.getElementById('xpCount').textContent = userXP.toLocaleString();
-
-  const subProgressArray = subbabs.map(s => ({
-    unlocked: s.unlocked,
-    completed: s.completed
-  }));
-
-  const completedCount = subbabs.filter(s => s.completed).length;
-  const percentTotal = Math.round((completedCount / subbabs.length) * 100);
-  const totalStars = percentTotal === 100 ? 3 : percentTotal >= 50 ? 2 : percentTotal >= 25 ? 1 : 0;
-
-  const userDocRef = doc(db, "users", currentUser.uid);
-  
-  userProgress["level4"] = {
-    percent: percentTotal,
-    stars: totalStars,
-    unlocked: true,
-    subProgress: subProgressArray
+  const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
+    authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
+    projectId: "azzahra-academy-ad1ec",
+    storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
+    messagingSenderId: "425297111795",
+    appId: "1:425297111795:web:86e82d6a2d32bd6c2ea586"
   };
 
-  // Otomatis buka kunci gembok level 5 di halaman utama jika level 4 tamat 100%
-  if (percentTotal === 100) {
-    if (!userProgress["level5"]) {
-      userProgress["level5"] = { percent: 0, stars: 0, unlocked: true, subProgress: [] };
-    } else {
-      userProgress["level5"].unlocked = true;
-    }
-  }
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  let currentUserId = null;
 
-  try {
-    await updateDoc(userDocRef, {
-      xp: userXP,
-      progress: userProgress
-    });
-  } catch (error) {
-    console.error("Gagal sinkronisasi data progres ke Firestore:", error);
-  }
-};
-</script>
+  onAuthStateChanged(auth, (user) => {
+    if (user) { currentUserId = user.uid; }
+  });
 
-<script>
-// Data Pembelajaran Lokal Level 4 (Multiple Choice Format)
-const subbabs = [
-  { 
-    id: 1, 
-    title: "Birrul Walidain (Bakti Orang Tua)", 
-    unlocked: true, 
-    completed: false, 
-    text: "<div class='mat-header'><span class='mat-tag'>Materi 01 — Adab Utama</span><h2 class='mat-title'>Bakti Kepada Kedua Orang Tua</h2></div><div class='mat-body'><p><strong>Birrul Walidain</strong> adalah bentuk ibadah paling agung setelah tauhid, yakni berbakti, mentaati, dan melembutkan ucapan di hadapan ayah dan ibu kita.</p><p>Allah SWT melarang keras seorang anak berkata kasar sekecil apa pun seperti ucapan 'Ah' atau 'Uff' kepada mereka, sebagaimana tercantum di dalam Al-Qur'an Surat Al-Isra ayat 23.</p></div>",
-    quiz: {
-      question: "Manakah ucapan kasar paling kecil yang dilarang keras diucapkan kepada orang tua berdasarkan surat Al-Isra ayat 23?",
-      options: ["Berkata 'Ah' atau menolak diperintah", "Memanggil nama asli mereka", "Membantah dengan nada keras", "Diam seribu bahasa saat dinasihati"],
-      correct: 0
-    }
-  },
-  { 
-    id: 2, 
-    title: "Adab Berbicara & Bergaul", 
-    unlocked: false, 
-    completed: false, 
-    text: "<div class='mat-header'><span class='mat-tag'>Materi 02 — Lisan</span><h2 class='mat-title'>Menjaga Lisan & Kehormatan Sesama</h2></div><div class='mat-body'><p>Rasulullah SAW bersabda: <em>'Barangsiapa yang beriman kepada Allah dan hari akhir, maka hendaklah ia berkata yang baik atau diam.'</em> (HR. Bukhari & Muslim).</p><p>Menjaga lisan dari ghibah (bergunjing), adu domba, dan perkataan dusta merupakan penentu keselamatan iman seorang muslim sejati dalam kehidupan sosial.</p></div>",
-    quiz: {
-      question: "Apa perintah Rasulullah SAW bagi orang beriman jika tidak mampu mengucapkan kalimat atau perkara yang baik?",
-      options: ["Meninggalkan majelis pertemuan", "Hendaklah ia memilih untuk diam", "Berbicara dengan suara pelan saja", "Mencari topik pembicaraan lain"],
-      correct: 1
-    }
-  }
-];
-
-let currentSub = 0;
-let quizMode = false;
-let selectedAns = null;
-
-function renderSidebar() {
-  const list = document.getElementById('sidebarList');
-  if(!list) return;
-  list.innerHTML = subbabs.map((s, idx) => {
-    let statusClass = 'locked';
-    let statusTxt = '<i class="fas fa-lock"></i> Terkunci';
+  window.checkAnswers = async function() {
+    const answers = { q1: 'B', q2: 'C', q3: 'A', q4: 'A', q5: 'C', q6: 'A', q7: 'C', q8: 'B', q9: 'C', q10: 'A' };
+    let score = 0;
     
-    if (s.completed) { statusClass = 'done'; statusTxt = '<i class="fas fa-check-circle"></i> Selesai'; }
-    else if (s.unlocked) { statusClass = 'current'; statusTxt = '<i class="fas fa-book-open"></i> Terbuka'; }
-    
-    return `
-      <li class="sb-item ${idx === currentSub ? 'active' : ''} ${!s.unlocked ? 'locked' : ''}" 
-          onclick="${s.unlocked ? `goToSub(${idx})` : `toast('🔒 Selesaikan materi sebelumnya terlebih dahulu!','warn')`}">
-        <div class="sb-idx">${s.id}</div>
-        <div class="sb-info">
-          <div class="sb-name">${s.title}</div>
-          <div class="sb-status ${statusClass}">${statusTxt}</div>
-        </div>
-      </li>`;
-  }).join('');
-}
-
-function renderMateri(idx) {
-  const card = document.getElementById('workspaceCard');
-  const current = subbabs[idx];
-  
-  if(!quizMode) {
-    card.innerHTML = current.text;
-    document.getElementById('btnAction').innerHTML = `Mulai Kuis <i class="fas fa-gamepad"></i>`;
-  } else {
-    selectedAns = null;
-    card.innerHTML = `
-      <div class="mat-header">
-        <span class="mat-tag">Evaluasi Kuis — ${current.title}</span>
-        <h2 class="mat-title">Uji Pemahaman Adab</h2>
-      </div>
-      <div class="quiz-box">
-        <div class="quiz-q"><i class="fas fa-question-circle"></i> <span>${current.quiz.question}</span></div>
-        <div class="quiz-options">
-          ${current.quiz.options.map((opt, i) => `
-            <div class="opt-card" id="opt-${i}" onclick="selectOption(${i})">
-              <div class="opt-idx">${String.fromCharCode(65 + i)}</div>
-              <div class="opt-text">${opt}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    document.getElementById('btnAction').innerHTML = `Periksa Jawaban <i class="fas fa-check-double"></i>`;
-  }
-  document.getElementById('btnPrev').disabled = (idx === 0 && !quizMode);
-}
-
-function selectOption(idx) {
-  selectedAns = idx;
-  document.querySelectorAll('.opt-card').forEach(el => el.classList.remove('selected'));
-  document.getElementById(`opt-${idx}`).classList.add('selected');
-}
-
-function handleActionClick() {
-  if(!quizMode) {
-    quizMode = true;
-    renderMateri(currentSub);
-  } else {
-    if(selectedAns === null) {
-      toast('⚠️ Silakan pilih salah satu opsi jawaban terlebih dahulu!', 'warn');
-      return;
+    for (let i = 1; i <= 10; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === answers[`q${i}`]) {
+        score += 10;
+      }
     }
 
-    const current = subbabs[currentSub];
-    if(selectedAns === current.quiz.correct) {
-      current.completed = true;
-      
-      if (currentSub + 1 < subbabs.length) {
-        subbabs[currentSub + 1].unlocked = true;
-      }
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const feedbackText = document.getElementById('feedbackText');
 
-      toast('🏆 Benar Sempurna! +150 XP ditambahkan.', 'gold');
-      
-      if(window.saveProgressToFirebase) {
-        window.saveProgressToFirebase(150, currentSub + 1);
-      }
+    resultBox.style.display = 'block';
+    scoreText.textContent = `Skor Kamu: ${score} / 100`;
 
-      setTimeout(() => {
-        if(currentSub + 1 < subbabs.length) {
-          currentSub++;
-          quizMode = false;
-          renderSidebar();
-          renderMateri(currentSub);
-        } else {
-          toast('🎉 Selamat! Seluruh modul Akhlak & Adab telah diselesaikan!', 'success');
-          setTimeout(() => window.location.href = 'index.html', 2000);
-        }
-      }, 1500);
+    // LOGIKA PROGRES KELULUSAN SKOR MINIMAL 70
+    if (score >= 70) {
+      feedbackText.textContent = `Selamat! Kamu dinyatakan lulus Level 4 dengan raihan skor ${score}/100. Klaim +100 XP sukses diverifikasi dan gerbang pamungkas Level 5 (Sejarah Kebudayaan Islam) resmi terbuka!`;
+      if (currentUserId) {
+        try {
+          const userRef = doc(db, 'users', currentUserId);
+          await updateDoc(userRef, {
+            xp: increment(100),
+            "progress.level4.percent": score,  
+            "progress.level5.unlocked": true  
+          });
+        } catch (e) { console.error("Firebase Sync Error:", e); }
+      }
     } else {
-      toast('❌ Jawabanmu kurang tepat. Pelajari kembali teks materi di atas!', 'warn');
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas kelulusan minimal 70% (Benar 7 dari 10 soal). Baca kembali poin-poin adab di atas dan coba lagi ya!`;
     }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
-}
-
-function goToSub(idx) {
-  currentSub = idx;
-  quizMode = false;
-  renderMateri(idx);
-  renderSidebar();
-}
-
-function navigate(dir) {
-  if(quizMode && dir === -1) {
-    quizMode = false;
-    renderMateri(currentSub);
-    return;
-  }
-  const next = currentSub + dir;
-  if (next < 0 || next >= subbabs.length) return;
-  goToSub(next);
-}
-
-function toast(msg, type='info') {
-  const icons={success:'fa-check-circle',warn:'fa-exclamation-triangle',info:'fa-info-circle',gold:'fa-trophy'};
-  const colors={success:'#00e676',warn:'#ff9800',info:'#00e5ff',gold:'#ffd700'};
-  const el=document.getElementById('toastEl');
-  document.getElementById('toastMsg').textContent=msg;
-  document.getElementById('toastIcon').className='fas ' + (icons[type]||'fa-star');
-  el.style.borderColor=colors[type]||'#ff8c00';
-  el.style.color=colors[type]||'#fff';
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 3500);
-}
 </script>
 </body>
 </html>
