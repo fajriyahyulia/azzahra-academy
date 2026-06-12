@@ -50,6 +50,25 @@
   }
   .submit-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
   .hidden { display: none; }
+
+  /* GAYA BARU UNTUK LINK PERPINDAHAN AUTH SWITCH */
+  .auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+  }
+  .auth-switch a {
+    color: var(--neon-cyan);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+    margin-left: 5px;
+  }
+  .auth-switch a:hover {
+    color: var(--neon-purple);
+    text-shadow: 0 0 8px rgba(176,38,255,0.6);
+  }
 </style>
 </head>
 <body>
@@ -72,6 +91,10 @@
       <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="loginPassword" required placeholder="••••••••"></div>
     </div>
     <button type="submit" class="submit-btn" id="btnLoginSubmit">Masuk Akun</button>
+    
+    <div class="auth-switch">
+      Belum punya akun? <a href="#" onclick="event.preventDefault(); switchTab('register')">Daftar dulu</a>
+    </div>
   </form>
 
   <form id="formRegister" class="hidden" onsubmit="handleSubmit(event, 'register')">
@@ -88,6 +111,10 @@
       <div class="input-wrapper"><i class="fas fa-lock"></i><input type="password" id="regPassword" required placeholder="Minimal 6 karakter"></div>
     </div>
     <button type="submit" class="submit-btn" id="btnRegisterSubmit">Daftar Sekarang</button>
+    
+    <div class="auth-switch">
+      Sudah punya akun? <a href="#" onclick="event.preventDefault(); switchTab('login')">Masuk di sini</a>
+    </div>
   </form>
 </div>
 
@@ -109,11 +136,9 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Variabel penanda agar sistem tahu user baru daftar atau sekadar login biasa
   let isRegisteringProcess = false;
 
   onAuthStateChanged(auth, (user) => {
-    // Jika ada user aktif DAN kita tidak sedang dalam proses pendaftaran akun baru, lempar ke index.html
     if (user && !isRegisteringProcess) {
       window.location.href = 'index.html';
     }
@@ -154,19 +179,15 @@
       const btn = document.getElementById('btnRegisterSubmit');
       btn.innerText = "MEMPROSES...";
       btn.disabled = true;
-      isRegisteringProcess = true; // Kunci agar onAuthStateChanged tidak langsung redirect ke index.html
+      isRegisteringProcess = true;
 
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
       const pass = document.getElementById('regPassword').value;
       try {
-        // 1. Daftarkan akun ke Firebase Auth
         const credential = await createUserWithEmailAndPassword(auth, email, pass);
-        
-        // 2. Perbarui nama profil di Auth
         await updateProfile(credential.user, { displayName: name });
         
-        // 3. Simpan data awal santri ke Cloud Firestore Database
         await setDoc(doc(db, 'users', credential.user.uid), {
           name: name,
           email: email,
@@ -182,12 +203,9 @@
           }
         });
 
-        // 4. Keluarkan paksa sesi otomatis agar santri harus login manual
         await signOut(auth);
-        
         alert("Pendaftaran Berhasil! Silakan masuk menggunakan akun baru Anda.");
         
-        // Kembalikan form ke tab login
         document.getElementById('formRegister').reset();
         isRegisteringProcess = false;
         switchTab('login');
