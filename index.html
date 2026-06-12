@@ -112,14 +112,14 @@
 
   let isRegisteringProcess = false;
 
-  // Interseptor Sesi Aktif
+  // PERBAIKAN: Jika pengguna terdeteksi aktif login, dialihkan ke berkas level1.html (bukan ke index.html)
   onAuthStateChanged(auth, (user) => {
     if (user && !isRegisteringProcess) {
-      window.location.href = 'index.html';
+      window.location.href = 'level1.html';
     }
   });
 
-  // Logika Perpindahan Tab Menu Secara Aman (Scoped di dalam Modul)
+  // Logika Perpindahan Tab Menu Secara Aman
   function switchTab(type) {
     if(type === 'login') {
       document.getElementById('tabLogin').classList.add('active');
@@ -153,7 +153,6 @@
     } catch (err) {
       alert("Gagal Masuk: " + err.message);
     } finally {
-      // PERBAIKAN: Menggunakan finally agar tombol dipastikan kembali normal apa pun hasil responnya
       if(btn) {
         btn.innerText = "Masuk Akun";
         btn.disabled = false;
