@@ -188,7 +188,6 @@
     try {
       const userDocRef = doc(db, 'users', user.uid);
       
-      // Menggunakan onSnapshot agar sinkronisasi dashboard berjalan secara real-time
       onSnapshot(userDocRef, (userSnap) => {
         let userProgress = {}; let currentXp = 0; let currentStreak = 0;
 
@@ -226,24 +225,29 @@
     staticLevels.forEach((lvl) => {
       const currentData = progress && progress[lvl.key] ? progress[lvl.key] : { percent: 0, unlocked: false };
       
-      // LOGIKA ANTI-BUG UNTUK MEMBUKA GEMBOK LEVEL SECARA AMAN DAN REALTIME
-      let isUnlocked = currentData.unlocked;
+      // LOGIKA ANTI-BUG YANG SUDAH DIPERBAIKI
+      let isUnlocked = false;
       
       if (lvl.id === 1) {
-        isUnlocked = true; // Level 1 selalu terbuka
+        isUnlocked = true; // Level 1 selalu terbuka gratis
       } else {
-        // Cek data level sebelumnya
+        // Ambil data dari level tepat sebelum level ini
         const prevLvlKey = `level${lvl.id - 1}`;
         const prevLvlData = progress && progress[prevLvlKey] ? progress[prevLvlKey] : null;
         
         if (prevLvlData) {
-          // Terbuka jika nilai persen di atas 70 ATAU ada flag manual 'unlocked' / 'completedAll'
-          if (prevLvlData.percent >= 70 || prevLvlData.unlocked === true || prevLvlData.completedAll === true) {
+          // Gerbang terbuka HANYA JIKA progres level sebelumnya sudah >= 70%
+          if (prevLvlData.percent >= 70 || prevLvlData.completedAll === true) {
             isUnlocked = true;
           }
         }
         
-        // Kasus Khusus Tambahan: Fallback pencocokan properti dari file database lama
+        // Cek apakah di database level ini memang dipaksa terbuka secara manual
+        if (currentData.unlocked === true) {
+          isUnlocked = true;
+        }
+        
+        // Fallback Kasus Khusus Level 6
         if (lvl.id === 6 && progress && (progress.completedAll === true || (progress.level5 && progress.level5.completedAll === true))) {
           isUnlocked = true;
         }
