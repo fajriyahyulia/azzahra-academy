@@ -187,27 +187,31 @@
 
     try {
       const userDocRef = doc(db, 'users', user.uid);
-      const userSnap = await getDoc(userDocRef);
-      let userProgress = {}; let currentXp = 0; let currentStreak = 0;
-
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        userProgress = userData.progress || {};
-        currentXp = userData.xp || 0;
-        currentStreak = userData.streak || 0;
-      }
-
-      document.getElementById('statXp').textContent = `${currentXp.toLocaleString()} XP`;
-      document.getElementById('statStreak').textContent = `${currentStreak} Hari`;
       
-      let titleTag = 'Mubtadi (Pemula)';
-      if(currentXp >= 3500) titleTag = 'Faqih Expert';
-      else if(currentXp >= 2000) titleTag = 'Hafidz Muda';
-      else if(currentXp >= 1000) titleTag = 'Mutaqaddim';
-      else if(currentXp >= 500) titleTag = 'Mutawassit';
-      document.getElementById('statRank').textContent = titleTag;
+      // Menggunakan onSnapshot agar sinkronisasi dashboard berjalan secara real-time
+      onSnapshot(userDocRef, (userSnap) => {
+        let userProgress = {}; let currentXp = 0; let currentStreak = 0;
 
-      renderLevelsGrid(userProgress);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          userProgress = userData.progress || {};
+          currentXp = userData.xp || 0;
+          currentStreak = userData.streak || 0;
+        }
+
+        document.getElementById('statXp').textContent = `${currentXp.toLocaleString()} XP`;
+        document.getElementById('statStreak').textContent = `${currentStreak} Hari`;
+        
+        let titleTag = 'Mubtadi (Pemula)';
+        if(currentXp >= 3500) titleTag = 'Faqih Expert';
+        else if(currentXp >= 2000) titleTag = 'Hafidz Muda';
+        else if(currentXp >= 1000) titleTag = 'Mutaqaddim';
+        else if(currentXp >= 500) titleTag = 'Mutawassit';
+        document.getElementById('statRank').textContent = titleTag;
+
+        renderLevelsGrid(userProgress);
+      });
+
       initLeaderboardRealtime(user.uid);
     } catch (err) {
       console.error(err);
@@ -218,23 +222,32 @@
   function renderLevelsGrid(progress) {
     const container = document.getElementById('levelsContainer');
     let html = '';
+    
     staticLevels.forEach((lvl) => {
       const currentData = progress && progress[lvl.key] ? progress[lvl.key] : { percent: 0, unlocked: false };
       
-      // LOGIKA CERDAS BARU: Level 1 otomatis buka, Level lain membaca properti unlocked masing-masing
+      // LOGIKA ANTI-BUG UNTUK MEMBUKA GEMBOK LEVEL SECARA AMAN DAN REALTIME
       let isUnlocked = currentData.unlocked;
-      if (lvl.id === 1) {
-        isUnlocked = true;
-      }
       
-      // Toleransi Tambahan: Jika kuis level sebelumnya terdeteksi selesai / completedAll, buka gembok level berikutnya
-      if (lvl.id === 6 && progress && progress.level5 && (progress.level5.completedAll === true || progress.level5.percent >= 70)) {
-        isUnlocked = true;
+      if (lvl.id === 1) {
+        isUnlocked = true; // Level 1 selalu terbuka
+      } else {
+        // Cek data level sebelumnya
+        const prevLvlKey = `level${lvl.id - 1}`;
+        const prevLvlData = progress && progress[prevLvlKey] ? progress[prevLvlKey] : null;
+        
+        if (prevLvlData) {
+          // Terbuka jika nilai persen di atas 70 ATAU ada flag manual 'unlocked' / 'completedAll'
+          if (prevLvlData.percent >= 70 || prevLvlData.unlocked === true || prevLvlData.completedAll === true) {
+            isUnlocked = true;
+          }
+        }
+        
+        // Kasus Khusus Tambahan: Fallback pencocokan properti dari file database lama
+        if (lvl.id === 6 && progress && (progress.completedAll === true || (progress.level5 && progress.level5.completedAll === true))) {
+          isUnlocked = true;
+        }
       }
-      if (lvl.id === 5 && progress && progress.level4 && progress.level4.percent >= 70) isUnlocked = true;
-      if (lvl.id === 4 && progress && progress.level3 && progress.level3.percent >= 70) isUnlocked = true;
-      if (lvl.id === 3 && progress && progress.level2 && progress.level2.percent >= 70) isUnlocked = true;
-      if (lvl.id === 2 && progress && progress.level1 && progress.level1.percent >= 70) isUnlocked = true;
 
       const percent = currentData.percent || 0;
       html += `
