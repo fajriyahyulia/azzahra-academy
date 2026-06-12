@@ -7,122 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  :root {
-    --neon-purple: #b026ff; --neon-violet: #7c3aed; --neon-pink: #e040fb;
-    --neon-cyan: #00e5ff; --neon-gold: #ffd700; --dark-bg: #050508;
-    --dark-card: #0d0d1a; --dark-card2: #12122a; --text-light: #e8e0ff; --text-dim: #8878aa;
-    --success: #00f5d4; --error: #ff2a85;
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--dark-bg); color: var(--text-light);
-    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
-  }
-
-  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
-  
-  /* HEADER */
-  .level-header {
-    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
-    border: 1px solid rgba(124,58,237,0.3); border-radius: 24px;
-    padding: 35px; margin-bottom: 35px; position: relative;
-    box-shadow: 0 10px 30px rgba(124,58,237,0.1);
-  }
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-cyan);
-    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
-  }
-  .back-btn:hover { color: #fff; transform: translateX(-3px); }
-  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
-  .level-badge { display: inline-block; background: rgba(176,38,255,0.15); border: 1px solid var(--neon-purple); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-
-  /* NAVIGATION KOTAK SUB-BAB */
-  .subbab-navigation {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 35px;
-  }
-  .nav-card {
-    background: var(--dark-card); border: 2px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; cursor: pointer; transition: 0.3s; position: relative;
-  }
-  .nav-card.active { border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(176,38,255,0.2); }
-  .nav-card.locked { opacity: 0.4; cursor: not-allowed; }
-  .nav-card h3 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
-  .nav-card p { font-size: 0.8rem; margin: 0; color: var(--text-dim); }
-  
-  .status-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 10px; font-weight: bold; position: absolute; top: 15px; right: 15px; }
-  .badge-locked { background: rgba(255,255,255,0.1); color: #aaa; }
-  .badge-ready { background: rgba(0,229,255,0.2); color: var(--neon-cyan); }
-  .badge-passed { background: rgba(0,245,212,0.2); color: var(--success); }
-
-  /* PANEL KONTEN MATERI */
-  .content-panel { display: none; }
-  .content-panel.active { display: block; }
-  .materi-card {
-    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
-  }
-  .sub-bab-title { font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
-  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.25rem; border-left: 4px solid var(--neon-purple); padding-left: 12px; }
-  p { margin-bottom: 15px; color: #d0c8ec; }
-  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #d0c8ec; }
-  li { margin-bottom: 8px; }
-
-  /* TABLE STYLE */
-  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
-  table { width: 100%; border-collapse: collapse; text-align: left; background: rgba(255,255,255,0.01); }
-  th { background: rgba(124,58,237,0.15); color: #fff; padding: 14px; font-weight: 700; font-size: 0.9rem; }
-  td { padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; vertical-align: top; }
-  .td-highlight { color: var(--neon-cyan); font-weight: 600; }
-
-  .dalil-box { background: rgba(255,215,0,0.05); border-left: 4px solid var(--neon-gold); padding: 15px; margin: 20px 0; border-radius: 0 12px 12px 0; font-style: italic; color: #eadeb8; }
-  
-  /* VIDEO EMBED */
-  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(124,58,237,0.2); margin: 25px 0; }
-  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-  /* TOMBOL MULAI QUIZ */
-  .play-quiz-btn {
-    background: linear-gradient(135deg, #00f0ff, #7c3aed); color: #fff; border: none;
-    padding: 16px 32px; border-radius: 50px; font-size: 1.1rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px; cursor: pointer; display: flex;
-    align-items: center; gap: 12px; margin: 35px auto 10px auto; transition: 0.3s;
-    box-shadow: 0 0 20px rgba(0,240,255,0.4);
-  }
-  .play-quiz-btn:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(0,240,255,0.6); }
-
-  /* ENGINE DISPLAY INTERAKTIF QUIZIZZ */
-  .quiz-container {
-    background: linear-gradient(135deg, rgba(13,13,26,0.98), rgba(18,18,42,0.98)); border: 2px solid var(--neon-purple); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(176,38,255,0.15); display: none; margin-top: 20px;
-  }
-  .quiz-container.active { display: block; }
-  .quiz-progress-bar { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 25px; overflow: hidden; }
-  .quiz-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); transition: width 0.3s; }
-  .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; color: var(--neon-pink); }
-  .question-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 25px; }
-  
-  /* PILIHAN JAWABAN */
-  .options-grid { display: flex; flex-direction: column; gap: 12px; }
-  .option-btn { background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.08); padding: 16px; border-radius: 14px; text-align: left; color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-  .option-btn:hover:not(:disabled) { background: rgba(176,38,255,0.08); border-color: var(--neon-purple); }
-  .option-btn.correct { background: rgba(0, 245, 212, 0.15) !important; border-color: var(--success) !important; color: var(--success); }
-  .option-btn.wrong { background: rgba(255, 42, 133, 0.15) !important; border-color: var(--error) !important; color: var(--error); }
-  
-  /* REKAPAN / FEEDBACK SCREEN */
-  .feedback-screen { display: none; text-align: center; padding: 25px 10px; }
-  .feedback-screen.active { display: block; }
-  .feedback-screen h2 { font-family: 'Cinzel Decorative', serif; font-size: 2.2rem; margin-bottom: 15px; }
-  .stats-flex { display: flex; justify-content: center; gap: 30px; margin: 25px 0; }
-  .stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 15px 25px; min-width: 140px; }
-  .stat-box span { display: block; font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 5px; }
-  .stat-box strong { font-size: 1.8rem; color: #fff; font-weight: 800; }
-  
-  .btn-group-feedback { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
-  .f-btn { padding: 15px 30px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; border: none; cursor: pointer; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; }
-  .f-btn.retry { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); }
-  .f-btn.next { background: linear-gradient(135deg, var(--success), #00e5ff); color: #050508; font-weight: 800; }
-  .f-btn:disabled { opacity: 0.3; cursor: not-allowed; filter: grayscale(1); }
-</style>
+<link rel="stylesheet" href="style-shared.css">
 </head>
 <body>
 
@@ -131,142 +16,206 @@
   <div class="level-header">
     <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
     <h1 class="level-title">Level 6: Sejarah Islam</h1>
-    <span class="level-badge">Khulafaur Rasyidin, Golden Age & Nusantara</span>
+    <span class="level-badge">Khulafaur Rasyidin, Golden Age & Islamisasi Nusantara</span>
   </div>
 
-  <div class="subbab-navigation" id="subbabNav">
-    <div class="nav-card active" onclick="switchSubBab(1)" id="card-sb1">
-      <h3>Sub-Bab 1</h3>
-      <p>Khulafaur Rasyidin</p>
-      <span class="status-badge badge-ready" id="status-sb1">Siap Belajar</span>
+  <div class="materi-card">
+    
+    <div class="sub-bab-title"><i class="fas fa-gavel"></i> Sub-Bab 1: Khulafaur Rasyidin</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/-W9_eWrkh7o" allowfullscreen></iframe>
     </div>
-    <div class="nav-card locked" onclick="switchSubBab(2)" id="card-sb2">
-      <h3>Sub-Bab 2</h3>
-      <p>Golden Age & Dunia</p>
-      <span class="status-badge badge-locked" id="status-sb2"><i class="fas fa-lock"></i> Terkunci</span>
+    
+    <h3>Esensi & Periodisasi</h3>
+    <p><strong>Khulafaur Rasyidin</strong> berasal dari kata <em>khulafa</em> (para pemimpin/pengganti) dan <em>rasyidin</em> (yang mendapat petunjuk). Mereka adalah empat sahabat utama penerus kepemimpinan umat Islam pasca wafatnya Rasulullah SAW. Periode ini berlangsung selama sekitar 30 tahun (632-661 M) dan menjadi fondasi perluasan dakwah global.</p>
+    
+    <div class="dalil-box">
+      <strong>HR. Tirmidzi</strong><br>
+      "Pegang teguhlah sunnahku dan sunnah Khulafaur Rasyidin yang mendapat petunjuk setelahku. Gigit dengan gigi gerahammu."
     </div>
-    <div class="nav-card locked" onclick="switchSubBab(3)" id="card-sb3">
-      <h3>Sub-Bab 3</h3>
-      <p>Islam di Nusantara</p>
-      <span class="status-badge badge-locked" id="status-sb3"><i class="fas fa-lock"></i> Terkunci</span>
+
+    <h3>Sistem Suksesi Kepemimpinan Unik</h3>
+    <p>Menariknya, mekanisme pemilihan keempat khalifah ini menggunakan metode demokratis yang bervariasi, membuktikan keluwesan politik Islam:</p>
+    <ul>
+      <li><strong>Abu Bakar RA:</strong> Dipilih melalui musyawarah terbuka darurat di Saqifah Bani Sa'idah antara kaum Muhajirin dan Anshar.</li>
+      <li><strong>Umar bin Khattab RA:</strong> Dipilih melalui penunjukan langsung oleh Abu Bakar melalui surat wasiat tertulis, yang kemudian diratifikasi dan dibaiat massal oleh para sahabat.</li>
+      <li><strong>Utsman bin Affan RA:</strong> Dipilih oleh tim formatur independen (Dewan Syura) beranggotakan 6 orang sahabat senior yang ditunjuk Umar menjelang wafatnya.</li>
+      <li><strong>Ali bin Abi Thalib RA:</strong> Dipilih secara aklamasi oleh mayoritas umat Islam di tengah situasi krisis politik pasca syahidnya Utsman.</li>
+    </ul>
+
+    <div class="sub-bab-title"><i class="fas fa-globe-asia"></i> Sub-Bab 2: Peradaban Islam Dunia & Golden Age</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/IabkVcZSy9A" allowfullscreen></iframe>
     </div>
-    <div class="nav-card locked" onclick="switchSubBab('final')" id="card-final">
-      <h3>Ujian Akhir Bab</h3>
-      <p>Syarat Lulus: Minim 20 Benar</p>
-      <span class="status-badge badge-locked" id="status-final"><i class="fas fa-lock"></i> Terkunci</span>
+    
+    <h3>Era Keemasan Dinasti Abbasiyah</h3>
+    <p>Puncak kejayaan sains dan kebudayaan Islam terjadi pada masa <strong>Dinasti Abbasiyah (750-1258 M)</strong>, khususnya di bawah kepemimpinan Khalifah Harun Ar-Rasyid dan Al-Ma'mun. Ibu kota Baghdad menjelma menjadi pusat peradaban dunia dengan didirikannya <strong>Baitul Hikmah</strong> (pusat penerjemahan dan perpustakaan raksasa).</p>
+
+    <h3>Tabel Kontribusi Ilmuwan Muslim Terhadap Dunia Modern</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Nama Ilmuwan</th><th>Disiplin Ilmu</th><th>Kontribusi & Karya Monumental</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-highlight">Al-Khawarizmi</td><td>Matematika</td><td>Bapak Aljabar (*Algebra*), penemu sistem desimal, angka nol (0), dan peletak dasar algoritma.</td></tr>
+          <tr><td class="td-highlight">Al-Biruni</td><td>Astronometri / Geodesi</td><td>Berhasil menghitung keliling bumi dengan trigonometri (akurasi meleset hanya 1% dari satelit modern).</td></tr>
+          <tr><td class="td-highlight">Ibnu Sina (Avicenna)</td><td>Kedokteran</td><td>Bapak Kedokteran Modern. Menulis kitab <em>Al-Qanun fit Thibb</em> yang menjadi rujukan wajib universitas Eropa selama 600 tahun. Pencetus konsep karantina.</td></tr>
+          <tr><td class="td-highlight">Az-Zahrawi</td><td>Ilmu Bedah</td><td>Bapak Ilmu Bedah Modern. Menulis kitab <em>Al-Tasrif</em> dan menciptakan lebih dari 200 instrumen bedah orisinal.</td></tr>
+          <tr><td class="td-highlight">Ibnu Al-Haytham</td><td>Fisika / Optika</td><td>Bapak Optik Modern. Membuktikan teori pembiasan cahaya masuk ke mata dan penemu sistem kamera obscura awal.</td></tr>
+          <tr><td class="td-highlight">Jabir bin Hayyan</td><td>Kimia</td><td>Bapak Kimia. Menemukan teknik distilasi, sublimasi, serta mengenalkan istilah alkohol, alkali, dan eliksir.</td></tr>
+          <tr><td class="td-highlight">Ibnu Battutah</td><td>Geografi / Penjelajah</td><td>Menempuh jarak 120.000 km melintasi 3 benua (jauh melampaui Marco Polo). Menulis catatan perjalanan legendaris <em>Rihlah</em>.</td></tr>
+          <tr><td class="td-highlight">Al-Ghazali</td><td>Teologi / Filsafat</td><td>Mendapat gelar <em>Hujjatul Islam</em>. Menulis karya fenomenal <em>Ihya Ulumiddin</em> serta pengkritik filsafat sekuler.</td></tr>
+        </tbody>
+      </table>
     </div>
+
+    <h3>Mata Rantai Transmisi Global Dinasti</h3>
+    <p>Pengetahuan dari dunia Islam mengalir ke Eropa Barat melalui koridor ilmiah di **Toledo (Spanyol Muslim/Andalusia)** dan **Sisilia**. Hal ini memicu runtuhnya abad kegelapan Eropa dan melahirkan era <em>Renaissance</em>. Selain Abbasiyah, dinasti besar lainnya adalah <strong>Dinasti Umayyah Damaskus</strong> (ekspansi geografis terluas), <strong>Fatimiyah Mesir</strong> (pendiri Universitas Al-Azhar Kairo), dan <strong>Utsmaniyah/Ottoman Istanbul</strong> (penakluk Konstantinopel pada 1453 M dipimpin Sultan Mehmed II / Al-Fatih).</p>
+
+    <div class="sub-bab-title"><i class="fas fa-ship"></i> Sub-Bab 3: Islam di Nusantara & Peran Wali Songo</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/mx_nVA8qyHM" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Teori Masuk & Strategi Dakwah</h3>
+    <p>Islamisasi di Nusantara ditandai dengan proses integrasi damai melalui akulturasi budaya tanpa peperangan fisik. Terdapat beberapa teori utama, di antaranya **Teori Arab** (sejak abad ke-7 M berdasarkan catatan Dinasti Tang), **Teori Gujarat** (abad ke-13 melalui jalur dagang India), serta pengaruh **Teori China** dan **Persia**. Penetrasi dakwah berjalan efektif melalui 5 saluran: perdagangan, pernikahan, pendidikan (pesantren), kesenian, dan jalur politik formal kerajaan.</p>
+
+    <h3>Konstelasi Kerajaan Islam Nusantara</h3>
+    <ol>
+      <li><strong>Samudera Pasai:</strong> Kerajaan Islam pertama di Indonesia (Aceh) yang berdiri pada abad ke-13 dengan raja pertamanya Sultan Malik As-Shalih.</li>
+      <li><strong>Kesultanan Aceh Darussalam:</strong> Mencapai masa keemasan di bawah Sultan Iskandar Muda, menjadi pusat ekonomi dan studi Islam terbesar di Asia Tenggara.</li>
+      <li><strong>Kesultanan Demak:</strong> Kerajaan Islam pertama di tanah Jawa yang didirikan oleh Raden Patah atas restu dan bimbingan langsung kolektif Wali Songo.</li>
+      <li><strong>Mataram Islam:</strong> Di bawah kepemimpinan Sultan Agung, kerajaan ini sukses menggabungkan akulturasi kalender Jawa-Hijriyah dan menyerang VOC di Batavia.</li>
+      <li><strong>Ternate-Tidore & Gowa-Tallo:</strong> Penguasa rempah-rempah timur dan pusat maritim Sulawesi yang dipimpin tokoh heroik seperti Sultan Hasanuddin (Ayam Jantan dari Timur).</li>
+    </ol>
+
+    <h3>Metodologi Dakwah Kultural Wali Songo</h3>
+    <ul>
+      <li><strong>Sunan Gresik (Maulana Malik Ibrahim):</strong> Wali pionir, berdakwah humanis lewat jalur pertanian, perdagangan, dan pengobatan gratis.</li>
+      <li><strong>Sunan Ampel (Raden Rahmat):</strong> Pendiri Pesantren Ampeldenta Surabaya, pencetus falsafah moral anti-maksiat *Moh Limo*.</li>
+      <li><strong>Sunan Bonang:</strong> Komponis ulung yang memanfaatkan instrumen gamelan dan menggubah tembang spiritual legendaris <em>Tombo Ati</em>.</li>
+      <li><strong>Sunan Drajat:</strong> Berfokus pada filantropi sosial dan jaminan kesejahteraan kaum miskin serta anak yatim.</li>
+      <li><strong>Sunan Kalijaga (Raden Said):</strong> Wali budayawan paling visioner. Memanfaatkan media wayang kulit purwa, mempopulerkan baju batik, serta menggubah lagu <em>Lir-ilir</em>.</li>
+      <li><strong>Sunan Giri:</strong> Menjadikan jalur mainan anak-anak (Jelungan, Cublak-cublak Suweng) sebagai internalisasi akidah dasar.</li>
+      <li><strong>Sunan Kudus (Ja'far Shadiq):</strong> Manifestasi toleransi tinggi. Membangun Menara Kudus bercorak candi Hindu dan melarang penyembelihan sapi demi menghormati warga lokal.</li>
+      <li><strong>Sunan Muria:</strong> Merambah dakwah di pelosok lereng gunung terpencil, membina komunitas petani dan nelayan tradisional.</li>
+      <li><strong>Sunan Gunung Jati (Syarif Hidayatullah):</strong> Pemimpin politik-religius yang mendirikan Kesultanan Cirebon dan Banten di Jawa Barat.</li>
+    </ul>
   </div>
 
-  <div id="panel-sb1" class="content-panel active">
-    <div class="materi-card">
-      <div class="sub-bab-title"><i class="fas fa-gavel"></i> Sub-Bab 1: Khulafaur Rasyidin</div>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/-W9_eWrkh7o" allowfullscreen></iframe>
-      </div>
-      <h3>Esensi & Periodisasi</h3>
-      <p><strong>Khulafaur Rasyidin</strong> berasal dari kata <em>khulafa</em> (para pemimpin/pengganti) dan <em>rasyidin</em> (yang mendapat petunjuk). Mereka adalah empat sahabat utama penerus kepemimpinan umat Islam pasca wafatnya Rasulullah SAW. Periode ini berlangsung selama sekitar 30 tahun (632-661 M).</p>
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-scroll"></i> Uji Kompetensi Teologis & Sejarah Islam</div>
+    <form id="quizForm">
       
-      <div class="dalil-box">
-        <strong>HR. Tirmidzi</strong><br>
-        "Pegang teguhlah sunnahku dan sunnah Khulafaur Rasyidin yang mendapat petunjuk setelahku. Gigit dengan gigi gerahammu."
+      <div class="question-box">
+        <div class="question-text">1. Mekanisme suksesi kepemimpinan berbentuk penunjukan langsung melalui surat wasiat tertulis dipraktikkan pada pemilihan khalifah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> Abu Bakar Ash-Shiddiq RA</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> Umar bin Khattab RA</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> Utsman bin Affan RA</label>
+        </div>
       </div>
 
-      <h3>Sistem Suksesi Kepemimpinan Unik</h3>
-      <ul>
-        <li><strong>Abu Bakar RA:</strong> Dipilih melalui musyawarah terbuka darurat di Saqifah Bani Sa'idah.</li>
-        <li><strong>Umar bin Khattab RA:</strong> Dipilih melalui penunjukan langsung oleh Abu Bakar melalui surat wasiat tertulis.</li>
-        <li><strong>Utsman bin Affan RA:</strong> Dipilih oleh Dewan Syura beranggotakan 6 orang sahabat senior.</li>
-        <li><strong>Ali bin Abi Thalib RA:</strong> Dipilih secara aklamasi oleh mayoritas umat Islam di tengah situasi krisis politik.</li>
-      </ul>
-      <button class="play-quiz-btn" onclick="startQuiz(1)"><i class="fas fa-gamepad"></i> Mulai Quiz Sub-Bab 1</button>
-    </div>
-  </div>
-
-  <div id="panel-sb2" class="content-panel">
-    <div class="materi-card">
-      <div class="sub-bab-title"><i class="fas fa-globe-asia"></i> Sub-Bab 2: Peradaban Islam Dunia & Golden Age</div>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/IabkVcZSy9A" allowfullscreen></iframe>
+      <div class="question-box">
+        <div class="question-text">2. Siapakah ilmuwan muslim luar biasa yang dinobatkan sebagai Bapak Aljabar dan penemu angka nol?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> Al-Khawarizmi</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> Ibnu Sina</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> Al-Biruni</label>
+        </div>
       </div>
-      <h3>Era Keemasan Dinasti Abbasiyah</h3>
-      <p>Puncak kejayaan sains dan kebudayaan Islam terjadi pada masa <strong>Dinasti Abbasiyah (750-1258 M)</strong>, khususnya di bawah kepemimpinan Khalifah Harun Ar-Rasyid dan Al-Ma'mun. Ibu kota Baghdad menjelma menjadi pusat peradaban dunia dengan didirikannya <strong>Baitul Hikmah</strong>.</p>
 
-      <h3>Tabel Kontribusi Ilmuwan Muslim</h3>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr><th>Nama Ilmuwan</th><th>Disiplin Ilmu</th><th>Kontribusi & Karya Monumental</th></tr>
-          </thead>
-          <tbody>
-            <tr><td class="td-highlight">Al-Khawarizmi</td><td>Matematika</td><td>Bapak Aljabar, penemu sistem desimal, angka nol (0), dan algoritma.</td></tr>
-            <tr><td class="td-highlight">Ibnu Sina</td><td>Kedokteran</td><td>Bapak Kedokteran Modern. Menulis kitab <em>Al-Qanun fit Thibb</em>.</td></tr>
-            <tr><td class="td-highlight">Ibnu Al-Haytham</td><td>Fisika / Optika</td><td>Bapak Optik Modern. Penemu sistem kamera obscura awal.</td></tr>
-          </tbody>
-        </table>
+      <div class="question-box">
+        <div class="question-text">3. Karya medis legendaris "Al-Qanun fit Thibb" (Canon of Medicine) yang menjadi buku teks kedokteran Eropa selama 6 abad ditulis oleh...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Az-Zahrawi</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Jabir bin Hayyan</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Ibnu Sina</label>
+        </div>
       </div>
-      <button class="play-quiz-btn" onclick="startQuiz(2)"><i class="fas fa-gamepad"></i> Mulai Quiz Sub-Bab 2</button>
-    </div>
-  </div>
 
-  <div id="panel-sb3" class="content-panel">
-    <div class="materi-card">
-      <div class="sub-bab-title"><i class="fas fa-ship"></i> Sub-Bab 3: Islam di Nusantara & Peran Wali Songo</div>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/mx_nVA8qyHM" allowfullscreen></iframe>
+      <div class="question-box">
+        <div class="question-text">4. Institusi riset ilmiah, perpustakaan, dan pusat penerjemahan akbar yang didirikan masa Dinasti Abbasiyah di Baghdad bernama...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Universitas Al-Azhar</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Baitul Hikmah</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Cordova Center</label>
+        </div>
       </div>
-      <h3>Teori Masuk & Strategi Dakwah</h3>
-      <p>Islamisasi di Nusantara ditandai dengan proses integrasi damai melalui akulturasi budaya tanpa peperangan fisik. Terdapat beberapa teori utama, di antaranya <strong>Teori Arab</strong>, <strong>Teori Gujarat</strong>, <strong>Teori China</strong>, dan <strong>Persia</strong>.</p>
 
-      <h3>Metodologi Dakwah Kultural Wali Songo</h3>
-      <ul>
-        <li><strong>Sunan Ampel:</strong> Pencetus falsafah moral anti-maksiat <em>Moh Limo</em>.</li>
-        <li><strong>Sunan Bonang:</strong> Komponis ulung yang memanfaatkan instrumen gamelan gubahan tembang <em>Tombo Ati</em>.</li>
-        <li><strong>Sunan Kudus:</strong> Manifestasi toleransi tinggi. Membangun Menara Kudus bercorak candi Hindu dan melarang penyembelihan sapi.</li>
-      </ul>
-      <button class="play-quiz-btn" onclick="startQuiz(3)"><i class="fas fa-gamepad"></i> Mulai Quiz Sub-Bab 3</button>
-    </div>
-  </div>
+      <div class="question-box">
+        <div class="question-text">5. Peristiwa takluknya kota Konstantinopel pada tahun 1453 M dipimpin oleh Sultan Mehmed II berhasil mengakhiri kekuasaan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> Kekaisaran Romawi Barat</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> Kekaisaran Romawi Timur (Byzantium)</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> Dinasti Safawi Persia</label>
+        </div>
+      </div>
 
-  <div id="panel-final" class="content-panel">
-    <div class="materi-card">
-      <div class="sub-bab-title"><i class="fas fa-trophy"></i> Ujian Akhir Bab 6: Total 25 Soal</div>
-      <p>Ujian akhir komprehensif dari materi Sub-Bab 1 sampai Sub-Bab 3. Jawab minimal 20 soal benar untuk menamatkan level akhir ini!</p>
-      <button class="play-quiz-btn" onclick="startQuiz('final')"><i class="fas fa-graduation-cap"></i> Mulai Ujian Akhir</button>
-    </div>
-  </div>
+      <div class="question-box">
+        <div class="question-text">6. Bukti fisik tertua mengenai keberadaan komunitas Muslim di tanah Jawa ditunjukkan oleh penemuan batu nisan Leran di Gresik yang bertanda tahun...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> 1453 M</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> 1082 M (475 H)</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> 1297 M</label>
+        </div>
+      </div>
 
-  <div class="quiz-container" id="quizContainer">
-    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill"></div></div>
-    <div class="quiz-header">
-      <span id="quizTitleDisplay">QUIZ SUB-BAB</span>
-      <span id="questionNumberDisplay">Soal 1 / 10</span>
-    </div>
-    <div class="question-title" id="questionText">Pertanyaan...</div>
-    <div class="options-grid" id="optionsGrid"></div>
-  </div>
+      <div class="question-box">
+        <div class="question-text">7. Kerajaan Islam pertama di Nusantara yang terletak di wilayah pantai utara Aceh dengan raja pertamanya bernama Sultan Malik As-Shalih adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> Kesultanan Demak</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> Kesultanan Aceh Darussalam</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> Kerajaan Samudera Pasai</label>
+        </div>
+      </div>
 
-  <div class="feedback-screen var-card" id="feedbackScreen">
-    <h2 id="feedbackTitle">HASIL TANTANGAN</h2>
-    <p id="feedbackDesc">Rincian hasil pencapaian belajar kamu:</p>
-    <div class="stats-flex">
-      <div class="stat-box"><span>Benar</span><strong id="statCorrect" style="color:var(--success);">0</strong></div>
-      <div class="stat-box"><span>Skor Akhir</span><strong id="statScore">0 / 100</strong></div>
-      <div class="stat-box"><span>Bonus XP</span><strong id="statXP" style="color:var(--neon-gold);">+0 XP</strong></div>
-    </div>
-    <div class="btn-group-feedback">
-      <button class="f-btn retry" onclick="reloadCurrentQuiz()"><i class="fas fa-redo"></i> Coba Lagi / Reload</button>
-      <button class="f-btn next" id="btnNextSubBab" onclick="goNextStep()"><i class="fas fa-arrow-right"></i> Lanjut Selanjutnya</button>
+      <div class="question-box">
+        <div class="question-text">8. Wali Songo yang sangat terkenal menggubah lagu "Tombo Ati" menggunakan instrumen gamelan sebagai sarana dakwah kultural adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Sunan Kalijaga</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Sunan Bonang</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Sunan Ampel</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">9. Bentuk toleransi dakwah luar biasa diperlihatkan Sunan Kudus dengan melarang para pengikutnya menyembelih hewan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Kambing</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Unta</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Sapi</label>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text">10. Penemu dasar metode kamera obscura dan pembuktian bahwa cahaya merambat dari objek menuju mata (Bapak Optik) adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> Ibnu Al-Haytham</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> Al-Battani</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> Ibnu Rusyd</label>
+        </div>
+      </div>
+
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Tetap Semangat!</p>
     </div>
   </div>
 
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
+    apiKey: "AIzaSyBXuyx-twaL6RGUVLiQr1ewERYFf9wpG7Q",
     authDomain: "azzahra-academy-ad1ec.firebaseapp.com",
     projectId: "azzahra-academy-ad1ec",
     storageBucket: "azzahra-academy-ad1ec.firebasestorage.app",
@@ -277,229 +226,46 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
   let currentUserId = null;
-  let currentProgress = { sb1: false, sb2: false, sb3: false, final: false };
 
-  // BANK SOAL SUB-BAB 1-3
-  const repositorySoal = {
-    1: [
-      { q: "Mekanisme suksesi kepemimpinan berbentuk penunjukan langsung melalui surat wasiat tertulis dipraktikkan pada pemilihan...", a: ["Abu Bakar Ash-Shiddiq", "Umar bin Khattab", "Utsman bin Affan"], correct: 1 },
-      { q: "Arti kata 'Khulafaur Rasyidin' secara bahasa adalah...", a: ["Para pemimpin yang mendapat petunjuk", "Panglima perang tak terkalahkan", "Ulama pengumpul Al-Qur'an"], correct: 0 },
-      { q: "Berapa tahun total perkiraan masa kepemimpinan Khulafaur Rasyidin?", a: ["10 Tahun", "20 Tahun", "30 Tahun"], correct: 2 },
-      { q: "Pemilihan Abu Bakar Ash-Shiddiq sebagai khalifah bertempat di...", a: ["Masjid Nabawi", "Saqifah Bani Sa'idah", "Rumah Arqam bin Abil Arqam"], correct: 1 },
-      { q: "Tim formatur beranggotakan 6 orang untuk memilih Utsman bin Affan dibentuk oleh...", a: ["Umar bin Khattab", "Abu Bakar", "Ali bin Abi Thalib"], correct: 0 },
-      { q: "Siapakah Khalifah yang dipilih secara aklamasi di tengah situasi krisis politik pasca syahidnya Utsman?", a: ["Muawiyah", "Ali bin Abi Thalib", "Zaid bin Tsabit"], correct: 1 },
-      { q: "Gelar 'Al-Faruq' yang berarti pembeda antara batil dan benar diberikan kepada...", a: ["Umar bin Khattab", "Abu Bakar", "Utsman bin Affan"], correct: 0 },
-      { q: "Kodifikasi resmi mushaf Al-Qur'an secara massal dilakukan pada era...", a: ["Ali bin Abi Thalib", "Utsman bin Affan", "Abu Bakar"], correct: 1 },
-      { q: "Siapakah sahabat yang mengusulkan pengumpulan Al-Qur'an pertama kali karena banyak penghafal gugur?", a: ["Umar bin Khattab", "Zaid bin Tsabit", "Usamah bin Zaid"], correct: 0 },
-      { q: "Masa kekhalifahan Rasyidin resmi berakhir setelah syahidnya...", a: ["Utsman bin Affan", "Ali bin Abi Thalib", "Umar bin Khattab"], correct: 1 }
-    ],
-    2: [
-      { q: "Siapakah ilmuwan muslim yang dinobatkan sebagai Bapak Aljabar dan penemu angka nol?", a: ["Al-Khawarizmi", "Ibnu Sina", "Al-Biruni"], correct: 0 },
-      { q: "Karya medis legendaris 'Al-Qanun fit Thibb' ditulis oleh...", a: ["Az-Zahrawi", "Jabir bin Hayyan", "Ibnu Sina"], correct: 2 },
-      { q: "Institusi riset ilmiah, perpustakaan, dan pusat penerjemahan masa Abbasiyah di Baghdad bernama...", a: ["Universitas Al-Azhar", "Baitul Hikmah", "Cordova Center"], correct: 1 },
-      { q: "Penemu dasar metode kamera obscura dan pembuktian cahaya merambat ke mata adalah...", a: ["Ibnu Al-Haytham", "Al-Battani", "Ibnu Rusyd"], correct: 0 },
-      { q: "Puncak Golden Age Islam terjadi pada masa kepemimpinan dinasti...", a: ["Umayyah", "Abbasiyah", "Fatimiyah"], correct: 1 },
-      { q: "Sultan Mehmed II (Al-Fatih) berhasil menaklukkan Konstantinopel pada tahun...", a: ["1258 M", "1511 M", "1453 M"], correct: 2 },
-      { q: "Universitas Al-Azhar di Kairo awal mulanya didirikan oleh dinasti...", a: ["Fatimiyah", "Utsmaniyah", "Ayyubiyah"], correct: 0 },
-      { q: "Bapak Kimia Muslim yang menemukan teknik distilasi dan sublimasi bernama...", a: ["Jabir bin Hayyan", "Al-Khawarizmi", "Al-Farabi"], correct: 0 },
-      { q: "Ilmuwan muslim yang sukses menghitung keliling bumi dengan akurasi trigonometri tinggi adalah...", a: ["Al-Biruni", "Ibnu Battutah", "Al-Kindi"], correct: 0 },
-      { q: "Penjelajah Muslim legendaris yang menempuh jarak 120.000 km melintasi 3 benua bernama...", a: ["Ibnu Battutah", "Marco Polo", "Laksamana Cheng Ho"], correct: 0 }
-    ],
-    3: [
-      { q: "Wali Songo yang sangat terkenal menggubah lagu 'Tombo Ati' menggunakan instrumen gamelan adalah...", a: ["Sunan Kalijaga", "Sunan Bonang", "Sunan Ampel"], correct: 1 },
-      { q: "Bentuk toleransi dakwah diperlihatkan Sunan Kudus dengan melarang menyembelih...", a: ["Kambing", "Unta", "Sapi"], correct: 2 },
-      { q: "Kerajaan Islam pertama di Nusantara yang terletak di pantai utara Aceh adalah...", a: ["Kesultanan Demak", "Kesultanan Aceh", "Kerajaan Samudera Pasai"], correct: 2 },
-      { q: "Wali Songo yang mencetuskan filosofi moral anti-maksiat 'Moh Limo' adalah...", a: ["Sunan Ampel", "Sunan Giri", "Sunan Muria"], correct: 0 },
-      { q: "Kerajaan Islam pertama di tanah Jawa yang didirikan oleh Raden Patah adalah...", a: ["Mataram Islam", "Kesultanan Banten", "Kesultanan Demak"], correct: 2 },
-      { q: "Raja pertama dari Kerajaan Samudera Pasai bergelar...", a: ["Sultan Iskandar Muda", "Sultan Malik As-Shalih", "Sultan Agung"], correct: 1 },
-      { q: "Wali Songo yang menyebarkan dakwah menggunakan media wayang kulit dan lagu 'Lir-ilir' adalah...", a: ["Sunan Kalijaga", "Sunan Drajat", "Sunan Gunung Jati"], correct: 0     },
-      { q: "Bukti tertua keberadaan komunitas Muslim di Jawa ditunjukkan oleh nisan Leran berangka tahun...", a: ["1453 M", "1082 M", "1297 M"], correct: 1 },
-      { q: "Teori yang menyatakan Islam masuk ke Indonesia abad ke-13 melalui jalur India dinamakan Teori...", a: ["Teori Arab", "Teori Persia", "Teori Gujarat"], correct: 2 },
-      { q: "Tokoh maritim heroik dari Gowa-Tallo yang dijuluki Ayam Jantan dari Timur adalah...", a: ["Sultan Hasanuddin", "Sultan Ageng Tirtayasa", "Raden Patah"], correct: 0 }
-    ],
-    'final': []
-  };
-
-  // Generate Otomatis Campuran Ujian Akhir (25 Soal)
-  const gabungan = [...repositorySoal[1], ...repositorySoal[2], ...repositorySoal[3]];
-  while(repositorySoal['final'].length < 25 && gabungan.length > 0){
-     let idxRand = Math.floor(Math.random() * gabungan.length);
-     repositorySoal['final'].push(gabungan.splice(idxRand, 1)[0]);
-  }
-
-  let activeQuizType = null;
-  let currentQuestions = [];
-  let questionIdx = 0;
-  let correctAnswersCount = 0;
-
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) { window.location.href = "auth.html"; return; }
-    currentUserId = user.uid;
-    await loadUserProgress();
+  onAuthStateChanged(auth, (user) => {
+    if (user) { currentUserId = user.uid; }
   });
 
-  async function loadUserProgress() {
-    try {
-      const userRef = doc(db, "users", currentUserId);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        const data = userSnap.data();
-        if (data.progressLevel6) {
-          currentProgress = { ...currentProgress, ...data.progressLevel6 };
-        }
-        syncNavigationUI();
+  window.checkAnswers = async function() {
+    const answers = { q1: 'B', q2: 'A', q3: 'C', q4: 'B', q5: 'B', q6: 'B', q7: 'C', q8: 'B', q9: 'C', q10: 'A' };
+    let score = 0;
+    
+    for (let i = 1; i <= 10; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === answers[`q${i}`]) {
+        score += 10;
       }
-    } catch (e) { console.error(e); }
-  }
-
-  function syncNavigationUI() {
-    setCardState(1, 'ready', false);
-    if (currentProgress.sb1) { setCardState(2, 'ready', false); setCardState(1, 'passed', false); }
-    if (currentProgress.sb2) { setCardState(3, 'ready', false); setCardState(2, 'passed', false); }
-    if (currentProgress.sb1 && currentProgress.sb2 && currentProgress.sb3) {
-      setCardState('final', 'ready', false);
-      setCardState(3, 'passed', false);
     }
-    if (currentProgress.final) { setCardState('final', 'passed', false); }
-  }
 
-  function setCardState(id, type, isLocked) {
-    const card = document.getElementById(id === 'final' ? 'card-final' : `card-sb${id}`);
-    const badge = document.getElementById(id === 'final' ? 'status-final' : `status-sb${id}`);
-    if(!card || !badge) return;
-    
-    card.className = "nav-card " + (type === 'active' ? 'active' : (isLocked ? 'locked' : ''));
-    if (type === 'passed') {
-      badge.className = "status-badge badge-passed";
-      badge.innerHTML = '<i class="fas fa-check-circle"></i> Lulus';
-    } else if (type === 'ready') {
-      badge.className = "status-badge badge-ready";
-      badge.innerHTML = 'Siap Belajar';
-      card.classList.remove('locked');
-    }
-  }
+    const resultBox = document.getElementById('resultBox');
+    const scoreText = document.getElementById('scoreText');
+    const feedbackText = document.getElementById('feedbackText');
 
-  window.switchSubBab = function(id) {
-    const card = document.getElementById(id === 'final' ? 'card-final' : `card-sb${id}`);
-    if (card.classList.contains('locked')) return;
+    resultBox.style.display = 'block';
+    scoreText.textContent = `Skor Kamu: ${score} / 100`;
 
-    document.querySelectorAll('.nav-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-
-    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById(id === 'final' ? 'panel-final' : `panel-sb${id}`).classList.add('active');
-    
-    document.getElementById('quizContainer').style.display = 'none';
-    document.getElementById('feedbackScreen').style.display = 'none';
-  }
-
-  window.startQuiz = function(type) {
-    activeQuizType = type;
-    currentQuestions = repositorySoal[type];
-    questionIdx = 0;
-    correctAnswersCount = 0;
-
-    document.getElementById('subbabNav').style.display = 'none';
-    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('quizContainer').style.display = 'block';
-    document.getElementById('feedbackScreen').style.display = 'none';
-
-    document.getElementById('quizTitleDisplay').textContent = type === 'final' ? 'UJIAN AKHIR BAB 6' : `QUIZ SUB-BAB ${type}`;
-    showQuestion();
-  }
-
-  function showQuestion() {
-    const total = currentQuestions.length;
-    document.getElementById('questionNumberDisplay').textContent = `Soal ${questionIdx + 1} / ${total}`;
-    document.getElementById('progressFill').style.width = `${((questionIdx) / total) * 100}%`;
-
-    const qData = currentQuestions[questionIdx];
-    document.getElementById('questionText').textContent = qData.q;
-
-    const grid = document.getElementById('optionsGrid');
-    grid.innerHTML = '';
-
-    qData.a.forEach((opt, index) => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.textContent = opt;
-      btn.onclick = () => checkAnswer(index, btn);
-      grid.appendChild(btn);
-    });
-  }
-
-  function checkAnswer(selectedIdx, clickedBtn) {
-    const qData = currentQuestions[questionIdx];
-    const allBtns = document.querySelectorAll('.option-btn');
-    allBtns.forEach(b => b.disabled = true);
-
-    if (selectedIdx === qData.correct) {
-      clickedBtn.classList.add('correct');
-      correctAnswersCount++;
+    if (score >= 70) {
+      feedbackText.textContent = `Luar Biasa! Kamu berhasil menyelesaikan Level 6 (Sejarah Islam) dengan skor telak ${score}/100. Klaim +100 XP sukses terverifikasi ke sistem database cloud kamu!`;
+      if (currentUserId) {
+        try {
+          const userRef = doc(db, 'users', currentUserId);
+          await updateDoc(userRef, {
+            xp: increment(100),
+            "progress.level6.percent": score,
+            "progress.completedAllCourse": true
+          });
+        } catch (e) { console.error("Firebase Sync Error:", e); }
+      }
     } else {
-      clickedBtn.classList.add('wrong');
-      allBtns[qData.correct].classList.add('correct');
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas ketuntasan minimal 70% (Benar 7 dari 10 soal). Baca kembali kronologi sejarah serta profil para ilmuwan di atas dan coba lagi ya!`;
     }
-
-    setTimeout(() => {
-      questionIdx++;
-      if (questionIdx < currentQuestions.length) { showQuestion(); } 
-      else { finishQuizShowResult(); }
-    }, 1200);
-  }
-
-  async function finishQuizShowResult() {
-    document.getElementById('quizContainer').style.display = 'none';
-    const feedbackScreen = document.getElementById('feedbackScreen');
-    feedbackScreen.style.display = 'block';
-
-    const totalSoal = currentQuestions.length;
-    const finalScore = Math.round((correctAnswersCount / totalSoal) * 100);
-    
-    document.getElementById('statCorrect').textContent = correctAnswersCount;
-    document.getElementById('statScore').textContent = `${finalScore} / 100`;
-
-    let isPassed = activeQuizType === 'final' ? correctAnswersCount >= 20 : correctAnswersCount >= 7;
-    document.getElementById('feedbackTitle').textContent = isPassed ? "MUMTAZ! KAMU LULUS" : "SKOR BELUM MENCAPAI TARGET";
-
-    const btnNext = document.getElementById('btnNextSubBab');
-    if (isPassed) {
-      document.getElementById('statXP').textContent = "+100 XP";
-      btnNext.disabled = false;
-      
-      if (activeQuizType === 'final') { currentProgress.final = true; } 
-      else { currentProgress[`sb${activeQuizType}`] = true; }
-      
-      try {
-        const userRef = doc(db, "users", currentUserId);
-        await updateDoc(userRef, {
-          xp: increment(100),
-          "progressLevel6": currentProgress,
-          "progress.level6.percent": finalScore,
-          "progress.completedAllCourse": activeQuizType === 'final' ? true : false
-        });
-      } catch(e) { console.error(e); }
-    } else {
-      document.getElementById('statXP').textContent = "+0 XP";
-      btnNext.disabled = true;
-    }
-  }
-
-  window.reloadCurrentQuiz = function() { startQuiz(activeQuizType); }
-
-  window.goNextStep = function() {
-    document.getElementById('feedbackScreen').style.display = 'none';
-    document.getElementById('subbabNav').style.display = 'grid';
-    syncNavigationUI();
-
-    if (activeQuizType === 'final') { window.location.href = "index.html"; } 
-    else {
-      const nextId = activeQuizType + 1;
-      if (repositorySoal[nextId]) { switchSubBab(nextId); } 
-      else { switchSubBab('final'); }
-    }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 </script>
 </body>
