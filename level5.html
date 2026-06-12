@@ -7,7 +7,84 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="style-shared.css">
+<style>
+  :root {
+    --neon-gold: #ffb703; --neon-emerald: #00f5d4; --neon-purple: #a2d2ff;
+    --dark-bg: #020205; --dark-card: #080811; --dark-card2: #0f0f22;
+    --text-light: #e4e4ed; --text-dim: #6c6c8a;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--dark-bg); color: var(--text-light);
+    font-family: 'Exo 2', sans-serif; padding-top: 40px; padding-bottom: 60px;
+  }
+
+  .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+  
+  /* HEADER LEVEL */
+  .level-header {
+    background: linear-gradient(135deg, var(--dark-card), var(--dark-card2));
+    border: 1px solid rgba(255, 183, 3, 0.3); border-radius: 24px;
+    padding: 35px; margin-bottom: 35px; position: relative;
+    box-shadow: 0 10px 30px rgba(255, 183, 3, 0.1);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--neon-gold);
+    text-decoration: none; font-size: 0.9rem; font-weight: 600; margin-bottom: 15px; transition: 0.3s;
+  }
+  .back-btn:hover { color: #fff; transform: translateX(-3px); }
+  .level-title { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+  .level-badge { display: inline-block; background: rgba(255, 183, 3, 0.15); border: 1px solid var(--neon-gold); color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* MATERI KONTEN */
+  .materi-card {
+    background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px; padding: 35px; margin-bottom: 35px; line-height: 1.7; font-size: 0.98rem;
+  }
+  .sub-bab-title { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; color: var(--neon-emerald); margin-top: 50px; margin-bottom: 25px; padding-bottom: 8px; border-bottom: 1px solid rgba(0,245,212,0.2); display: flex; align-items: center; gap: 10px; }
+  .sub-bab-title:first-of-type { margin-top: 0; }
+  
+  h3 { color: #fff; margin-top: 30px; margin-bottom: 12px; font-weight: 700; font-size: 1.2rem; border-left: 3px solid var(--neon-gold); padding-left: 10px; }
+  h4 { color: #fff; margin-top: 25px; margin-bottom: 10px; font-weight: 600; font-size: 1.05rem; color: var(--neon-purple); }
+  p { margin-bottom: 15px; color: #cbd5e1; }
+  ul, ol { margin-left: 20px; margin-bottom: 15px; color: #cbd5e1; }
+  li { margin-bottom: 6px; }
+
+  .dalil-box { background: rgba(255,255,255,0.02); border-left: 4px solid var(--neon-gold); padding: 20px; border-radius: 0 16px 16px 0; margin: 20px 0; font-style: italic; color: #e2e8f0; }
+
+  /* VIDEO EMBED */
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid rgba(0, 245, 212, 0.2); margin: 25px 0; box-shadow: 0 0 15px rgba(0, 245, 212, 0.1); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+  /* TABEL RESPONSIVE STYLING */
+  .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; background: rgba(5,5,8,0.5); min-width: 600px; }
+  th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
+  th { background-color: rgba(0, 245, 212, 0.15); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+  tr:hover { background-color: rgba(0, 245, 212, 0.04); }
+  .td-highlight { color: var(--neon-gold); font-weight: 600; }
+  .td-cyan { color: var(--neon-emerald); font-weight: 600; }
+
+  /* EVALUASI KUIS */
+  .quiz-section { background: linear-gradient(135deg, rgba(8,8,17,0.95), rgba(15,15,34,0.95)); border: 2px solid var(--neon-gold); border-radius: 24px; padding: 35px; box-shadow: 0 0 30px rgba(255,183,3,0.15); }
+  .quiz-title { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: #fff; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+  .quiz-title i { color: var(--neon-emerald); }
+  
+  .question-box { margin-bottom: 30px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.04); }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 15px; }
+  
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.92rem; }
+  .option-item:hover { background: rgba(255,183,3,0.08); border-color: var(--neon-gold); }
+  .option-item input { accent-color: var(--neon-gold); cursor: pointer; width: 18px; height: 18px; }
+
+  .submit-quiz-btn { width: 100%; background: linear-gradient(135deg, var(--neon-gold), #e65c00); color: #fff; border: none; padding: 16px; border-radius: 50px; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 15px rgba(255,183,3,0.3); transition: 0.3s; }
+  .submit-quiz-btn:hover { filter: brightness(1.2); transform: scale(1.01); }
+
+  .result-box { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 16px; background: rgba(0,245,212,0.05); border: 1px solid var(--neon-emerald); }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--neon-gold); margin-bottom: 10px; }
+</style>
 </head>
 <body>
 
@@ -16,115 +93,186 @@
   <div class="level-header">
     <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
     <h1 class="level-title">Level 5: Sirah Nabawiyah</h1>
-    <span class="level-badge">Kisah Hidup Rasulullah SAW & Jejak Dakwah Mulia</span>
+    <span class="level-badge">Kronologi Kenabian, Khulafaur Rasyidin & Sejarah Para Nabi</span>
   </div>
 
   <div class="materi-card">
-    <div class="sub-bab-title"><i class="fas fa-book-open"></i> Sub-Bab 1: Periode Makkah (Kelahiran hingga Kerasulan)</div>
-    <div class="materi-text">
-      <p>Nabi Muhammad SAW lahir pada tanggal 12 Rabiul Awal Tahun Gajah di kota Makkah. Beliau tumbuh sebagai seorang yatim piatu yang dikenal memiliki akhlak sangat terpuji, sehingga penduduk Makkah menjuluki beliau dengan gelar <strong>Al-Amin</strong> (Yang Terpercaya).</p>
-      <p>Pada usia 40 tahun, tepatnya di bulan Ramadhan saat sedang bertahanuts di <strong>Gua Hira</strong>, malaikat Jibril mendatangi beliau membawa wahyu pertama, yaitu Surat Al-'Alaq ayat 1-5. Peristiwa agung ini menandai resminya pengangkatan beliau sebagai nabi dan rasul Allah SWT terakhir.</p>
-    </div>
-
-    <div class="sub-bab-title"><i class="fas fa-shield-halved"></i> Sub-Bab 2: Periode Madinah & Pembentukan Masyarakat Islam</div>
-    <div class="materi-text">
-      <p>Akibat tekanan, boikot, dan siksaan kejam dari kaum kafir Quraisy di Makkah, Rasulullah SAW memerintahkan umat Islam untuk melakukan <strong>Hijrah ke Yatsrib</strong> (yang kemudian diubah namanya menjadi Madinah Al-Munawwarah). Peristiwa bersejarah hijrah ini dijadikan sebagai awal penanggalan Kalender Hijriah.</p>
-      <p>Di Madinah, strategi pertama yang dilakukan Rasulullah SAW adalah membangun Masjid Nabawi sebagai pusat ibadah dan pemerintahan, serta mempersaudarakan kaum <strong>Muhajirin</strong> (para imigran dari Makkah) dengan kaum <strong>Ansar</strong> (penduduk asli Madinah). Langkah luar biasa ini berhasil menyatukan umat Islam menjadi kekuatan baru yang solid dan mandiri.</p>
-    </div>
-  </div>
-
-  <div class="quiz-container">
-    <div class="quiz-title-box">
-      <i class="fas fa-star"></i> Kuis Evaluasi Tingkat Level 5
+    
+    <div class="sub-bab-title"><i class="fas fa-history"></i> Sub-Bab 1: Kisah Nabi Muhammad SAW</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/A6rodkFU-GU" allowfullscreen></iframe>
     </div>
     
+    <h3>Silsilah & Kelahiran Agung</h3>
+    <p>Nabi Muhammad SAW lahir di Makkah pada hari Senin, 12 Rabi'ul Awwal Tahun Gajah (sekitar 570/571 M). Jalur nasab mulia beliau: <strong>Muhammad bin Abdullah bin Abdul Muththalib bin Hasyim bin Abdi Manaf bin Qushay bin Kilab</strong> dari suku Quraisy. Ayahnya wafat saat beliau masih di dalam kandungan ibunya, Aminah.</p>
+    
+    <h4>Fase Pertumbuhan & Karakteristik Pra-Islam</h4>
+    <ul>
+      <li><strong>Masa Kecil:</strong> Disusui di pedalaman oleh Halimah As-Sa'diyah untuk menjaga kemurnian bahasa dan fisik. Pada fase ini terjadi peristiwa <em>Syaqqus Shadr</em> (pembelahan dada) oleh Malaikat Jibril untuk menyucikan hatinya. Ibunya wafat saat beliau berusia 6 tahun, disusul kakeknya Abdul Muththalib pada usia 8 tahun, lalu pengasuhan dialihkan kepada pamannya, Abu Thalib.</li>
+      <li><strong>Masa Remaja & Dewasa:</strong> Aktif berdagang hingga ke Syam (bertemu Pendeta Buhairah), terlibat dalam aliansi kemanusiaan <em>Hilful Fudhul</em>, dan digelari <strong>Al-Amin</strong> (Yang Terpercaya) oleh seluruh penduduk Makkah karena kejujurannya.</li>
+      <li><strong>Pernikahan & Diplomasi:</strong> Pada usia 25 tahun, menikah dengan Khadijah binti Khuwailid (40 tahun). Beliau juga berhasil meredam konflik antarsuku melalui kecerdasan diplomasinya saat meletakkan kembali batu Hajar Aswad menggunakan selembar kain.</li>
+    </ul>
+
+    <h3>Turunnya Wahyu & Fase Perjuangan</h3>
+    <p>Pada usia 40 tahun (17 Ramadhan), beliau menerima wahyu pertama (QS. Al-Alaq: 1-5) di Gua Hira melalui Malaikat Jibril. Fase dakwah dibagi menjadi dua:</p>
+    <ol>
+      <li><strong>Dakwah Sirr (Sembunyi-sembunyi - 3 Tahun):</strong> Berfokus pada keluarga dan sahabat terdekat (Khadijah, Ali, Abu Bakar, Zaid bin Haritsah).</li>
+      <li><strong>Dakwah Jahr (Terang-terangan):</strong> Dimulai secara vokal di Bukit Shafa. Membawa konsekuensi berupa boikot dan penyiksaan kejam terhadap kaum lemah seperti Bilal bin Rabah dan keluarga Yasir (syuhada pertama Islam).</li>
+    </ol>
+    <p>Guna menyelamatkan akidah, Nabi menginstruksikan hijrah ke Habasyah (Ethiopia) di bawah perlindungan Raja Najasyi. Pada tahun ke-10 kenabian (<em>Amul Huzn</em> / Tahun Kesedihan), Abu Thalib dan Khadijah wafat. Allah kemudian menghibur Nabi lewat peristiwa agung <strong>Isra Mi'raj</strong>, tempat diturunkannya perintah sholat 5 waktu secara langsung.</p>
+
+    <h3>Konstruksi Peradaban Madinah & Era Perang</h3>
+    <p>Tahun 622 M, Nabi bersama Abu Bakar hijrah ke Yatsrib (Madinah). Di sana, beliau menerapkan 3 pilar strategis: Membangun Masjid Nabawi, mempersaudarakan kaum Muhajirin dan Anshar, serta merumuskan <strong>Piagam Madinah</strong> sebagai konstitusi tertulis pertama dunia.</p>
+    
+    <h3>Tabel Kronologi Perang & Rekonsiliasi Besar</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Peristiwa / Perang</th><th>Tahun (Hijriyah)</th><th>Esensi & Hasil Signifikan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-highlight">Perang Badar</td><td>2 H (624 M)</td><td>313 Muslim menang gemilang melawan 1000 pasukan bersenjata lengkap kaum Quraisy.</td></tr>
+          <tr><td class="td-highlight">Perang Uhud</td><td>3 H (625 M)</td><td>Kekalahan taktis akibat pasukan pemanah turun dari pos demi harta ghanimah. Hamzah RA gugur.</td></tr>
+          <tr><td class="td-highlight">Perang Khandaq</td><td>5 H (627 M)</td><td>Strategi parit ide Salman Al-Farisi sukses mematahkan kepungan 10.000 pasukan sekutu (Ahzab).</td></tr>
+          <tr><td class="td-highlight">Perjanjian Hudaibiyah</td><td>6 H (628 M)</td><td>Gencatan senjata 10 tahun; pintu pembuka diplomasi dakwah luar biasa secara global.</td></tr>
+          <tr><td class="td-highlight">Fathu Makkah</td><td>8 H (630 M)</td><td>Pembebasan kota Makkah tanpa tumpah darah. Nabi memberikan amnesti massal bagi Quraisy.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Setelah melaksanakan Haji Wada' (10 H) dan turunnya ayat kesempurnaan agama (QS. Al-Maidah: 3), Rasulullah SAW wafat pada hari Senin, 12 Rabi'ul Awwal 11 H (8 Juni 632 M) di pangkuan Aisyah RA pada usia 63 tahun.</p>
+
+    <div class="sub-bab-title"><i class="fas fa-users-cog"></i> Sub-Bab 2: Kisah Para Sahabat Terbaik</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/Jjs0f8vNPWM" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Profil Khulafaur Rasyidin & Sahabat Utama</h3>
+    <ul>
+      <li><strong>Abu Bakar Ash-Shiddiq RA:</strong> Orang dewasa pertama yang memeluk Islam, mendampingi Nabi di Gua Tsur, dan menginfakkan seluruh hartanya demi Allah. Menjadi Khalifah pertama yang menumpas gerakan nabi palsu (<em>Perang Riddah</em>) dan memprakarsai kodifikasi awal Al-Qur'an.</li>
+      <li><strong>Umar bin Khattab RA (Al-Faruq):</strong> Masuk Islam pasca tersentuh mendengar lantunan QS. Thaha. Di masa kekhalifahannya, peradaban Islam melakukan ekspansi besar (Persia, Mesir, Syam) dan membebaskan Yerusalem. Beliau juga merintis sistem kas negara (<em>Baitul Mal</em>) serta kalender Hijriyah. Gugur ditikam oleh Abu Lu'lu'ah.</li>
+      <li><strong>Utsman bin Affan RA (Dzun Nurain):</strong> Menikahi dua putri Rasulullah, mendanai penuh Pasukan Tabuk, dan mewakafkan sumur Bi'r Rumah untuk publik. Pencapaian terbesarnya sebagai khalifah adalah standardisasi penulisan Al-Qur'an (<strong>Mushaf Utsmani</strong>). Gugur sebagai syahid saat membaca Al-Qur'an akibat pengepungan pemberontak.</li>
+      <li><strong>Ali bin Abi Thalib RA (Karramallahu Wajhah):</strong> Muslim pertama dari kalangan anak-anak, menantu Nabi (suami Fatimah), dan dikenal sebagai pintu gerbang ilmu pengetahuan dengan keberanian luar biasa. Masa kekhalifahannya diuji oleh dinamika fitnah internal (Perang Jamal & Perang Shiffin). Gugur ditikam Ibnu Muljam.</li>
+      <li><strong>Bilal bin Rabah RA:</strong> Budak Habasyah yang disiksa batu terik matahari oleh Umayyah namun konsisten meneriakkan <em>"Ahad! Ahad!"</em>. Ia dibebaskan Abu Bakar dan diangkat menjadi Muadzin pertama dalam sejarah Islam.</li>
+      <li><strong>Khadijah binti Khuwailid RA:</strong> Wanita pertama yang beriman, menyokong total dakwah dengan seluruh kekayaannya, serta mendapatkan salam khusus dari Allah SWT melalui Malaikat Jibril.</li>
+    </ul>
+
+    <div class="sub-bab-title"><i class="fas fa-scroll"></i> Sub-Bab 3: Epik Kisah 25 Nabi & Rasul Pilihan</div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/g2qCgHAnMoo" allowfullscreen></iframe>
+    </div>
+    
+    <h3>Naratif Keteladanan Pola Nubuwwah</h3>
+    <ul>
+      <li><strong>Nabi Adam AS:</strong> Manusia pertama yang diciptakan dari tanah. Diajarkan ilmu penamaan materi, digoda Iblis yang sombong, diturunkan ke bumi, dan diampuni dosanya setelah bertaubat dengan tulus.</li>
+      <li><strong>Nabi Idris AS:</strong> Nabi berilmu tinggi yang dianugerahi kemampuan menulis dengan pena serta diangkat oleh Allah ke tempat yang tinggi (langit).</li>
+      <li><strong>Nabi Nuh AS (Bapak Umat Manusia Kedua):</strong> Berdakwah pantang menyerah selama 950 tahun dengan hasil minim (80 pengikut). Atas perintah Allah, beliau membangun bahtera raksasa yang menyelamatkan kehidupan dari azab banjir bandang global.</li>
+      <li><strong>Nabi Ibrahim AS (Khalilullah):</strong> Bapak para Nabi (<em>Abul Anbiya</em>). Selamat dari kobaran api Raja Namrud atas izin Allah (<em>"Wahai api jadilah dingin..."</em>), lulus dari ujian pengorbanan putranya Ismail yang menjadi cikal bakal Idul Adha, serta pembangun Ka'bah.</li>
+      <li><strong>Nabi Yusuf AS:</strong> Pemilik paras paling rupawan (<em>Ahsanal Qashash</em>). Dibuang ke sumur oleh saudaranya, difitnah Zulaikha hingga dipenjara, sukses menafsirkan mimpi geopolitik Raja Mesir tentang musim paceklik, hingga akhirnya diangkat menjadi bendahara negara.</li>
+      <li><strong>Nabi Musa AS (Kalimullah):</strong> Berbicara langsung dengan Allah di Gunung Thur. Menghadapi tirani Fir'aun dengan mukjizat tongkat yang berubah menjadi ular besar dan membelah Laut Merah menjadi 12 jalur penyelamatan bagi Bani Israil.</li>
+      <li><strong>Nabi Isa AS (Ruhullah):</strong> Lahir tanpa ayah dari perawan suci Maryam. Bisa berbicara sejak bayi, menghidupkan orang mati serta menyembuhkan kusta atas izin Allah. Beliau tidak disalib melainkan diangkat ke langit, dan akan turun kembali di akhir zaman untuk membunuh Dajjal.</li>
+    </ul>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-title"><i class="fas fa-trophy"></i> Uji Kompetensi Final: Sirah & Kisah Nabi</div>
     <form id="quizForm">
-      <div class="question-block">
-        <div class="q-text">1. Di kota manakah Nabi Muhammad SAW dilahirkan?</div>
-        <label class="option-item"><input type="radio" name="q1" value="A"> A. Madinah</label>
-        <label class="option-item"><input type="radio" name="q1" value="B"> B. Makkah</label>
-        <label class="option-item"><input type="radio" name="q1" value="C"> C. Thaif</label>
-        <label class="option-item"><input type="radio" name="q1" value="D"> D. Syam</label>
+      
+      <div class="question-box">
+        <div class="question-text">1. Siapakah nama kakek Rasulullah SAW yang mengasuh beliau setelah wafatnya Ibunda Aminah?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q1" value="A"> Abu Thalib</label>
+          <label class="option-item"><input type="radio" name="q1" value="B"> Abdul Muththalib</label>
+          <label class="option-item"><input type="radio" name="q1" value="C"> Hasyim bin Abdi Manaf</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">2. Gelar mulia apakah yang disematkan oleh penduduk Makkah kepada Nabi Muhammad karena kejujurannya?</div>
-        <label class="option-item"><input type="radio" name="q2" value="A"> A. Al-Faruq</label>
-        <label class="option-item"><input type="radio" name="q2" value="B"> B. As-Siddiq</label>
-        <label class="option-item"><input type="radio" name="q2" value="C"> C. Al-Amin</label>
-        <label class="option-item"><input type="radio" name="q2" value="D"> D. Saifullah</label>
+      <div class="question-box">
+        <div class="question-text">2. Peristiwa pembelahan dada (Syaqqus Shadr) pada masa kecil Nabi Muhammad SAW terjadi ketika beliau berada di bawah pengasuhan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q2" value="A"> Aminah binti Wahb</label>
+          <label class="option-item"><input type="radio" name="q2" value="B"> Khadijah binti Khuwailid</label>
+          <label class="option-item"><input type="radio" name="q2" value="C"> Halimah As-Sa'diyah</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">3. Di manakah lokasi tempat Rasulullah SAW menerima wahyu pertama kalinya?</div>
-        <label class="option-item"><input type="radio" name="q3" value="A"> A. Gua Tsur</label>
-        <label class="option-item"><input type="radio" name="q3" value="B"> B. Gua Hira</label>
-        <label class="option-item"><input type="radio" name="q3" value="C"> C. Jabal Rahmah</label>
-        <label class="option-item"><input type="radio" name="q3" value="D"> D. Masjidil Haram</label>
+      <div class="question-box">
+        <div class="question-text">3. Apa strategi militer yang diusulkan oleh sahabat Salman Al-Farisi untuk memenangkan Perang Khandaq/Ahzab?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q3" value="A"> Memasang pasukan pemanah di atas bukit batu</label>
+          <label class="option-item"><input type="radio" name="q3" value="B"> Menggali parit raksasa mengelilingi batas kota Madinah</label>
+          <label class="option-item"><input type="radio" name="q3" value="C"> Melakukan serangan gerilya pada malam hari</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">4. Surat dan ayat Al-Qur'an manakah yang merupakan wahyu perdana yang diterima Rasulullah?</div>
-        <label class="option-item"><input type="radio" name="q4" value="A"> A. Al-Fatihah ayat 1-7</label>
-        <label class="option-item"><input type="radio" name="q4" value="B"> B. Al-Baqarah ayat 1-5</label>
-        <label class="option-item"><input type="radio" name="q4" value="C"> C. Al-Muddassir ayat 1-7</label>
-        <label class="option-item"><input type="radio" name="q4" value="D"> D. Al-'Alaq ayat 1-5</label>
+      <div class="question-box">
+        <div class="question-text">4. Peristiwa bersejarah pembebasan kota Makkah secara damai dan pemberian amnesti massal oleh Rasulullah dinamakan...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q4" value="A"> Fathu Makkah</label>
+          <label class="option-item"><input type="radio" name="q4" value="B"> Perjanjian Hudaibiyah</label>
+          <label class="option-item"><input type="radio" name="q4" value="C"> Amul Huzn</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">5. Peristiwa perpindahan umat Islam dari Makkah menuju Madinah dikenal dengan sebutan...</div>
-        <label class="option-item"><input type="radio" name="q5" value="A"> A. Hijrah</label>
-        <label class="option-item"><input type="radio" name="q5" value="B"> B. Fathu Makkah</label>
-        <label class="option-item"><input type="radio" name="q5" value="C"> C. Isra Miraj</label>
-        <label class="option-item"><input type="radio" name="q5" value="D"> D. Baitul Aqabah</label>
+      <div class="question-box">
+        <div class="question-text">5. Khalifah manakah yang sukses memprakarsai standarisasi penulisan Al-Qur'an menjadi satu mushaf induk yang kita baca hari ini?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q5" value="A"> Abu Bakar Ash-Shiddiq RA</label>
+          <label class="option-item"><input type="radio" name="q5" value="B"> Umar bin Khattab RA</label>
+          <label class="option-item"><input type="radio" name="q5" value="C"> Utsman bin Affan RA</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">6. Apakah sebutan bagi kaum imigran muslim yang datang meninggalkan kampung halaman mereka dari Makkah ke Madinah?</div>
-        <label class="option-item"><input type="radio" name="q6" value="A"> A. Ansar</label>
-        <label class="option-item"><input type="radio" name="q6" value="B"> B. Muhajirin</label>
-        <label class="option-item"><input type="radio" name="q6" value="C"> C. Hawariyun</label>
-        <label class="option-item"><input type="radio" name="q6" value="D"> D. Tabi'in</label>
+      <div class="question-box">
+        <div class="question-text">6. Sahabat yang dipercaya sebagai Muadzin pertama dalam Islam karena keteguhan tauhidnya mempertahankan kalimat "Ahad! Ahad!" saat disiksa adalah...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q6" value="A"> Bilal bin Rabah RA</label>
+          <label class="option-item"><input type="radio" name="q6" value="B"> Ammar bin Yasir RA</label>
+          <label class="option-item"><input type="radio" name="q6" value="C"> Zaid bin Haritsah RA</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">7. Apakah sebutan bagi penduduk asli Madinah yang menyambut dan menolong perjuangan dakwah kaum muslimin?</div>
-        <label class="option-item"><input type="radio" name="q7" value="A"> A. Muhajirin</label>
-        <label class="option-item"><input type="radio" name="q7" value="B"> B. Ansar</label>
-        <label class="option-item"><input type="radio" name="q7" value="C"> C. Quraisy</label>
-        <label class="option-item"><input type="radio" name="q7" value="D"> D. Khazraj</label>
+      <div class="question-box">
+        <div class="question-text">7. Mengapa Nabi Nuh AS mendapat julukan sejarah sebagai "Bapak Umat Manusia Kedua"?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q7" value="A"> Karena beliau berdakwah paling lama sepanjang sejarah</label>
+          <label class="option-item"><input type="radio" name="q7" value="B"> Karena seluruh populasi manusia baru berkembang kembali dari keturunan yang selamat di dalam bahteranya</label>
+          <label class="option-item"><input type="radio" name="q7" value="C"> Karena beliau nabi pertama yang bisa membuat kapal kayu</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">8. Berapakah usia Nabi Muhammad SAW ketika beliau diutus secara resmi menjadi seorang rasul?</div>
-        <label class="option-item"><input type="radio" name="q8" value="A"> A. 25 Tahun</label>
-        <label class="option-item"><input type="radio" name="q8" value="B"> B. 35 Tahun</label>
-        <label class="option-item"><input type="radio" name="q8" value="C"> C. 40 Tahun</label>
-        <label class="option-item"><input type="radio" name="q8" value="D"> D. 63 Tahun</label>
+      <div class="question-box">
+        <div class="question-text">8. Kisah Nabi manakah di dalam Al-Qur'an yang disebut secara eksplisit sebagai "Ahsanal Qashash" (Sebaik-baik Kisah)?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q8" value="A"> Kisah Nabi Musa AS</label>
+          <label class="option-item"><input type="radio" name="q8" value="B"> Kisah Nabi Yusuf AS</label>
+          <label class="option-item"><input type="radio" name="q8" value="C"> Kisah Nabi Ibrahim AS</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">9. Peristiwa penanggalan awal kalender Hijriah dihitung berdasarkan peristiwa mulia apa?</div>
-        <label class="option-item"><input type="radio" name="q9" value="A"> A. Kelahiran Nabi SAW</label>
-        <label class="option-item"><input type="radio" name="q9" value="B"> B. Wafatnya Nabi SAW</label>
-        <label class="option-item"><input type="radio" name="q9" value="C"> C. Peristiwa Hijrah ke Madinah</label>
-        <label class="option-item"><input type="radio" name="q9" value="D"> D. Peristiwa Turunnya Al-Qur'an</label>
+      <div class="question-box">
+        <div class="question-text">9. Mukjizat membelah air Laut Merah menjadi 12 jalur keselamatan guna menghindari kejaran pasukan Fir'aun dianugerahkan kepada...</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q9" value="A"> Nabi Musa AS</label>
+          <label class="option-item"><input type="radio" name="q9" value="B"> Nabi Ibrahim AS</label>
+          <label class="option-item"><input type="radio" name="q9" value="C"> Nabi Isa AS</label>
+        </div>
       </div>
 
-      <div class="question-block">
-        <div class="q-text">10. Apakah nama masjid pertama yang dibangun Rasulullah SAW saat tiba memimpin di kota Madinah?</div>
-        <label class="option-item"><input type="radio" name="q10" value="A"> A. Masjid Nabawi</label>
-        <label class="option-item"><input type="radio" name="q10" value="B"> B. Masjid Quba</label>
-        <label class="option-item"><input type="radio" name="q10" value="C"> C. Masjidil Aqsa</label>
-        <label class="option-item"><input type="radio" name="q10" value="D"> D. Masjid Qiblatain</label>
+      <div class="question-box">
+        <div class="question-text">10. Apa yang ditegaskan Al-Qur'an mengenai akhir kehidupan duniawi Nabi Isa AS dari makar orang-orang kafir?</div>
+        <div class="options-list">
+          <label class="option-item"><input type="radio" name="q10" value="A"> Beliau gugur di tiang salib bersama para pengikutnya</label>
+          <label class="option-item"><input type="radio" name="q10" value="B"> Beliau wafat karena sakit di pengasingan</label>
+          <label class="option-item"><input type="radio" name="q10" value="C"> Beliau tidak disalib, melainkan diselamatkan dan diangkat oleh Allah ke langit dalam kondisi hidup</label>
+        </div>
       </div>
 
-      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Evaluasi</button>
+      <button type="button" class="submit-quiz-btn" onclick="checkAnswers()">Kirim Jawaban Kuis Final</button>
     </form>
 
     <div class="result-box" id="resultBox">
-      <div class="score-text" id="scoreText">Skor Kamu: 0 / 100</div>
-      <div class="feedback-text" id="feedbackText">Memproses hasil evaluasi...</div>
+      <div class="result-score" id="scoreText">Skor Kamu: 0 / 100</div>
+      <p id="feedbackText">Tetap Semangat!</p>
     </div>
   </div>
 
@@ -147,20 +295,14 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
   let currentUserId = null;
 
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      currentUserId = user.uid;
-    } else {
-      window.location.href = "auth.html";
-    }
+    if (user) { currentUserId = user.uid; }
   });
 
   window.checkAnswers = async function() {
-    // Kunci Kunci Jawaban Resmi Level 5
-    const answers = { q1: 'B', q2: 'C', q3: 'B', q4: 'D', q5: 'A', q6: 'B', q7: 'B', q8: 'C', q9: 'C', q10: 'A' };
+    const answers = { q1: 'B', q2: 'C', q3: 'B', q4: 'A', q5: 'C', q6: 'A', q7: 'B', q8: 'B', q9: 'A', q10: 'C' };
     let score = 0;
     
     for (let i = 1; i <= 10; i++) {
@@ -177,33 +319,23 @@
     resultBox.style.display = 'block';
     scoreText.textContent = `Skor Kamu: ${score} / 100`;
 
-    // SYARAT KELULUSAN SINKRONISASI FIRESTORE (MINIMAL SKOR 70)
+    // LOGIKA KELULUSAN SKOR MINIMAL 70
     if (score >= 70) {
-      feedbackText.textContent = `Luar Biasa! Kamu berhasil menuntaskan Level 5 dengan skor ${score}/100. Bonus +100 XP sukses diklaim dan Gerbang Level 6 (Sejarah Islam & Peradaban Dunia) resmi terbuka!`;
-      feedbackText.style.color = "var(--neon-emerald)";
-      
+      feedbackText.textContent = `Luar Biasa! Kamu berhasil menuntaskan Level 5 dengan skor ${score}/100. Sinkronisasi +100 XP ke database berhasil. Selamat, kamu telah menyelesaikan seluruh rangkaian kurikulum esensial AzZahra Academy!`;
       if (currentUserId) {
         try {
           const userRef = doc(db, 'users', currentUserId);
-          
-          // Memperbarui database & membuka kunci Level 6 secara modular
           await updateDoc(userRef, {
             xp: increment(100),
             "progress.level5.percent": score,
-            "progress.level5.completedAll": true,
-            "progress.level6.unlocked": true // Bagian Krusial pembuka gembok Level 6
+            "progress.completedAll": true
           });
-        } catch (e) { 
-          console.error("Firebase Sync Error:", e); 
-        }
+        } catch (e) { console.error("Firebase Sync Error:", e); }
       }
     } else {
-      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas kelulusan minimal 70%. Silakan baca kembali ringkasan materi di atas dan coba lagi!`;
-      feedbackText.style.color = "#ff5555";
+      feedbackText.textContent = `Skor kamu ${score}/100. Kamu belum mencapai batas kelulusan minimal 70% (Benar 7 dari 10 soal). Silakan tinjau kembali kisah perjalanan Sirah di atas dan coba lagi kuisnya!`;
     }
-
-    // Scroll otomatis menuju kotak hasil evaluasi
-    resultBox.scrollIntoView({ behavior: 'smooth' });
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 </script>
 </body>
