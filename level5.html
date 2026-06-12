@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style-shared.css">
 <style>
   :root {
     --neon-gold: #ffb703; --neon-emerald: #00f5d4; --neon-purple: #a2d2ff;
@@ -321,13 +322,17 @@
 
     // LOGIKA KELULUSAN SKOR MINIMAL 70
     if (score >= 70) {
-      feedbackText.textContent = `Luar Biasa! Kamu berhasil menuntaskan Level 5 dengan skor ${score}/100. Sinkronisasi +100 XP ke database berhasil. Selamat, kamu telah menyelesaikan seluruh rangkaian kurikulum esensial AzZahra Academy!`;
+      // Modifikasi pesan: Menyebutkan Level 6 terbuka
+      feedbackText.textContent = `Luar Biasa! Kamu berhasil menuntaskan Level 5 dengan skor ${score}/100. Sinkronisasi +100 XP sukses. Segel gembok Level 6 (Sejarah Islam) kini resmi terbuka lebar!`;
+      
       if (currentUserId) {
         try {
           const userRef = doc(db, 'users', currentUserId);
+          // Sinkronisasi data pembuka gembok Level 6 agar sinkron dengan index.html dan level6.html
           await updateDoc(userRef, {
             xp: increment(100),
             "progress.level5.percent": score,
+            "progress.level6.unlocked": true,
             "progress.completedAll": true
           });
         } catch (e) { console.error("Firebase Sync Error:", e); }
