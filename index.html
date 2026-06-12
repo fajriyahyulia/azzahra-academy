@@ -219,8 +219,23 @@
     const container = document.getElementById('levelsContainer');
     let html = '';
     staticLevels.forEach((lvl) => {
-      const currentData = progress && progress[lvl.key] ? progress[lvl.key] : { percent: 0, unlocked: (lvl.id === 1) };
-      const isUnlocked = currentData.unlocked || (lvl.id === 1);
+      const currentData = progress && progress[lvl.key] ? progress[lvl.key] : { percent: 0, unlocked: false };
+      
+      // LOGIKA CERDAS BARU: Level 1 otomatis buka, Level lain membaca properti unlocked masing-masing
+      let isUnlocked = currentData.unlocked;
+      if (lvl.id === 1) {
+        isUnlocked = true;
+      }
+      
+      // Toleransi Tambahan: Jika kuis level sebelumnya terdeteksi selesai / completedAll, buka gembok level berikutnya
+      if (lvl.id === 6 && progress && progress.level5 && (progress.level5.completedAll === true || progress.level5.percent >= 70)) {
+        isUnlocked = true;
+      }
+      if (lvl.id === 5 && progress && progress.level4 && progress.level4.percent >= 70) isUnlocked = true;
+      if (lvl.id === 4 && progress && progress.level3 && progress.level3.percent >= 70) isUnlocked = true;
+      if (lvl.id === 3 && progress && progress.level2 && progress.level2.percent >= 70) isUnlocked = true;
+      if (lvl.id === 2 && progress && progress.level1 && progress.level1.percent >= 70) isUnlocked = true;
+
       const percent = currentData.percent || 0;
       html += `
         <div class="card-level ${!isUnlocked ? 'locked' : ''}" style="--lvl-color:${lvl.color}; --lvl-color-glow:${lvl.glow}; --lvl-grad:${lvl.grad};">
